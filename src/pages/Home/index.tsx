@@ -1,4 +1,4 @@
-import { ChatInput, Dialogs, Message } from "../../components";
+import { ChatInput, Dialogs, Message, Sidebar } from "../../components";
 
 import { Input } from "antd";
 import {
@@ -15,67 +15,7 @@ const Home = () => {
   return (
     <section className={styles.home}>
       <div className={styles.chat}>
-        <div className={styles.chatSidebar}>
-          <div className={styles.chatSidebarHeader}>
-            <div className={styles.chatSidebarDialogsList}>
-              <TeamOutlined />
-              <span>Список диалогов</span>
-            </div>
-            <FormOutlined />
-          </div>
-          <div className={styles.chatSidebarSearch}>
-            <Input.Search
-              placeholder="Поиск среди контактов"
-              onSearch={(value) => console.log(value)}
-            />
-          </div>
-          <Dialogs
-            userId="f90721c90de9bd9ef516bea0b184fd30"
-            items={[
-              {
-                _id: "f90721c90de9bd9ef516bea0b184fd30",
-                text: "Вставь тут текст подлиннее",
-                isReaded: false,
-                createdAt: new Date(),
-                unreaded: 5,
-                user: {
-                  _id: "152e5dfe57dc7075cc2b681ce2b0e5b6",
-                  fullName: "Somebody",
-                  avatar: null,
-                  isOnline: true,
-                },
-              },
-              {
-                _id: "f90721c90de9bd9ef516bea0b184fd30",
-                text: "Вставь тут текст подлиннее",
-                isReaded: false,
-                createdAt: new Date(),
-                unreaded: 0,
-                user: {
-                  _id: "152e5dfe57dc7075cc2b681ce2b0e5b6",
-                  fullName: "Somebody",
-                  avatar:
-                    "https://media.istockphoto.com/id/1281804798/photo/very-closeup-view-of-amazing-domestic-pet-in-mirror-round-fashion-sunglasses-is-isolated-on.jpg?s=612x612&w=0&k=20&c=oMoz9rUr-rDhMGNmEepCkr7F1g3AXs9416hvVnT_4CI=",
-                  isOnline: true,
-                },
-              },
-              {
-                _id: "f90721c90de9bd9ef516bea0b184fd30",
-                text: "Вставь тут текст подлиннее",
-                isReaded: false,
-                createdAt: new Date(),
-                unreaded: 0,
-                user: {
-                  _id: "152e5dfe57dc7075cc2b681ce2b0e5b6",
-                  fullName: "Somebody",
-                  avatar:
-                    "https://media.istockphoto.com/id/1281804798/photo/very-closeup-view-of-amazing-domestic-pet-in-mirror-round-fashion-sunglasses-is-isolated-on.jpg?s=612x612&w=0&k=20&c=oMoz9rUr-rDhMGNmEepCkr7F1g3AXs9416hvVnT_4CI=",
-                  isOnline: true,
-                },
-              },
-            ]}
-          />
-        </div>
+        <Sidebar />
         <div className={styles.chatDialog}>
           <div className={styles.chatDialogHeader}>
             <div className={styles.chatDialogHeaderCenter}>

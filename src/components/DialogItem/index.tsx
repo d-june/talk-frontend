@@ -10,7 +10,7 @@ type DialogItemProps = {
   _id: string;
   text: string;
   isReaded: boolean;
-  createdAt: Date;
+  createdAt: string;
   unreaded: number;
   user: {
     _id: string;
@@ -27,11 +27,12 @@ const DialogItem: FC<DialogItemProps> = ({
   text,
   isMe,
 }) => {
-  const getMessageTime = (createdAt: Date) => {
-    if (isToday(createdAt)) {
-      return format(createdAt, "HH:mm");
+  const getMessageTime = (createdAt: string) => {
+    const createdAtDate = new Date(createdAt);
+    if (isToday(createdAtDate)) {
+      return format(createdAtDate, "HH:mm");
     } else {
-      return format(createdAt, "DD.MM.YYYY");
+      return format(createdAtDate, "DD.MM.YYYY");
     }
   };
 

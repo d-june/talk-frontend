@@ -1,0 +1,57 @@
+@import "../../styles/variables";
+
+.sidebar {
+  width: 410px;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  color: $white;
+  border-bottom: 1px solid #a08eb4;
+  height: 70px;
+
+  svg {
+    font-size: 20px;
+  }
+
+}
+
+.sidebarDialogsList {
+  display: flex;
+  align-items: center;
+  gap: 10px
+}
+
+.sidebarSearch {
+  padding: 30px 10px 20px 10px;
+  width: 100%;
+  input {
+    width: 100%;
+    background: $white;
+    border: 0;
+    padding: 10px 20px;
+    height: 40px;
+    &:active, &:focus {
+      border: none;
+      box-shadow: none;
+    }
+  }
+  button {
+    background: $white;
+    height: 40px !important;
+    padding: 10px 20px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      background: $white;
+      color: $purple !important;
+    }
+
+  }
+}
