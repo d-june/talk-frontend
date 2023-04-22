@@ -1,0 +1,110 @@
+@import "../../styles/variables";
+.home {
+  height: 100vh;
+}
+
+.chat {
+  display: flex;
+  height: 100%;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.2);
+}
+
+.chatSidebar {
+  width: 410px;
+  height: 100%;
+  overflow: auto;
+}
+
+.chatSidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  color: $white;
+  border-bottom: 1px solid #a08eb4;
+  height: 70px;
+
+  svg {
+    font-size: 20px;
+  }
+
+}
+
+.chatSidebarDialogsList {
+  display: flex;
+  align-items: center;
+  gap: 10px
+}
+
+.chatSidebarSearch {
+  padding: 30px 10px 20px 10px;
+  width: 100%;
+  input {
+    width: 100%;
+    background: $white;
+    border: 0;
+    padding: 10px 20px;
+    height: 40px;
+    &:active, &:focus {
+      border: none;
+      box-shadow: none;
+    }
+  }
+  button {
+    background: $white;
+    height: 40px !important;
+    padding: 10px 20px !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:hover {
+      background: $white;
+      color: $purple !important;
+    }
+
+  }
+}
+
+
+
+.chatDialog {
+  height: 100vh;
+  flex: 1 1 auto;
+  background: rgb(250,237,255);
+  background: radial-gradient(circle, rgba(250,237,255,1) 0%, rgba(238,237,247,1) 100%);
+}
+
+.chatDialogHeader {
+  display: grid;
+  grid-template-columns: 1fr 10px;
+  text-align: center;
+  align-items: center;
+  padding: 10px 40px;
+  border-bottom: 1px solid #a08eb4;
+  height: 70px;
+  svg {
+    font-size: 20px;
+  }
+}
+
+.chatDialogHeaderUserName {
+  color: $purple;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.chatDialogMessagesBlock {
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+  padding: 40px 0;
+  height: calc(100vh - 70px);
+}
+
+.chatDialogMessages {
+  padding: 40px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+}

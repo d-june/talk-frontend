@@ -1,0 +1,17 @@
+@import "../../styles/variables";
+
+.button {
+  height: 50px !important;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  width: 100%;
+  background: linear-gradient(52deg, rgba(51,11,150,1) 0%, rgba(145,20,207,1) 50%, rgba(168,17,203,1) 100%);
+  color: $white !important;
+  transition: opacity 0.3s ease-out 0s;
+  &:hover {
+    opacity: 0.7;
+  }
+}

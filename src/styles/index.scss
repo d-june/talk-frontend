@@ -1,0 +1,22 @@
+@import "~reset-scss";
+@import "./variables";
+
+* {
+  outline: none
+}
+
+body, html, #root, .wrapper {
+  font-family: 'Raleway', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  line-height: 1.7em;
+  height: 100%;
+  background: rgb(51,11,150);
+  background: linear-gradient(52deg, rgba(51,11,150,1) 0%, rgba(145,20,207,1) 50%, rgba(168,17,203,1) 100%);
+  color: #202002;
+}
+
+.ant-form-item-explain-error {
+  margin: 10px;
+}
