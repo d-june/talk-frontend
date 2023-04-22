@@ -1,5 +1,5 @@
 import { FormOutlined, TeamOutlined } from "@ant-design/icons";
-import { Input } from "antd";
+import { Empty, Input } from "antd";
 import { Dialogs } from "../index";
 
 // @ts-ignore
@@ -54,7 +54,15 @@ const Sidebar = () => {
           onChange={(e) => onChangeInput(e.target.value)}
         />
       </div>
-      <Dialogs userId="f90721c90de9bd9ef516bea0b184fd30" items={filtered} />
+      {filtered.length > 0 ? (
+        <Dialogs userId="f90721c90de9bd9ef516bea0b184fd30" items={filtered} />
+      ) : (
+        <Empty
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          description="Ничего не найдено("
+          className={styles.dialogsEmpty}
+        />
+      )}
     </div>
   );
 };

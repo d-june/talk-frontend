@@ -7,13 +7,16 @@
   .messageAvatar {
     display: flex;
     flex-direction: column-reverse;
-    img {
+    align-items: center;
+    margin-right: 13px;
+    margin-bottom: 22px;
+    img, div {
       border-radius: 50px;
       width: 40px;
       height: 40px;
-      margin-right: 13px;
-      margin-bottom: 22px;
+      object-fit: cover;
     }
+
   }
 
   .messageContent {
@@ -110,7 +113,7 @@
   flex-direction: row-reverse;
   align-self: flex-end;
   .messageAvatar {
-    img {
+   img {
       margin-right: 0px;
       margin-left: 13px;
     }

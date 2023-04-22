@@ -55,3 +55,18 @@
 
   }
 }
+
+.dialogsEmpty {
+  display: flex;
+  flex-direction: column;
+  svg {
+    width: 120px !important;
+    height: 120px !important;
+  }
+  div {
+    color: $white !important;
+    margin-top: 60px;
+    font-size: 14px;
+  }
+
+}

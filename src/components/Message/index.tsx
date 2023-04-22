@@ -4,26 +4,27 @@ import styles from "./Message.module.scss";
 import classNames from "classnames";
 import Time from "../Time";
 import IconReaded from "../IconReaded";
-import { MessageAudio } from "../index";
+import { Avatar, MessageAudio } from "../index";
+import { MessageType } from "../../redux/slices/messages/types";
 
-type MessageType = {
-  avatar?: string | null;
-  text?: string;
-  date?: Date;
+type MessagePropsType = {
   isMe?: boolean;
-  isReaded?: boolean;
   isTyping?: boolean;
-  attachments?: Array<{ filename: string; url: string }>;
+  isReaded?: boolean;
+  attachments?: Array<{
+    url?: string;
+    filename?: string;
+  }>;
   audio?: string;
 };
 
-const Message: FC<MessageType> = ({
-  avatar,
+const Message: FC<MessageType & MessagePropsType> = ({
   text,
-  date,
+  user,
+  createdAt,
   isMe,
-  isReaded,
   isTyping,
+  isReaded,
   attachments,
   audio,
 }) => {
@@ -38,7 +39,7 @@ const Message: FC<MessageType> = ({
       )}
     >
       <div className={styles.messageAvatar}>
-        {avatar && <img src={avatar} alt="аватар" />}
+        <Avatar user={user} />
       </div>
       <div className={styles.messageContent}>
         {(audio || text || isTyping) && (
@@ -65,9 +66,9 @@ const Message: FC<MessageType> = ({
           </div>
         )}
 
-        {date && (
+        {createdAt && (
           <span className={styles.messageDate}>
-            <Time date={date} />
+            <Time date={createdAt} />
           </span>
         )}
       </div>

@@ -3,11 +3,14 @@ import ruLocale from "date-fns/locale/ru";
 import { FC } from "react";
 
 type TimeProps = {
-  date: Date;
+  date: string;
 };
 const Time: FC<TimeProps> = ({ date }) => {
+  const formatDate = new Date(date);
   return (
-    <>{formatDistanceToNow(date, { addSuffix: true, locale: ruLocale })}</>
+    <>
+      {formatDistanceToNow(formatDate, { addSuffix: true, locale: ruLocale })}
+    </>
   );
 };
 

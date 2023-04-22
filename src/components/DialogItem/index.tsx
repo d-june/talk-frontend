@@ -5,6 +5,8 @@ import { Avatar, IconReaded } from "../index";
 import classNames from "classnames";
 import { FC } from "react";
 import { isToday, format } from "date-fns";
+import { setCurrentDialogId } from "../../redux/slices/dialogs/slice";
+import { useAppDispatch } from "../../redux/store";
 
 type DialogItemProps = {
   _id: string;
@@ -19,14 +21,19 @@ type DialogItemProps = {
     isOnline?: boolean;
   };
   isMe: boolean;
+  dialog: string;
 };
 const DialogItem: FC<DialogItemProps> = ({
+  _id,
   user,
   unreaded,
   createdAt,
   text,
   isMe,
+  dialog,
 }) => {
+  const dispatch = useAppDispatch();
+
   const getMessageTime = (createdAt: string) => {
     const createdAtDate = new Date(createdAt);
     if (isToday(createdAtDate)) {
@@ -36,12 +43,17 @@ const DialogItem: FC<DialogItemProps> = ({
     }
   };
 
+  const onChangeCurrentDialogId = () => {
+    dispatch(setCurrentDialogId(dialog));
+  };
+
   return (
     <div
       className={classNames(
         styles.dialogItem,
         user.isOnline ? styles.dialogItemOnline : ""
       )}
+      onClick={onChangeCurrentDialogId}
     >
       <div className={styles.dialogItemAvatar}>
         <Avatar user={user} />

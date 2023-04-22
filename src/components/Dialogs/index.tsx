@@ -18,6 +18,7 @@ type DialogsProps = {
       avatar?: string | null;
       isOnline?: boolean;
     };
+    dialog: string;
   }>;
 };
 
