@@ -3,30 +3,45 @@ import { orderBy } from "lodash";
 import styles from "./Dialogs.module.scss";
 import { DialogItem } from "../index";
 import { FC } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 type DialogsProps = {
-  userId: string;
   items: Array<{
     _id: string;
     text: string;
     isReaded: boolean;
     createdAt: string;
     unreaded: number;
-    user: {
+    partner: {
       _id: string;
       fullName: string;
       avatar?: string | null;
       isOnline?: boolean;
     };
+    author: {
+      _id: string;
+      fullName: string;
+      avatar: string | null;
+    };
     dialog: string;
+    lastMessage: {
+      text: string;
+      createdAt: string;
+    };
   }>;
 };
 
-const Dialogs: FC<DialogsProps> = ({ items, userId }) => {
+const Dialogs: FC<DialogsProps> = ({ items }) => {
+  const { data } = useSelector((state: RootState) => state.me);
   return (
     <div className={styles.dialogs}>
       {orderBy(items, ["createdAt"], ["desc"]).map((item) => (
-        <DialogItem key={item._id} {...item} isMe={item.user._id === userId} />
+        <DialogItem
+          key={item._id}
+          {...item}
+          isMe={data && item.author._id === data._id}
+        />
       ))}
     </div>
   );

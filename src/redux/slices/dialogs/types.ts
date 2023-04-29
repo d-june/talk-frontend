@@ -4,11 +4,20 @@ export type dialogType = {
   isReaded: boolean;
   createdAt: string;
   unreaded: number;
-  user: {
+  partner: {
     _id: string;
     fullName: string;
     avatar: string | null;
     isOnline: boolean;
   };
+  author: {
+    _id: string;
+    fullName: string;
+    avatar: string | null;
+  };
   dialog: string;
+  lastMessage: {
+    text: string;
+    createdAt: string;
+  };
 };

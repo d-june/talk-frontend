@@ -12,9 +12,14 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={isAuth ? <Navigate to="/im" /> : <Navigate to="/login" />}
+          element={
+            isAuth ? <Navigate to="/dialogs" /> : <Navigate to="/login" />
+          }
         />
-        <Route path="/im" element={<Home />} />
+        <Route path="/dialogs" element={<Home />} />
+        <Route path="/dialogs" element={<Home />}>
+          <Route path=":id" element={<Home />} />
+        </Route>
         <Route path="/login" element={<Auth />} />
         <Route path="/register" element={<Auth />} />
         <Route path="/register/verify" element={<CheckEmailInfo />} />

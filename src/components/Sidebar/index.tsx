@@ -7,7 +7,7 @@ import styles from "./Sidebar.module.scss";
 import { useEffect, useState } from "react";
 import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../redux/store";
+import { RootState, useAppDispatch } from "../../redux/store";
 import { getDialogs } from "../../redux/slices/dialogs/asyncActions";
 
 const Sidebar = () => {
@@ -17,14 +17,17 @@ const Sidebar = () => {
   const [inputValue, setInputValue] = useState("");
   const [filtered, setFilteredItems] = useState(Array.from(items));
 
+  const { isAuth, token } = useSelector((state: RootState) => state.me);
+
   const onChangeInput = (value: any) => {
     console.log(
-      items[0].user.fullName.toLowerCase().indexOf(value.toLowerCase()) >= 0
+      items[0].partner.fullName.toLowerCase().indexOf(value.toLowerCase()) >= 0
     );
     setFilteredItems(
       items.filter(
         (dialog) =>
-          dialog.user.fullName.toLowerCase().indexOf(value.toLowerCase()) >= 0
+          dialog.partner.fullName.toLowerCase().indexOf(value.toLowerCase()) >=
+          0
       )
     );
     setInputValue(value);
@@ -32,7 +35,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     if (!items.length) {
-      dispatch(getDialogs());
+      getDialogs(token);
     } else {
       setFilteredItems(items);
     }
@@ -54,7 +57,7 @@ const Sidebar = () => {
         />
       </div>
       {filtered.length > 0 ? (
-        <Dialogs userId="f90721c90de9bd9ef516bea0b184fd30" items={filtered} />
+        <Dialogs items={filtered} />
       ) : (
         <Empty description="Ничего не нашлось :(" light />
       )}

@@ -8,13 +8,15 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/store";
 import { useEffect } from "react";
 import { getMe } from "../../redux/slices/me/asyncActions";
+import { getDialogs } from "../../redux/slices/dialogs/asyncActions";
 
 const Home = () => {
-  const { isAuth } = useSelector((state: RootState) => state.me);
+  const { isAuth, token } = useSelector((state: RootState) => state.me);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getMe());
+    dispatch(getDialogs(token));
   }, [isAuth]);
 
   return (

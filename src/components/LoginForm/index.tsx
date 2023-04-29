@@ -37,7 +37,7 @@ const LoginForm = () => {
   return (
     <div>
       {isAuth ? (
-        <Navigate to="/im" />
+        <Navigate to="/dialogs" />
       ) : (
         <div>
           {contextHolder}
