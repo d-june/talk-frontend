@@ -2,7 +2,7 @@ import { orderBy } from "lodash";
 // @ts-ignore
 import styles from "./Dialogs.module.scss";
 import { DialogItem } from "../index";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 type DialogsProps = {
   userId: string;

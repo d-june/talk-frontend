@@ -9,14 +9,13 @@
   input {
     transition: all 0.4s ease-in-out;
     &:hover, &:focus {
-      border: 1px solid $blue;
+      border: 1px solid $lightBlue;
       box-shadow: none;
     }
   }
   svg {
     font-size: 20px;
-    color: $blue;
-    opacity: 0.8;
+    color: $lightBlue;
     cursor: pointer;
     transition: color 0.3s ease-in-out;
     &:hover {
@@ -29,4 +28,20 @@
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.chatInputActionsUploadBtn {
+  cursor: pointer;
+  &:hover  {
+    button {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+}
+
+.chatInputEmojiPicker {
+  position: absolute;
+  bottom: 90px;
+  z-index: 1;
 }

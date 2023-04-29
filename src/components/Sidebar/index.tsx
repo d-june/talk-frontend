@@ -1,6 +1,6 @@
 import { FormOutlined, TeamOutlined } from "@ant-design/icons";
-import { Empty, Input } from "antd";
-import { Dialogs } from "../index";
+import { Input } from "antd";
+import { Dialogs, Empty } from "../index";
 
 // @ts-ignore
 import styles from "./Sidebar.module.scss";
@@ -9,7 +9,6 @@ import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../redux/store";
 import { getDialogs } from "../../redux/slices/dialogs/asyncActions";
-import dialogs from "../Dialogs";
 
 const Sidebar = () => {
   const { items } = useSelector(selectDialogsData);
@@ -57,11 +56,7 @@ const Sidebar = () => {
       {filtered.length > 0 ? (
         <Dialogs userId="f90721c90de9bd9ef516bea0b184fd30" items={filtered} />
       ) : (
-        <Empty
-          image={Empty.PRESENTED_IMAGE_SIMPLE}
-          description="Ничего не найдено("
-          className={styles.dialogsEmpty}
-        />
+        <Empty description="Ничего не нашлось :(" light />
       )}
     </div>
   );

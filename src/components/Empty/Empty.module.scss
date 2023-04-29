@@ -1,0 +1,33 @@
+@import "../../styles/variables";
+
+.emptyBlockBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: $lightBlue;
+  font-size: 18px;
+  font-weight: bold;
+  p {
+    opacity: 0.8;
+  }
+}
+
+
+
+.emptyBlockImage {
+  width: 150px;
+}
+
+.emptyBlockBodyLight {
+  color: $white;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 100px 0;
+  p {
+    opacity: 1;
+  }
+  .emptyBlockImage {
+    width: 100px;
+  }
+}

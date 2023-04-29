@@ -5,18 +5,22 @@ import {
   MailOutlined,
   InfoCircleTwoTone,
 } from "@ant-design/icons";
-import { Button, AuthBlock } from "../index";
-import { Link } from "react-router-dom";
+import { Button, AuthBlock, CheckEmailInfo } from "../index";
+import { Link, Navigate } from "react-router-dom";
 import React from "react";
 
 // @ts-ignore
 import styles from "./RegisterForm.module.scss";
+import { RootState, useAppDispatch } from "../../redux/store";
+import { register } from "../../redux/slices/me/asyncActions";
+import { useSelector } from "react-redux";
 
 const RegisterForm = () => {
-  const success = false;
   const [form] = Form.useForm();
+  const dispatch = useAppDispatch();
+  const { registrationSuccess } = useSelector((state: RootState) => state.me);
   const onFinish = (values: any) => {
-    alert(values);
+    dispatch(register(values));
   };
   return (
     <div>
@@ -25,7 +29,7 @@ const RegisterForm = () => {
         <p>Зарегистрируйтесь для входа в чат</p>
       </div>
       <AuthBlock>
-        {!success ? (
+        {!registrationSuccess ? (
           <Form
             name="normal_login"
             className="login-form"
@@ -55,7 +59,7 @@ const RegisterForm = () => {
               />
             </Form.Item>
             <Form.Item
-              name="username"
+              name="fullName"
               rules={[{ required: true, message: "Пожалуйста введите имя" }]}
               hasFeedback
             >
@@ -129,17 +133,7 @@ const RegisterForm = () => {
             </Link>
           </Form>
         ) : (
-          <div className={styles.successBlock}>
-            <InfoCircleTwoTone
-              twoToneColor="rgba(168,17,203,1)"
-              className={styles.successIcon}
-            />
-            <h3>Подтвердите свой аккаунт</h3>
-            <p className={styles.successText}>
-              Вам на почту отправлено письмо со ссылкой на подтверждение
-              аккаунта
-            </p>
-          </div>
+          <Navigate to="/register/verify" />
         )}
       </AuthBlock>
     </div>

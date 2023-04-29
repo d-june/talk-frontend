@@ -30,7 +30,7 @@
 }
 
 .chatDialogHeaderUserName {
-  color: $purple;
+  color: $lightBlue;
   font-size: 16px;
   font-weight: bold;
 }
@@ -44,10 +44,8 @@
 }
 
 .chatDialogMessages {
-  padding: 40px;
-  overflow: auto;
   display: flex;
   flex-direction: column;
   align-content: space-between;
-  height: 100%;
+  height: 95%;
 }

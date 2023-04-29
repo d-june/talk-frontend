@@ -4,8 +4,19 @@ import { EllipsisOutlined } from "@ant-design/icons";
 
 // @ts-ignore
 import styles from "./Home.module.scss";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../redux/store";
+import { useEffect } from "react";
+import { getMe } from "../../redux/slices/me/asyncActions";
 
 const Home = () => {
+  const { isAuth } = useSelector((state: RootState) => state.me);
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getMe());
+  }, [isAuth]);
+
   return (
     <section className={styles.home}>
       <div className={styles.chat}>

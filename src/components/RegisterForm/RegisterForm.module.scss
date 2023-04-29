@@ -16,22 +16,3 @@
   }
 }
 
-.successBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  h3 {
-    color: $dark;
-    font-size: 20px;
-    font-weight: bold;
-  }
-
-  .successText {
-    color: $dark;
-    font-size: 16px;
-  }
-
-  svg {
-    font-size: 60px;
-  }
-}

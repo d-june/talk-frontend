@@ -28,6 +28,12 @@
   }
 }
 
+.dialogItemSelected {
+  &::before {
+    opacity: 0.4;
+  }
+}
+
 .dialogItemAvatar {
   z-index: 1;
   flex: 0 0 50px;

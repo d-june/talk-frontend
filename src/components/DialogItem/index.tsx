@@ -7,6 +7,8 @@ import { FC } from "react";
 import { isToday, format } from "date-fns";
 import { setCurrentDialogId } from "../../redux/slices/dialogs/slice";
 import { useAppDispatch } from "../../redux/store";
+import { useSelector } from "react-redux";
+import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
 
 type DialogItemProps = {
   _id: string;
@@ -33,6 +35,7 @@ const DialogItem: FC<DialogItemProps> = ({
   dialog,
 }) => {
   const dispatch = useAppDispatch();
+  const { currentDialogId } = useSelector(selectDialogsData);
 
   const getMessageTime = (createdAt: string) => {
     const createdAtDate = new Date(createdAt);
@@ -44,14 +47,18 @@ const DialogItem: FC<DialogItemProps> = ({
   };
 
   const onChangeCurrentDialogId = () => {
-    dispatch(setCurrentDialogId(dialog));
+    dispatch(setCurrentDialogId(_id));
   };
+
+  console.log(_id);
+  console.log(currentDialogId);
 
   return (
     <div
       className={classNames(
         styles.dialogItem,
-        user.isOnline ? styles.dialogItemOnline : ""
+        user.isOnline ? styles.dialogItemOnline : "",
+        currentDialogId === _id ? styles.dialogItemSelected : ""
       )}
       onClick={onChangeCurrentDialogId}
     >

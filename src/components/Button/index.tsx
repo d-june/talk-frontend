@@ -23,6 +23,7 @@ type ButtonProps = {
     | undefined;
   htmlType?: ButtonHTMLType;
   size: SizeType;
+  onClick?: any;
 };
 const Button: FC<ButtonProps> = (props) => {
   return (

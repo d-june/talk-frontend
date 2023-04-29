@@ -1,0 +1,15 @@
+.messages {
+  height: 100%;
+  overflow: auto;
+  padding: 40px;
+}
+
+.messagesLoading, .messagesEmpty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+
