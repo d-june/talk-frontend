@@ -25,13 +25,7 @@ const Home = () => {
         <Sidebar />
         <div className={styles.chatDialog}>
           <div className={styles.chatDialogHeader}>
-            <div className={styles.chatDialogHeaderCenter}>
-              <b className={styles.chatDialogHeaderUserName}>Somebody</b>
-              <div className={styles.chatDialogHeaderStatus}>
-                <Status online={true} />
-              </div>
-            </div>
-            <EllipsisOutlined />
+            <Status />
           </div>
           <div className={styles.chatDialogMessagesBlock}>
             <div className={styles.chatDialogMessages}>

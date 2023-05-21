@@ -1,16 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getMessageById } from "./asyncActions";
+import { getMessageById, removeMessage, sendMessage } from "./asyncActions";
 import { MessagesType } from "./types";
+import { reduce } from "lodash";
 
 const initialState = {
-  messages: null as MessagesType | null,
+  messages: [] as MessagesType,
   isLoading: false,
 };
 
 const messagesSlice = createSlice({
   name: "messages",
   initialState,
-  reducers: {},
+  reducers: {
+    addMessage(state, action) {
+      if (action.payload.currentDialogId === action.payload.data.dialog._id) {
+        state.messages = [...state.messages, action.payload.data];
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getMessageById.pending, (state) => {
       state.isLoading = true;
@@ -19,7 +26,14 @@ const messagesSlice = createSlice({
       state.messages = action.payload;
       state.isLoading = false;
     });
+    builder.addCase(removeMessage.fulfilled, (state, action) => {
+      state.messages = state.messages.filter(
+        (message) => message._id !== action.payload._id
+      );
+    });
   },
 });
+
+export const { addMessage } = messagesSlice.actions;
 
 export default messagesSlice.reducer;

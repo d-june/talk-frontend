@@ -39,6 +39,10 @@ const meSlice = createSlice({
     builder.addCase(getMe.fulfilled, (state, action) => {
       state.data = action.payload;
     });
+    builder.addCase(getMe.rejected, (state, action) => {
+      state.isAuth = false;
+      delete window.localStorage.token;
+    });
     builder.addCase(register.fulfilled, (state, action) => {
       state.registrationSuccess = true;
     });

@@ -2,13 +2,13 @@
 
 .message {
   display: flex;
-  max-width: 440px;
+  max-width: 50%;
   margin-bottom: 15px;
+  gap: 10px;
   .messageAvatar {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
-    margin-right: 13px;
     margin-bottom: 22px;
     img, div {
       border-radius: 50px;
@@ -19,8 +19,12 @@
 
   }
 
-  .messageContent {
-
+  .messageBody {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 10px
   }
 
   .messageBubble {
@@ -28,7 +32,7 @@
     box-shadow: 0px 5px 5px $boxShadow;
     border-radius: 12px 12px 12px 0px;
     padding: 15px;
-    margin-bottom: 8px;
+
   }
 
   .messageText {
@@ -76,9 +80,33 @@
     overflow: hidden;
     box-shadow: 0px 5px 5px $boxShadow;
     cursor: pointer;
+    position: relative;
     img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
+    }
+    .messageAttachmentsItemOverlay {
+      background: rgba(0,0,0,0.6);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      svg {
+        font-size: 18px;
+        color: white;
+      }
+    }
+    &:hover {
+      .messageAttachmentsItemOverlay {
+        opacity: 1;
+      }
     }
   }
 
@@ -112,12 +140,11 @@
   display: flex;
   flex-direction: row-reverse;
   align-self: flex-end;
-  .messageAvatar {
-   img {
-      margin-right: 0px;
-      margin-left: 13px;
-    }
+
+  .messageBody {
+    flex-direction: row;
   }
+
   .messageBubble {
     background: $purple;
     border-radius: 12px 12px 0px 12px;
@@ -130,19 +157,25 @@
     display: flex;
     flex-direction: row-reverse;
   }
-  .messageIconReaded {
+  .messageIcons {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    margin-right: 15px;
+    gap: 20px;
+    margin-top: 5px;
+  }
+  .messageIconsDelete {
+    opacity: 0.5;
+    transition: 0.3s ease-in-out 0s;
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 
-.messageAudio {
-  .messageBubble {
-    width: 290px;
-    height: 62px;
-    position: relative;
-    overflow: hidden;
+.messagePhotoModal {
+  img {
+    width: 100%;
   }
 }
 

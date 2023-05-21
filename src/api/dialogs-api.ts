@@ -7,4 +7,7 @@ export const dialogsAPI = {
       .get<dialogType[]>("/dialogs/" + token)
       .then((res) => res.data);
   },
+  createDialog(partnerId: string, text: string) {
+    return instance.post("/dialogs", { partner: partnerId, text: text });
+  },
 };

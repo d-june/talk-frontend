@@ -64,7 +64,7 @@ const MessageAudio: FC<MessageAudioProps> = ({ audioSrc }) => {
   }, []);
 
   return (
-    <div className={styles.messageAudio}>
+    <div className={styles.messageAudioBubble}>
       <audio ref={audioElem} src={audioSrc} preload="auto" />
       <div
         className={styles.messageAudioProgress}

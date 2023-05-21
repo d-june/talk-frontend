@@ -6,7 +6,7 @@ import classNames from "classnames";
 import { FC } from "react";
 import { isToday, format } from "date-fns";
 import { setCurrentDialogId } from "../../redux/slices/dialogs/slice";
-import { useAppDispatch } from "../../redux/store";
+import { RootState, useAppDispatch } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
 import { Link, useParams } from "react-router-dom";
@@ -17,13 +17,17 @@ type DialogItemProps = {
   isReaded: boolean;
   createdAt: string;
   unreaded: number;
+  author: {
+    _id: string;
+    fullName: string;
+    avatar: string | null;
+  };
   partner: {
     _id: string;
     fullName: string;
     avatar?: string | null;
     isOnline?: boolean;
   };
-  isMe: boolean | null;
   dialog: string;
   lastMessage: {
     text: string;
@@ -34,22 +38,23 @@ const DialogItem: FC<DialogItemProps> = ({
   _id,
   partner,
   unreaded,
-  createdAt,
+  author,
   text,
-  isMe,
   dialog,
   lastMessage,
 }) => {
   const dispatch = useAppDispatch();
   const { currentDialogId } = useSelector(selectDialogsData);
   let params = useParams();
+  const { data } = useSelector((state: RootState) => state.me);
+  const isMe = data && author._id === data._id;
 
   const getMessageTime = (createdAt: string) => {
     const createdAtDate = new Date(createdAt);
     if (isToday(createdAtDate)) {
       return format(createdAtDate, "HH:mm");
     } else {
-      return format(createdAtDate, "DD.MM.YYYY");
+      return format(createdAtDate, "dd.MM.yyyy");
     }
   };
 
@@ -77,7 +82,7 @@ const DialogItem: FC<DialogItemProps> = ({
             <span>{getMessageTime(lastMessage.createdAt)}</span>
           </div>
           <div className={styles.dialogItemInfoBottom}>
-            <p>{lastMessage.text}</p>
+            <p>{isMe ? `Вы: ${lastMessage?.text}` : lastMessage?.text}</p>
             <div className={styles.messageIconReaded}>
               {isMe && <IconReaded isMe={true} isReaded={false} />}
             </div>

@@ -1,8 +1,9 @@
 import { Empty, Message } from "../index";
-import { Spin } from "antd";
+import { Modal, Spin } from "antd";
 import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/store";
+import socket from "../../socket/socket";
 import { getMessageById } from "../../redux/slices/messages/asyncActions";
 import {
   selectLoading,
@@ -14,6 +15,7 @@ import classNames from "classnames";
 
 // @ts-ignore
 import emptyIcon from "../../assets/img/empty.svg";
+import { addMessage } from "../../redux/slices/messages/slice";
 const Messages = () => {
   const dispatch = useAppDispatch();
   const currentDialogId = useSelector(
@@ -24,8 +26,16 @@ const Messages = () => {
 
   const messagesRef = useRef<HTMLDivElement>(null);
 
+  const onNewMessage = (data: any) => {
+    dispatch(addMessage({ currentDialogId, data }));
+  };
+
   useEffect(() => {
     currentDialogId && dispatch(getMessageById(currentDialogId));
+    socket.on("SERVER:NEW_MESSAGE", onNewMessage);
+    return () => {
+      socket.removeListener("SERVER:NEW_MESSAGE", onNewMessage);
+    };
   }, [currentDialogId]);
 
   useEffect(() => {
@@ -47,18 +57,16 @@ const Messages = () => {
         <Spin size="large" tip="Загрузка..."></Spin>
       ) : !isLoading && messages ? (
         messages.length > 0 ? (
-          <div>
+          <div className={styles.messagesContainer}>
             {messages.map((item) => (
-              <div>
-                <Message {...item} />
-              </div>
+              <Message {...item} />
             ))}
           </div>
         ) : (
-          <Empty description="Диалога пока нет" />
+          <Empty description="Откройте диалог" />
         )
       ) : (
-        <Empty description="Откройте диалог" />
+        <Empty description="Диалога пока нет" />
       )}
     </div>
   );

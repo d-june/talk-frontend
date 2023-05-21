@@ -1,0 +1,25 @@
+.uploadModal {
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+}
+
+:global(.ant-modal-wrap) {
+
+display: flex;
+  align-items: center;
+
+}
+:global(.ant-modal) {
+  top: 0px;
+  bottom: 0px;
+}
+:global(.ant-modal-content) {
+  padding: 0px !important;
+}
+:global(.ant-modal-body) {
+  padding: 5px !important;
+}

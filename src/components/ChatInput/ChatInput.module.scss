@@ -1,11 +1,44 @@
 @import "../../styles/variables";
 
+.messageBubble {
+
+}
+
 .chatInput {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: 20px;
   padding: 0 40px;
 
+
+}
+
+.chatInputMessage {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 40px;
+  .chatRecord {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    svg {
+      color: #f46b6b;
+    }
+    p {
+      line-height: 1em;
+    }
+  }
+  .chatRecordBubble {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #f46b6b;
+  }
   input {
     transition: all 0.4s ease-in-out;
     &:hover, &:focus {
@@ -42,6 +75,11 @@
 
 .chatInputEmojiPicker {
   position: absolute;
-  bottom: 90px;
+  bottom: 210px;
   z-index: 1;
+}
+
+.chatInputUpload {
+  width: 100%;
+  padding-left: 80px;
 }
