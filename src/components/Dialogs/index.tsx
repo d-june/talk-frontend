@@ -1,36 +1,15 @@
+import { FC } from "react";
+
 import { orderBy } from "lodash";
+
+import { DialogItem } from "../index";
 
 // @ts-ignore
 import styles from "./Dialogs.module.scss";
-import { DialogItem } from "../index";
-import { FC } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
+import { dialogType } from "../../redux/slices/dialogs/types";
 
 type DialogsProps = {
-  items: Array<{
-    _id: string;
-    text: string;
-    isReaded: boolean;
-    createdAt: string;
-    unreaded: number;
-    partner: {
-      _id: string;
-      fullName: string;
-      avatar?: string | null;
-      isOnline?: boolean;
-    };
-    author: {
-      _id: string;
-      fullName: string;
-      avatar: string | null;
-    };
-    dialog: string;
-    lastMessage: {
-      text: string;
-      createdAt: string;
-    };
-  }>;
+  items: Array<dialogType>;
 };
 
 const Dialogs: FC<DialogsProps> = ({ items }) => {

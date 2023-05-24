@@ -16,3 +16,4 @@ export { default as Messages } from "./Messages";
 export { default as Empty } from "./Empty";
 export { default as CheckEmailInfo } from "./CheckEmailInfo";
 export { default as UploadFiles } from "./UploadFiles";
+export { default as CreateDialogForm } from "./CreateDialogForm";

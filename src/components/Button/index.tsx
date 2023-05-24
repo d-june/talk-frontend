@@ -24,6 +24,8 @@ type ButtonProps = {
   htmlType?: ButtonHTMLType;
   size: SizeType;
   onClick?: any;
+  disabled?: boolean;
+  loading?: boolean;
 };
 const Button: FC<ButtonProps> = (props) => {
   return (

@@ -1,6 +1,5 @@
 // @ts-ignore
 import styles from "./DialogItem.module.scss";
-import Time from "../Time";
 import { Avatar, IconReaded } from "../index";
 import classNames from "classnames";
 import { FC } from "react";
@@ -9,8 +8,9 @@ import { setCurrentDialogId } from "../../redux/slices/dialogs/slice";
 import { RootState, useAppDispatch } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import socket from "../../socket/socket";
+import { getPartner } from "../../utils/helpers/getPartner";
 
 type DialogItemProps = {
   _id: string;
@@ -40,15 +40,14 @@ const DialogItem: FC<DialogItemProps> = ({
   partner,
   unreaded,
   author,
-  text,
-  dialog,
   lastMessage,
 }) => {
   const dispatch = useAppDispatch();
-  const { currentDialogId } = useSelector(selectDialogsData);
-  let params = useParams();
+
   const { data } = useSelector((state: RootState) => state.me);
+  const { items } = useSelector(selectDialogsData);
   const isMe = data && author._id === data._id;
+  const { currentDialogId } = useSelector(selectDialogsData);
 
   const getMessageTime = (createdAt: string) => {
     const createdAtDate = new Date(createdAt);
@@ -75,23 +74,25 @@ const DialogItem: FC<DialogItemProps> = ({
     return `${message.user._id === userId ? "Вы: " : ""}${text}`;
   };
 
+  partner = getPartner(items, data, author, partner);
+
   return (
     <Link to={`${_id}`}>
       <div
         className={classNames(
           styles.dialogItem,
-          partner.isOnline ? styles.dialogItemOnline : "",
-          currentDialogId === params.id ? styles.dialogItemSelected : ""
+          partner?.isOnline ? styles.dialogItemOnline : "",
+          currentDialogId === _id ? styles.dialogItemSelected : ""
         )}
         onClick={onChangeCurrentDialogId}
       >
         <div className={styles.dialogItemAvatar}>
-          <Avatar user={partner} />
+          {partner && <Avatar user={partner} />}
         </div>
 
         <div className={styles.dialogItemInfo}>
           <div className={styles.dialogItemInfoTop}>
-            <b>{partner.fullName}</b>
+            <b>{partner?.fullName}</b>
             <span>{getMessageTime(lastMessage.createdAt)}</span>
           </div>
           <div className={styles.dialogItemInfoBottom}>

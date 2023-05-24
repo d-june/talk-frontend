@@ -1,30 +1,18 @@
 import classNames from "classnames";
 // @ts-ignore
 import styles from "./Status.module.scss";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { getPartnerInDialog } from "../../utils/helpers/getPartner";
 
 const Status: FC = () => {
   const { currentDialogId, items } = useSelector(
     (state: RootState) => state.dialogs
   );
   const { data } = useSelector((state: RootState) => state.me);
-
-  if (!items.length || !currentDialogId) {
-    return null;
-  }
-
-  const currentDialogObj = items.filter(
-    (dialog) => dialog._id === currentDialogId
-  )[0];
   let partner = {} as any;
-
-  if (data && currentDialogObj.author._id === data._id) {
-    partner = currentDialogObj.partner;
-  } else {
-    partner = currentDialogObj.author;
-  }
+  partner = getPartnerInDialog(currentDialogId, items, data);
 
   if (!items.length || !currentDialogId) {
     return null;
@@ -32,15 +20,15 @@ const Status: FC = () => {
 
   return (
     <div className={styles.chatDialogHeaderBody}>
-      <b className={styles.chatDialogHeaderUserName}>{partner.fullName}</b>
+      <b className={styles.chatDialogHeaderUserName}>{partner?.fullName}</b>
       <div className={styles.chatDialogHeaderStatus}>
         <span
           className={classNames(
             styles.status,
-            partner.isOnline ? styles.statusOnline : ""
+            partner?.isOnline ? styles.statusOnline : ""
           )}
         >
-          {partner.isOnline ? "онлайн" : "офлайн"}
+          {partner?.isOnline ? "онлайн" : "офлайн"}
         </span>
       </div>
     </div>
