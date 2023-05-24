@@ -26,6 +26,11 @@ import Picker from "@emoji-mart/react";
 import { RcFile } from "antd/es/upload";
 import { filesApi } from "../../api/files-api";
 import { UploadFiles } from "../index";
+import {
+  removeAttachment,
+  setAttachments,
+} from "../../redux/slices/attachments/slice";
+import socket from "../../socket/socket";
 
 const ChatInput = () => {
   (window.navigator as any).getUserMedia =
@@ -38,11 +43,11 @@ const ChatInput = () => {
   const [emojiPickerVisible, setShowEmojiPicker] = useState(false);
   const dispatch = useAppDispatch();
   const { currentDialogId } = useSelector((state: RootState) => state.dialogs);
-  const [attachments, setAttachments] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
   const [mediaRecorder, setMediaRecorder] = useState<any>(null);
   const [isLoading, setLoading] = useState(false);
-
+  const { attachments } = useSelector((state: RootState) => state.attachments);
+  const { data } = useSelector((state: RootState) => state.me);
   const toggleEmojiPicker = () => {
     setShowEmojiPicker(!emojiPickerVisible);
   };
@@ -53,6 +58,10 @@ const ChatInput = () => {
     if (el && !el.contains(e.target)) {
       setShowEmojiPicker(false);
     }
+  };
+
+  const onRemove = (file: any) => {
+    dispatch(removeAttachment(file));
   };
 
   const onSelectFiles = async (files: any) => {
@@ -68,7 +77,7 @@ const ChatInput = () => {
           status: "uploading",
         },
       ];
-      setAttachments(uploaded);
+      dispatch(setAttachments(uploaded));
       // eslint-disable-next-line no-loop-func
       await filesApi.upload(file).then(({ data }) => {
         uploaded = uploaded.map((item: any) => {
@@ -84,7 +93,7 @@ const ChatInput = () => {
         });
       });
     }
-    setAttachments(uploaded);
+    dispatch(setAttachments(uploaded));
   };
 
   useEffect(() => {
@@ -155,20 +164,17 @@ const ChatInput = () => {
       );
 
       setValue("");
-      setAttachments([]);
+      dispatch(setAttachments([]));
     }
   };
 
   const handleSendMessage = (e: any) => {
-    // socket.emit('DIALOGS:TYPING', { dialogId: currentDialogId, user });
+    socket.emit("DIALOGS:TYPING", { dialogId: currentDialogId, data });
     if (e.keyCode === 13) {
       onSendMessage();
     }
   };
 
-  const handleStartRecording = () => {
-    setIsRecording(true);
-  };
   const onHideRecording = () => {
     setIsRecording(false);
   };
@@ -238,6 +244,7 @@ const ChatInput = () => {
               accept: ".jpg,.jpeg,.png,.gif,.bmp",
               multiple: "multiple",
             }}
+            onRemove={(file: any) => onRemove(file)}
           >
             <Button type="link">
               <CameraOutlined />

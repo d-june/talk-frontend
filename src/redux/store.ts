@@ -4,6 +4,7 @@ import dialogsSlice from "./slices/dialogs/slice";
 import messagesSlice from "./slices/messages/slice";
 import meSlice from "./slices/me/slice";
 import usersSlice from "./slices/users/slice";
+import attachmentsSlice from "./slices/attachments/slice";
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     messages: messagesSlice,
     me: meSlice,
     users: usersSlice,
+    attachments: attachmentsSlice,
   },
 });
 

@@ -1,6 +1,6 @@
 import { Empty, Message } from "../index";
 import { Modal, Spin } from "antd";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/store";
 import socket from "../../socket/socket";
@@ -24,11 +24,29 @@ const Messages = () => {
   const messages = useSelector(selectMessagesData);
   const isLoading = useSelector(selectLoading);
 
+  const [isTyping, setIsTyping] = useState(false);
+  let typingTimeoutId: any = null;
+
   const messagesRef = useRef<HTMLDivElement>(null);
 
   const onNewMessage = (data: any) => {
     dispatch(addMessage({ currentDialogId, data }));
   };
+
+  const toggleIsTyping = () => {
+    setIsTyping(true);
+    clearInterval(typingTimeoutId);
+    typingTimeoutId = setTimeout(() => {
+      setIsTyping(false);
+    }, 3000);
+  };
+
+  useEffect(() => {
+    socket.on("DIALOGS:TYPING", toggleIsTyping);
+    return () => {
+      socket.removeListener("DIALOGS:TYPING", toggleIsTyping);
+    };
+  }, []);
 
   useEffect(() => {
     currentDialogId && dispatch(getMessageById(currentDialogId));
@@ -68,6 +86,15 @@ const Messages = () => {
       ) : (
         <Empty description="Диалога пока нет" />
       )}
+      <div>
+        {isTyping && (
+          <Message
+            _id={"0"}
+            user={{ fullName: "Amo", _id: "51561" }}
+            isTyping={isTyping}
+          />
+        )}
+      </div>
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
-const Status = () => {
+const Status: FC = () => {
   const { currentDialogId, items } = useSelector(
     (state: RootState) => state.dialogs
   );

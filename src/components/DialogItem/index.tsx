@@ -10,6 +10,7 @@ import { RootState, useAppDispatch } from "../../redux/store";
 import { useSelector } from "react-redux";
 import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
 import { Link, useParams } from "react-router-dom";
+import socket from "../../socket/socket";
 
 type DialogItemProps = {
   _id: string;
@@ -59,7 +60,19 @@ const DialogItem: FC<DialogItemProps> = ({
   };
 
   const onChangeCurrentDialogId = () => {
+    socket.emit("DIALOGS:JOIN", _id);
     dispatch(setCurrentDialogId(_id));
+  };
+
+  const renderLastMessage = (message: any, userId: string | undefined) => {
+    let text = "";
+    if (!message.text && message.attachments.length) {
+      text = "прикрепленный файл";
+    } else {
+      text = message.text;
+    }
+
+    return `${message.user._id === userId ? "Вы: " : ""}${text}`;
   };
 
   return (
@@ -82,7 +95,7 @@ const DialogItem: FC<DialogItemProps> = ({
             <span>{getMessageTime(lastMessage.createdAt)}</span>
           </div>
           <div className={styles.dialogItemInfoBottom}>
-            <p>{isMe ? `Вы: ${lastMessage?.text}` : lastMessage?.text}</p>
+            <p>{renderLastMessage(lastMessage, data?._id)}</p>
             <div className={styles.messageIconReaded}>
               {isMe && <IconReaded isMe={true} isReaded={false} />}
             </div>

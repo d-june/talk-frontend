@@ -2,12 +2,12 @@ import { Form, Input, notification } from "antd";
 import { LockOutlined, FrownOutlined, UserOutlined } from "@ant-design/icons";
 import { AuthBlock, Button } from "../index";
 import { Link, Navigate } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 // @ts-ignore
 import styles from "./LoginForm.module.scss";
 import { RootState, useAppDispatch } from "../../redux/store";
-import { getMe, login } from "../../redux/slices/me/asyncActions";
+import { login } from "../../redux/slices/me/asyncActions";
 import { useSelector } from "react-redux";
 
 const LoginForm = () => {

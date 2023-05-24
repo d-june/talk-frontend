@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 // @ts-ignore
 import styles from "./Message.module.scss";
 import classNames from "classnames";
@@ -12,9 +12,10 @@ import { useSelector } from "react-redux";
 import { RootState, useAppDispatch } from "../../redux/store";
 import { removeMessage } from "../../redux/slices/messages/asyncActions";
 import { Modal } from "antd";
+import socket from "../../socket/socket";
 
 type MessagePropsType = {
-  _id: string;
+  _id?: string;
   isTyping?: boolean;
   isReaded?: boolean;
   attachments?: Array<{
@@ -29,10 +30,10 @@ const Message: FC<MessageType & MessagePropsType> = ({
   text,
   user,
   createdAt,
-  isTyping,
   isReaded,
   attachments,
   audio,
+  isTyping,
 }) => {
   const [previewImage, setPreviewImage] = useState("");
   const { data } = useSelector((state: RootState) => state.me);
@@ -45,7 +46,9 @@ const Message: FC<MessageType & MessagePropsType> = ({
 
   const onRemoveMessage = () => {
     if (window.confirm("Вы действительно хотите удалить сообщение?")) {
-      dispatch(removeMessage(_id));
+      if (_id != null) {
+        dispatch(removeMessage(_id));
+      }
     }
   };
   const renderAttachment = (item: any) => {
@@ -82,8 +85,7 @@ const Message: FC<MessageType & MessagePropsType> = ({
         isTyping ? styles.messageIsTyping : "",
         attachments?.length === 1 && text?.length === 1
           ? styles.messageImage
-          : "",
-        isAudio(attachments) ? styles.messageAudio : ""
+          : ""
       )}
     >
       <div className={styles.messageAvatar}>
@@ -96,7 +98,7 @@ const Message: FC<MessageType & MessagePropsType> = ({
               {attachments.map((item) => renderAttachment(item))}
             </div>
           )}
-          {(text?.length > 1 || isTyping) && (
+          {((text?.length && text?.length > 1) || isTyping) && (
             <div className={styles.messageBubble}>
               {/*<Emoji emoji="smile" />*/}
               {text && (
