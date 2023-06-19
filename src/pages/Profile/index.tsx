@@ -16,11 +16,12 @@ import {
 } from "../../components";
 import { Navigate, useParams } from "react-router-dom";
 import { Col, Row } from "antd";
-import { SyncOutlined, LoadingOutlined } from "@ant-design/icons";
+import { SyncOutlined, LoadingOutlined, EditOutlined } from "@ant-design/icons";
 import ProfileStatus from "../../components/ProfileStatus";
 import ProfileInfo from "./ProfileInfo";
 import {
   getProfile,
+  updateAvatar,
   updateProfile,
 } from "../../redux/slices/profile/asyncActions";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
@@ -47,6 +48,7 @@ const Profile: FC = () => {
     profile.fullName,
     profile.hobbies,
     profile.birthday,
+    profile.avatar,
   ]);
 
   const onEditMode = () => {
@@ -55,6 +57,12 @@ const Profile: FC = () => {
   const onSubmit = (values: UpdateProfileType) => {
     dispatch(updateProfile(values));
     setEditMode(false);
+  };
+
+  const editUserAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files !== null) {
+      dispatch(updateAvatar(e.target.files[0]));
+    }
   };
 
   if (!isAuth) {
@@ -72,8 +80,16 @@ const Profile: FC = () => {
             <div className={styles.profileAbout}>
               <div className={styles.profileLeft}>
                 <div className={styles.profileImage}>
-                  <img src={defaultAvatar} alt="avatar" />
+                  <img src={profile.avatar || defaultAvatar} alt="avatar" />
+
+                  <div className={styles.editAvatarButton}>
+                    <label>
+                      <EditOutlined />
+                      <input type="file" onChange={editUserAvatar} />
+                    </label>
+                  </div>
                 </div>
+
                 <ProfileStatus userId={String(id)} />
               </div>
 

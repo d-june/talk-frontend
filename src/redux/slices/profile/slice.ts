@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getProfile,
   getUserStatus,
+  updateAvatar,
   updateProfile,
   updateUserStatus,
 } from "./asyncActions";
@@ -11,6 +12,7 @@ const initialState = {
     userId: "" as string,
     fullName: "" as string,
     birthday: 0 as Date | number,
+    avatar: "" as string,
     city: "" as string,
     about: "" as string,
     hobbies: "" as string,
@@ -49,6 +51,9 @@ const profileSlice = createSlice({
       state.profile.city = action.payload.city;
       state.profile.about = action.payload.about;
       state.profile.hobbies = action.payload.hobbies;
+    });
+    builder.addCase(updateAvatar.fulfilled, (state, action) => {
+      state.profile.avatar = action.payload.avatar;
     });
   },
 });

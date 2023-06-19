@@ -29,4 +29,15 @@ export const profileApi = {
       })
       .then((res) => res.data);
   },
+  updateAvatar(file: File) {
+    const formData = new FormData();
+    formData.append("file", file);
+    return instance
+      .post("/user/avatar", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => res.data);
+  },
 };

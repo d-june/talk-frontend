@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { profileApi } from "../../../api/profile-api";
 import { UpdateProfileType } from "./types";
+import avatar from "../../../components/Avatar";
 
 export const getUserStatus = createAsyncThunk(
   "getUserStatus",
@@ -36,6 +37,14 @@ export const updateProfile = createAsyncThunk(
       about,
       hobbies
     );
+    return data;
+  }
+);
+
+export const updateAvatar = createAsyncThunk(
+  "profile/updateAvatar",
+  async (avatar: File) => {
+    const data = await profileApi.updateAvatar(avatar);
     return data;
   }
 );
