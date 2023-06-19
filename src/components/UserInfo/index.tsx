@@ -46,6 +46,11 @@ const UserInfo: FC = () => {
                   </Link>
                 </li>
                 <li>
+                  <Link to="/users">
+                    <TeamOutlined /> Пользователи
+                  </Link>
+                </li>
+                <li>
                   <Link to="/friends">
                     <TeamOutlined /> Друзья
                   </Link>

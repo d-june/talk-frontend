@@ -23,3 +23,4 @@ export { default as ProfileStatus } from "./ProfileStatus";
 export { default as Posts } from "./Posts";
 export { default as PostsContent } from "./Posts/PostsContent";
 export { default as PostsForm } from "./Posts/PostsForm";
+export { default as UsersList } from "./UsersList";
