@@ -4,12 +4,12 @@ import { orderBy } from "lodash";
 
 import { DialogItem } from "../index";
 
-// @ts-ignore
+import { DialogType } from "../../redux/slices/dialogs/types";
+
 import styles from "./Dialogs.module.scss";
-import { dialogType } from "../../redux/slices/dialogs/types";
 
 type DialogsProps = {
-  items: Array<dialogType>;
+  items: Array<DialogType>;
 };
 
 const Dialogs: FC<DialogsProps> = ({ items }) => {

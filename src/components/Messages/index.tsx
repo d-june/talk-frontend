@@ -1,21 +1,23 @@
-import { Empty, Message } from "../index";
-import { Modal, Spin } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../redux/store";
+import { RootState } from "../../redux/store";
+
 import socket from "../../socket/socket";
+
+import { Empty, Message } from "../index";
 import { getMessageById } from "../../redux/slices/messages/asyncActions";
 import {
   selectLoading,
   selectMessagesData,
 } from "../../redux/slices/messages/selectors";
-// @ts-ignore
+
+import { Spin } from "antd";
+
 import styles from "./Messages.module.scss";
 import classNames from "classnames";
 
-// @ts-ignore
-import emptyIcon from "../../assets/img/empty.svg";
 import { addMessage } from "../../redux/slices/messages/slice";
+import { useAppDispatch } from "../../hooks/hooks";
 const Messages = () => {
   const dispatch = useAppDispatch();
   const currentDialogId = useSelector(

@@ -1,17 +1,11 @@
 @import "../../styles/variables";
 
-.messageBubble {
-
-}
-
 .chatInput {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   padding: 0 40px;
-
-
 }
 
 .chatInputMessage {
@@ -75,7 +69,7 @@
 
 .chatInputEmojiPicker {
   position: absolute;
-  bottom: 210px;
+  bottom: 100px;
   z-index: 1;
 }
 

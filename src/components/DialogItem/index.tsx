@@ -1,41 +1,24 @@
-// @ts-ignore
-import styles from "./DialogItem.module.scss";
-import { Avatar, IconReaded } from "../index";
-import classNames from "classnames";
 import { FC } from "react";
-import { isToday, format } from "date-fns";
-import { setCurrentDialogId } from "../../redux/slices/dialogs/slice";
-import { RootState, useAppDispatch } from "../../redux/store";
 import { useSelector } from "react-redux";
-import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
+import { RootState } from "../../redux/store";
 import { Link } from "react-router-dom";
-import socket from "../../socket/socket";
-import { getPartner } from "../../utils/helpers/getPartner";
 
-type DialogItemProps = {
-  _id: string;
-  text: string;
-  isReaded: boolean;
-  createdAt: string;
-  unreaded: number;
-  author: {
-    _id: string;
-    fullName: string;
-    avatar: string | null;
-  };
-  partner: {
-    _id: string;
-    fullName: string;
-    avatar?: string | null;
-    isOnline?: boolean;
-  };
-  dialog: string;
-  lastMessage: {
-    text: string;
-    createdAt: string;
-  };
-};
-const DialogItem: FC<DialogItemProps> = ({
+import socket from "../../socket/socket";
+import classNames from "classnames";
+import { isToday, format } from "date-fns";
+
+import { Avatar, IconReaded } from "../index";
+
+import { getPartner } from "../../utils/helpers/getPartner";
+import { setCurrentDialogId } from "../../redux/slices/dialogs/slice";
+
+import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
+
+import styles from "./DialogItem.module.scss";
+import { DialogType } from "../../redux/slices/dialogs/types";
+import { useAppDispatch } from "../../hooks/hooks";
+
+const DialogItem: FC<DialogType> = ({
   _id,
   partner,
   unreaded,

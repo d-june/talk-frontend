@@ -1,4 +1,4 @@
-export type dialogType = {
+export type DialogType = {
   _id: string;
   text: string;
   isReaded: boolean;

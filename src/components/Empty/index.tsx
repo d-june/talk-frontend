@@ -1,9 +1,7 @@
-// @ts-ignore
-import styles from "./Empty.module.scss";
-// @ts-ignore
-import emptyIcon from "../../assets/img/empty.svg";
 import { FC } from "react";
 import classNames from "classnames";
+import emptyIcon from "../../assets/img/empty.svg";
+import styles from "./Empty.module.scss";
 
 type EmptyType = {
   description: string;

@@ -1,16 +1,18 @@
-import classNames from "classnames";
-// @ts-ignore
-import styles from "./Status.module.scss";
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+
 import { getPartnerInDialog } from "../../utils/helpers/getPartner";
+
+import classNames from "classnames";
+import styles from "./Status.module.scss";
 
 const Status: FC = () => {
   const { currentDialogId, items } = useSelector(
     (state: RootState) => state.dialogs
   );
   const { data } = useSelector((state: RootState) => state.me);
+
   let partner = {} as any;
   partner = getPartnerInDialog(currentDialogId, items, data);
 

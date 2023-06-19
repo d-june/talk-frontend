@@ -1,4 +1,3 @@
-import { dialogType } from "./types";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { dialogsAPI } from "../../../api/dialogs-api";
 

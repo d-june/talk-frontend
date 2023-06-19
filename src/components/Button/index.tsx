@@ -24,6 +24,7 @@ type ButtonProps = {
   htmlType?: ButtonHTMLType;
   size: SizeType;
   onClick?: any;
+  onSubmit?: any;
   disabled?: boolean;
   loading?: boolean;
 };

@@ -1,17 +1,17 @@
+import { useSelector } from "react-redux";
+import { FC, useEffect } from "react";
+
+import { useAppDispatch } from "../../hooks/hooks";
+
 import { ChatInput, Messages, Sidebar, Status } from "../../components";
 
-import { EllipsisOutlined } from "@ant-design/icons";
-
-// @ts-ignore
-import styles from "./Home.module.scss";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../redux/store";
-import { useEffect } from "react";
 import { getMe } from "../../redux/slices/me/asyncActions";
 import { getDialogs } from "../../redux/slices/dialogs/asyncActions";
 import { selectIsAuth, selectToken } from "../../redux/slices/me/selectors";
 
-const Home = () => {
+import styles from "./Home.module.scss";
+
+const Home: FC = () => {
   const isAuth = useSelector(selectIsAuth);
   const token = useSelector(selectToken);
 

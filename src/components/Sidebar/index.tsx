@@ -1,22 +1,18 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../redux/store";
+import { RootState } from "../../redux/store";
+
+import { useAppDispatch } from "../../hooks/hooks";
 
 import socket from "../../socket/socket";
-import { CreateDialogForm, Dialogs, Empty } from "../index";
+import { CreateDialogForm, Dialogs, Empty, UserInfo } from "../index";
 import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
 
-import {
-  createDialog,
-  getDialogs,
-} from "../../redux/slices/dialogs/asyncActions";
-import { findUsers } from "../../redux/slices/users/asyncActions";
+import { getDialogs } from "../../redux/slices/dialogs/asyncActions";
 
-import { FormOutlined, TeamOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Modal, Select } from "antd";
-import TextArea from "antd/es/input/TextArea";
+import { FormOutlined } from "@ant-design/icons";
+import { Input } from "antd";
 
-// @ts-ignore
 import styles from "./Sidebar.module.scss";
 
 const Sidebar = () => {
@@ -65,8 +61,7 @@ const Sidebar = () => {
     <div className={styles.sidebar}>
       <div className={styles.sidebarHeader}>
         <div className={styles.sidebarDialogsList}>
-          <TeamOutlined />
-          <span>Список диалогов</span>
+          <UserInfo />
         </div>
         <button onClick={onShow}>
           <FormOutlined />

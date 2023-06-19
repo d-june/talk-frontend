@@ -1,10 +1,10 @@
 import { instance } from "./api";
-import { dialogType } from "../redux/slices/dialogs/types";
+import { DialogType } from "../redux/slices/dialogs/types";
 
 export const dialogsAPI = {
   getAllDialogs(token: string) {
     return instance
-      .get<dialogType[]>("/dialogs/" + token)
+      .get<DialogType[]>("/dialogs/" + token)
       .then((res) => res.data);
   },
   createDialog(partnerId: string, text: string) {

@@ -1,0 +1,62 @@
+@import "../../styles/variables";
+
+.status {
+  width: 100%;
+  margin-top: 20px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.statusEdit {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  input {
+    width: 100%;
+    height: 40px;
+    padding: 10px 20px;
+    transition: all 0.3s ease-in-out;
+    &:active, &:focus, &:hover {
+      border: 1px solid $purple;
+      box-shadow: none;
+    }
+  }
+
+}
+
+
+.editButton {
+  opacity: 0.4;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    color: $blue;
+    opacity: 1;
+  }
+}
+
+
+.editButtonStatus:hover {
+  opacity: 0.6;
+}
+
+
+.statusButton {
+  color: white;
+  height: 40px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  background: rgb(51,11,150);
+  background: linear-gradient(52deg, rgba(51,11,150,1) 0%, rgba(145,20,207,1) 50%, rgba(168,17,203,1) 100%);
+  transition: opacity 0.3s ease-in-out;
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+:global(.ant-form-item) {
+  margin-bottom: 0px;
+}

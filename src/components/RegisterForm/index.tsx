@@ -11,9 +11,10 @@ import React from "react";
 
 // @ts-ignore
 import styles from "./RegisterForm.module.scss";
-import { RootState, useAppDispatch } from "../../redux/store";
+import { RootState } from "../../redux/store";
 import { register } from "../../redux/slices/me/asyncActions";
 import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../hooks/hooks";
 
 const RegisterForm = () => {
   const [form] = Form.useForm();

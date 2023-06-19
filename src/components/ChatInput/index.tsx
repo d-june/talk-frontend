@@ -1,36 +1,27 @@
-import { Button, Input, Upload, UploadFile, UploadProps } from "antd";
+import { Button } from "antd";
 import {
-  SmileOutlined,
-  CameraOutlined,
   AudioOutlined,
-  SendOutlined,
   CloseCircleOutlined,
   LoadingOutlined,
+  SendOutlined,
+  SmileOutlined,
 } from "@ant-design/icons";
 
-import { Data } from "emoji-mart";
-
-// @ts-ignore
-import { UploadField } from "@navjobs/upload";
-
-// @ts-ignore
 import styles from "./ChatInput.module.scss";
-import { FC, HTMLInputTypeAttribute, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { sendMessage } from "../../redux/slices/messages/asyncActions";
-import { RootState, useAppDispatch } from "../../redux/store";
+import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 
 import TextArea from "antd/es/input/TextArea";
-import data from "@emoji-mart/data";
-import Picker from "@emoji-mart/react";
-import { RcFile } from "antd/es/upload";
+// @ts-ignore
+import EmojiPicker from "emoji-picker-react";
+
 import { filesApi } from "../../api/files-api";
-import { UploadFiles } from "../index";
-import {
-  removeAttachment,
-  setAttachments,
-} from "../../redux/slices/attachments/slice";
+import { ChatUpload, UploadFiles } from "../index";
+import { setAttachments } from "../../redux/slices/attachments/slice";
 import socket from "../../socket/socket";
+import { useAppDispatch } from "../../hooks/hooks";
 
 const ChatInput = () => {
   (window.navigator as any).getUserMedia =
@@ -52,48 +43,10 @@ const ChatInput = () => {
     setShowEmojiPicker(!emojiPickerVisible);
   };
 
-  const [selectedEmoji, setSelectedEmoji] = useState("");
-
   const handleOutsideClick = (el: any, e: any) => {
     if (el && !el.contains(e.target)) {
       setShowEmojiPicker(false);
     }
-  };
-
-  const onRemove = (file: any) => {
-    dispatch(removeAttachment(file));
-  };
-
-  const onSelectFiles = async (files: any) => {
-    let uploaded: any = [];
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
-      const uid = Math.round(Math.random() * 1000);
-      uploaded = [
-        ...uploaded,
-        {
-          uid,
-          name: file.name,
-          status: "uploading",
-        },
-      ];
-      dispatch(setAttachments(uploaded));
-      // eslint-disable-next-line no-loop-func
-      await filesApi.upload(file).then(({ data }) => {
-        uploaded = uploaded.map((item: any) => {
-          if (item.uid === uid) {
-            return {
-              status: "done",
-              uid: data.file._id,
-              name: data.file.filename,
-              url: data.file.url,
-            };
-          }
-          return item;
-        });
-      });
-    }
-    dispatch(setAttachments(uploaded));
   };
 
   useEffect(() => {
@@ -178,19 +131,9 @@ const ChatInput = () => {
   const onHideRecording = () => {
     setIsRecording(false);
   };
-  const addEmoji = (emoji: any) => {
-    // const sym = e.unified.split("_");
-    // const codeArray: any = [];
-    // // sym.forEach((el: any) => codeArray.push("0x" + el));
-    // let emoji = "";
-    // // setValue((value + " " + id).trim());
-    // console.log(
-    //   reactStringReplace(e.id, /:(.+?):/g, (match, i) => (emoji = match))
-    // );
-    //
-    // reactStringReplace(e.id, /:(.+?):/g, (match, i) => (emoji = match));
-    console.log(emoji);
-    setValue(value + emoji.native);
+  const addEmoji = (emojiData: any) => {
+    setValue(value + " " + emojiData.emoji);
+    setShowEmojiPicker(false);
   };
 
   if (!currentDialogId) {
@@ -202,15 +145,7 @@ const ChatInput = () => {
       <div className={styles.chatInputMessage}>
         {emojiPickerVisible && (
           <div className={styles.chatInputEmojiPicker}>
-            <Picker
-              set="apple"
-              sheetSize={64}
-              theme="dark"
-              showPreview={false}
-              showSkinTones={false}
-              data={data}
-              onEmojiSelect={addEmoji}
-            />
+            <EmojiPicker onEmojiClick={addEmoji} />
           </div>
         )}
         <Button type="link">
@@ -235,22 +170,7 @@ const ChatInput = () => {
         )}
 
         <div className={styles.chatInputActions}>
-          <UploadField
-            onFiles={onSelectFiles}
-            containerProps={{
-              className: "chat-input__actions-upload-btn",
-            }}
-            uploadProps={{
-              accept: ".jpg,.jpeg,.png,.gif,.bmp",
-              multiple: "multiple",
-            }}
-            onRemove={(file: any) => onRemove(file)}
-          >
-            <Button type="link">
-              <CameraOutlined />
-              <UploadField></UploadField>
-            </Button>
-          </UploadField>
+          <ChatUpload />
           {isLoading ? (
             <Button>
               <LoadingOutlined />

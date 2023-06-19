@@ -1,18 +1,21 @@
-import { FC, useEffect, useState } from "react";
-// @ts-ignore
-import styles from "./Message.module.scss";
-import classNames from "classnames";
+import { FC, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+
 import Time from "../Time";
+import { Avatar, MessageAudio } from "../index";
+
+import { removeMessage } from "../../redux/slices/messages/asyncActions";
+
+import { MessageType } from "../../redux/slices/messages/types";
+
+import { Modal } from "antd";
 import IconReaded from "../IconReaded";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-import reactStringReplace from "react-string-replace";
-import { Avatar, MessageAudio } from "../index";
-import { MessageType } from "../../redux/slices/messages/types";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../redux/store";
-import { removeMessage } from "../../redux/slices/messages/asyncActions";
-import { Modal } from "antd";
-import socket from "../../socket/socket";
+
+import classNames from "classnames";
+import styles from "./Message.module.scss";
+import { useAppDispatch } from "../../hooks/hooks";
 
 type MessagePropsType = {
   _id?: string;
@@ -70,13 +73,6 @@ const Message: FC<MessageType & MessagePropsType> = ({
     }
   };
 
-  const isAudio = (attachments: any) => {
-    if (attachments?.length) {
-      const file = attachments[0];
-      return file.ext === "webm";
-    }
-  };
-
   return (
     <div
       className={classNames(
@@ -100,15 +96,7 @@ const Message: FC<MessageType & MessagePropsType> = ({
           )}
           {((text?.length && text?.length > 1) || isTyping) && (
             <div className={styles.messageBubble}>
-              {/*<Emoji emoji="smile" />*/}
-              {text && (
-                <p className={styles.messageText}>
-                  {text}
-                  {/*{reactStringReplace(text, /:(.+?):/g, (match, i) => (*/}
-                  {/*  <Emoji unified={match} emojiStyle={EmojiStyle.APPLE} />*/}
-                  {/*))}*/}
-                </p>
-              )}
+              {text && <p className={styles.messageText}>{text}</p>}
               {isTyping && (
                 <div className={styles.messageTyping}>
                   <span></span>

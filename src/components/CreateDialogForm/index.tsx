@@ -1,14 +1,16 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { FC, useState } from "react";
+
+import { Button } from "../index";
+
 import { Form, Modal, Select } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { findUsers } from "../../redux/slices/users/asyncActions";
 import { createDialog } from "../../redux/slices/dialogs/asyncActions";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../redux/store";
-import { FC, useState } from "react";
-import { Button } from "../index";
 
-// @ts-ignore
 import styles from "./CreateDialogForm.module.scss";
+import { useAppDispatch } from "../../hooks/hooks";
 
 type CreateDialogFormType = {
   setVisible: (value: boolean) => void;

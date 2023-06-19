@@ -1,9 +1,10 @@
 import { FC, useEffect, useRef, useState } from "react";
+
 import { PauseCircleFilled, PlayCircleFilled } from "@ant-design/icons";
+
 import { convertCurrentTime } from "../../utils";
-// @ts-ignore
+
 import styles from "./MessageAudio.module.scss";
-// @ts-ignore
 import waveSvg from "../../assets/img/wave.svg";
 
 type MessageAudioProps = {

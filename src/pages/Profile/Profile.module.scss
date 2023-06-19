@@ -1,0 +1,187 @@
+@import "../../styles/variables";
+
+.profile {
+  background-image: linear-gradient(35deg, #ffffff 0, #ffffff 25%, #f5ebff 50%, #e0d5f0 75%, #cdc2e2 100%);
+  display: grid;
+  grid-template-columns: 410px 1fr;
+  height: 100vh;
+  overflow: auto;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.2);
+  color: $grey;
+}
+
+.profileHeader {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.profileContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.profileLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.profileAbout {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+
+}
+
+.profileContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 400px;
+}
+
+.profileImage {
+  border-radius: 50%;
+  overflow: hidden;
+  width: 350px;
+  height: 350px;
+  box-shadow: 0px 0px 15px $boxShadow;
+  margin-right: 30px;
+
+}
+
+.profileImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photoEdit {
+  cursor: pointer;
+  transition: all 0.3s ease-in-out 0s;
+  background: linear-gradient(80deg, rgba(150,150,220,1) 0%, rgba(168,17,203,1) 99%  );
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.photoEdit:hover {
+  background: $lightBlue;
+  color: $white;
+  opacity: 0.9;
+}
+
+.photoEditInput {
+  display: none;
+}
+
+.row {
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.profileInfoContainer {
+  line-height: 2em;
+  color: $grey;
+}
+
+.profileInfoName {
+  font-weight: bold;
+  font-size: 30px;
+  margin-bottom: 10px;
+  color: $dark;
+}
+
+.editButton {
+  font-size: 20px;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.profileInfoList {
+  font-weight: bold;
+  font-size: 16px;
+  li {
+    margin-bottom: 10px;
+    line-height: 1.5em;
+  }
+  span {
+    font-weight: 400;
+  }
+}
+
+
+.profileIcon {
+  font-size: 20px;
+}
+
+.profileInfoContainer {
+  input {
+    width: 100%;
+    padding: 10px 20px;
+    height: 40px;
+    transition: all 0.3s ease-in-out;
+    &:active, &:focus, &:hover {
+      border: 1px solid $purple;
+      box-shadow: none;
+    }
+  }
+  textarea {
+    &:active, &:focus, &:hover {
+      border: 1px solid $purple;
+      box-shadow: none;
+    }
+  }
+  button {
+    margin-top: 20px;
+  }
+}
+
+:global(.ant-picker) {
+  transition: all 0.3s ease-in-out;
+  &:active, &:focus, &:hover {
+    border: 1px solid $purple;
+    box-shadow: none;
+  }
+  input {
+    &:active, &:focus, &:hover {
+      border: none;
+      box-shadow: none;
+    }
+  }
+}
+
+:global(.ant-picker-cell-selected > .ant-picker-cell-inner) {
+    background: $purple !important;
+}
+
+:global(.ant-picker-today-btn) {
+  color: $purple !important;
+}
+
+:global(.ant-picker-focused) {
+  border: 1px solid $purple;
+}
+
+.profileLoading {
+  svg {
+    font-size: 100px;
+    color: $grey;
+  }
+}
+

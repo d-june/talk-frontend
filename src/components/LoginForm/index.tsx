@@ -6,9 +6,10 @@ import React, { useEffect } from "react";
 
 // @ts-ignore
 import styles from "./LoginForm.module.scss";
-import { RootState, useAppDispatch } from "../../redux/store";
+import { RootState } from "../../redux/store";
 import { login } from "../../redux/slices/me/asyncActions";
 import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../hooks/hooks";
 
 const LoginForm = () => {
   const [form] = Form.useForm();
@@ -55,6 +56,7 @@ const LoginForm = () => {
               autoComplete="off"
             >
               <Form.Item
+                className={styles.item}
                 name="email"
                 hasFeedback
                 rules={[
@@ -86,6 +88,7 @@ const LoginForm = () => {
                 />
               </Form.Item>
               <Form.Item
+                className={styles.item}
                 name="password"
                 rules={[
                   {

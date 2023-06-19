@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { dialogType } from "./types";
+import { DialogType } from "./types";
 import { getDialogs } from "./asyncActions";
 
 const initialState = {
-  items: [] as Array<dialogType>,
+  items: [] as Array<DialogType>,
   currentDialogId: null as string | null,
 };
 
