@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { Component, FC, ReactElement } from "react";
 
 import classNames from "classnames";
 
@@ -11,7 +11,7 @@ import { ButtonHTMLType } from "antd/es/button";
 
 type ButtonProps = {
   className?: string;
-  children: string;
+  children: string | ReactElement;
 
   type?:
     | "link"

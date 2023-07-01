@@ -5,7 +5,7 @@ import { PostsContent, PostsForm } from "../index";
 const Posts = () => {
   return (
     <>
-      <Row className={styles.postsWrapper}>
+      <div className={styles.postsWrapper}>
         <h2 className={styles.postsTitle}>Посты</h2>
         <Col span={24}>
           <PostsContent />
@@ -13,7 +13,7 @@ const Posts = () => {
         <Col span={24}>
           <PostsForm />
         </Col>
-      </Row>
+      </div>
     </>
   );
 };

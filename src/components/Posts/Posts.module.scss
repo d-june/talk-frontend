@@ -2,6 +2,7 @@
 
 .postsWrapper {
     padding: 40px;
+    width: 100%;
 }
 
 .postsContainer {
@@ -14,8 +15,6 @@
 }
 
 .postContainer {
-    //background: rgb(51,11,150);
-    //background: linear-gradient(52deg, rgba(51,11,150,1) 0%, rgba(145,20,207,1) 50%, rgba(168,17,203,1) 100%);
     box-shadow: 0 0 10px #DCDCDC;
     background: white;
     color: $grey;
@@ -31,7 +30,7 @@
     display: flex;
     img {
         overflow: hidden;
-        width: 100px;
+        width: 150px;
         height: 100%;
         object-fit: cover;
         align-self: flex-start;
@@ -55,15 +54,40 @@
     font-size: 14px;
 }
 
-.postLikes {
-    width: 100%;
+.postLikes, .deletePost {
     display: flex;
     gap: 5px;
     justify-content: flex-end;
-    margin-top: 10px;
     position: absolute;
     bottom: 10px;
     right: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+
+    &:active {
+        transform: translateY(10px);
+    }
+}
+
+.deletePost {
+    color: $red;
+    top: 15px;
+    align-items: flex-start;
+}
+
+.postLikes {
+    color: $boxShadow;
+    svg {
+        font-size: 16px;
+    }
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.postLikesHeart {
+    color: $green;
 }
 
 .postsForm {

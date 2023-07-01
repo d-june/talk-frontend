@@ -1,5 +1,5 @@
 export type ProfileType = {
-  userId?: number;
+  userId?: string;
   fullName: string;
   birthday: Date | number;
   city: string;

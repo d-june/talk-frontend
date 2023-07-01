@@ -76,7 +76,7 @@ const Profile: FC = () => {
         {isLoading ? (
           <SyncOutlined spin className={styles.profileLoading} />
         ) : (
-          <div>
+          <>
             <div className={styles.profileAbout}>
               <div className={styles.profileLeft}>
                 <div className={styles.profileImage}>
@@ -109,7 +109,7 @@ const Profile: FC = () => {
               </div>
             </div>
             <Posts />
-          </div>
+          </>
         )}
       </div>
     </section>
