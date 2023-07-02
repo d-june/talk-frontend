@@ -14,12 +14,19 @@ import CatImage from "../../assets/img/cat.jpg";
 
 import styles from "./UserInfo.module.scss";
 import { Link } from "react-router-dom";
+import { useAppDispatch } from "../../hooks/hooks";
+import { logout } from "../../redux/slices/me/slice";
 
 const UserInfo: FC = () => {
   const userData = useSelector(selectMeData);
   const isAuth = useSelector(selectIsAuth);
+  const dispatch = useAppDispatch();
 
   const [menuVisible, setMenuVisible] = useState(false);
+
+  const logOut = () => {
+    dispatch(logout());
+  };
 
   return (
     <div>
@@ -60,7 +67,7 @@ const UserInfo: FC = () => {
                     <WechatOutlined /> Чат
                   </Link>
                 </li>
-                <li className={styles.userLogOut}>
+                <li className={styles.userLogOut} onClick={logOut}>
                   <button>
                     <LogoutOutlined /> Выйти
                   </button>
@@ -70,7 +77,9 @@ const UserInfo: FC = () => {
           )}
         </div>
       ) : (
-        <Button size="small">Войти</Button>
+        <Button size="small">
+          <Link to="/login">Войти </Link>
+        </Button>
       )}
     </div>
   );

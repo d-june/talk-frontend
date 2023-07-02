@@ -60,7 +60,7 @@ const DialogItem: FC<DialogType> = ({
   partner = getPartner(items, data, author, partner);
 
   return (
-    <Link to={`${_id}`}>
+    <Link to={`/dialogs/${_id}`}>
       <div
         className={classNames(
           styles.dialogItem,

@@ -25,7 +25,12 @@ const initialState: MeSliceType = {
 const meSlice = createSlice({
   name: "me",
   initialState,
-  reducers: {},
+  reducers: {
+    logout(state) {
+      state.isAuth = false;
+      localStorage.removeItem("token");
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(login.rejected, (state, action) => {
       state.status = "error";
@@ -53,5 +58,7 @@ const meSlice = createSlice({
     });
   },
 });
+
+export const { logout } = meSlice.actions;
 
 export default meSlice.reducer;

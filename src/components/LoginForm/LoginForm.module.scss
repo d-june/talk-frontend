@@ -4,8 +4,6 @@
   margin-bottom: 30px;
 }
 
-
-
 .registerButton {
   color: $blue;
   opacity: 0.8;
@@ -19,18 +17,20 @@
 }
 
 .item{
-  margin-bottom: 10px;
+
 }
 
 :global(.ant-input-affix-wrapper) {
-  &::before {
-    border: none;
-    transition: all 0.3s ease-in-out;
-    &:active, &:focus, &:hover {
-      border: 1px solid $purple;
-      box-shadow: none;
-    }
+  border: 1px solid $boxShadow !important;
+
+  transition: all 0.3s ease-in-out;
+  &:active, &:focus, &:hover {
+    border: 1px solid $purple !important;
   }
+
 
 }
 
+:global(.ant-form-item-control) {
+  margin-bottom: 10px;
+}

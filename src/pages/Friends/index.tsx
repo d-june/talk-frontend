@@ -1,6 +1,6 @@
 import { FC } from "react";
 import styles from "../Home/Home.module.scss";
-import { Sidebar, UsersList } from "../../components";
+import { Sidebar } from "../../components";
 
 const Friends: FC = () => {
   return (
