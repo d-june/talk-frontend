@@ -23,7 +23,9 @@ function App() {
         <Route path="/login" element={<Auth />} />
         <Route path="/register" element={<Auth />} />
         <Route path="/register/verify" element={<CheckEmailInfo />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:id" element={<Profile />} />
+        {/*<Route path="/profile" element={<Profile />} />*/}
+
         <Route path="/users" element={<Users />} />
         <Route path="/friends" element={<Friends />} />
       </Routes>

@@ -5,6 +5,7 @@ import { getAllUsers } from "../../redux/slices/users/asyncActions";
 import { format, isToday } from "date-fns";
 import { Avatar, Button } from "../index";
 import styles from "./UsersList.module.scss";
+import { Link } from "react-router-dom";
 
 const UsersList = () => {
   const { users } = useAppSelector((state: RootState) => state.users);
@@ -28,14 +29,16 @@ const UsersList = () => {
       {users.map((user) => {
         return (
           <div className={styles.userWrapper}>
-            <div className={styles.userAvatar}>
-              <Avatar user={user} />
-            </div>
-            <div className={styles.userName}>{user.fullName}</div>
+            <Link to={"/profile/" + user._id} className={styles.userAbout}>
+              <div className={styles.userAvatar}>
+                <Avatar user={user} />
+              </div>
+              <div className={styles.userName}>{user.fullName}</div>
 
-            <div className={styles.userLastSeen}>
-              Был(а) в сети: {getMessageTime(user.lastSeen)}
-            </div>
+              <div className={styles.userLastSeen}>
+                Был(а) в сети: {getMessageTime(user.lastSeen)}
+              </div>
+            </Link>
             <div className={styles.userButtons}>
               <Button size="small">Подписаться</Button>
               <Button size="small">Отписаться</Button>

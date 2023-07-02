@@ -41,7 +41,7 @@ const UserInfo: FC = () => {
             <div className={styles.userMenu}>
               <ul>
                 <li>
-                  <Link to="/profile">
+                  <Link to={`/profile/${userData?._id}`}>
                     <UserOutlined /> Профиль
                   </Link>
                 </li>

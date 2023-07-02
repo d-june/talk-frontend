@@ -38,10 +38,13 @@ const Profile: FC = () => {
   const dispatch = useAppDispatch();
   const [editMode, setEditMode] = useState(false);
 
+  const { data } = useAppSelector((state: RootState) => state.me);
+
   const { id } = useParams();
+  const isMe = data?._id === id;
 
   useEffect(() => {
-    dispatch(getProfile("644bfdeabab5a5f1c7416c4f"));
+    dispatch(getProfile(String(id)));
   }, [
     profile.about,
     profile.city,
@@ -82,15 +85,17 @@ const Profile: FC = () => {
                 <div className={styles.profileImage}>
                   <img src={profile.avatar || defaultAvatar} alt="avatar" />
 
-                  <div className={styles.editAvatarButton}>
-                    <label>
-                      <EditOutlined />
-                      <input type="file" onChange={editUserAvatar} />
-                    </label>
-                  </div>
+                  {isMe && (
+                    <div className={styles.editAvatarButton}>
+                      <label>
+                        <EditOutlined />
+                        <input type="file" onChange={editUserAvatar} />
+                      </label>
+                    </div>
+                  )}
                 </div>
 
-                <ProfileStatus userId={String(id)} />
+                <ProfileStatus userId={String(id)} isMe={isMe} />
               </div>
 
               <div className={styles.profileContent}>
@@ -104,11 +109,12 @@ const Profile: FC = () => {
                     city={profile.city}
                     hobbies={profile.hobbies}
                     onEditMode={onEditMode}
+                    isMe={isMe}
                   />
                 )}
               </div>
             </div>
-            <Posts />
+            <Posts isMe={isMe} />
           </>
         )}
       </div>

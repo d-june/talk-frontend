@@ -19,4 +19,5 @@ export type UpdateProfileType = {
   city: string;
   about: string;
   hobbies: string;
+  isMe: boolean;
 };

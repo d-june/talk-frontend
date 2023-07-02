@@ -2,17 +2,23 @@ import { Col, Row } from "antd";
 
 import styles from "./Posts.module.scss";
 import { PostsContent, PostsForm } from "../index";
-const Posts = () => {
+import { FC } from "react";
+
+type PropsType = {
+  isMe: boolean;
+};
+const Posts: FC<PropsType> = ({ isMe }) => {
   return (
     <>
       <div className={styles.postsWrapper}>
-        <h2 className={styles.postsTitle}>Посты</h2>
         <Col span={24}>
-          <PostsContent />
+          <PostsContent isMe={isMe} />
         </Col>
-        <Col span={24}>
-          <PostsForm />
-        </Col>
+        {isMe && (
+          <Col span={24}>
+            <PostsForm />
+          </Col>
+        )}
       </div>
     </>
   );

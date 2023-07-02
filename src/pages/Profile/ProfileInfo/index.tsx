@@ -3,11 +3,10 @@ import { Col, Row } from "antd";
 import React, { FC } from "react";
 import styles from "../Profile.module.scss";
 import { EditOutlined, GiftOutlined, HomeOutlined } from "@ant-design/icons";
-import {
-  ProfileType,
-  UpdateProfileType,
-} from "../../../redux/slices/profile/types";
+import { UpdateProfileType } from "../../../redux/slices/profile/types";
 import { format } from "date-fns";
+import { useAppSelector } from "../../../hooks/hooks";
+import { RootState } from "../../../redux/store";
 
 type onEditMode = {
   onEditMode: () => void;
@@ -20,6 +19,7 @@ const ProfileInfo: FC<UpdateProfileType & onEditMode> = ({
   about,
   hobbies,
   onEditMode,
+  isMe,
 }) => {
   return (
     <>
@@ -27,9 +27,11 @@ const ProfileInfo: FC<UpdateProfileType & onEditMode> = ({
         <Row>
           <Row className={styles.row} align="middle" gutter={10}>
             <Col className={styles.profileInfoName}>{fullName}</Col>
-            <Col onClick={onEditMode}>
-              <EditOutlined className={styles.editButton} />
-            </Col>
+            {isMe && (
+              <Col onClick={onEditMode}>
+                <EditOutlined className={styles.editButton} />
+              </Col>
+            )}
           </Row>
           <Row className={`${styles.profileInfoList} ${styles.row}`}>
             <ul>

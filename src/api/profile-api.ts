@@ -10,7 +10,7 @@ export const profileApi = {
       .then((res) => res.data);
   },
   getProfile(userId: string) {
-    return instance.get("/user/profile/" + userId).then((res) => res.data);
+    return instance.get("/user/" + userId).then((res) => res.data);
   },
   updateProfile(
     fullName: string,

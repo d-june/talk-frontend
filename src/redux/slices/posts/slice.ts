@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { postType } from "./types";
-import { deletePost, getPosts, sendPost, setLikesCount } from "./asyncActions";
+import { deletePost, getPosts, sendPost } from "./asyncActions";
 
 const initialState = {
   posts: [] as Array<postType>,

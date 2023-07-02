@@ -3,6 +3,7 @@ import { getMe, login, register, verifyHash } from "./asyncActions";
 import { MeData } from "./types";
 
 interface MeSliceType {
+  _id: null | string;
   data: null | MeData;
   token: string;
   isAuth: boolean;
@@ -12,6 +13,7 @@ interface MeSliceType {
 }
 
 const initialState: MeSliceType = {
+  _id: null,
   data: null,
   token: window.localStorage.token,
   isAuth: !!window.localStorage.token,

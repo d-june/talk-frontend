@@ -12,8 +12,9 @@ import {
 
 type PropsType = {
   userId: string;
+  isMe: boolean;
 };
-const ProfileStatus: FC<PropsType> = ({ userId }) => {
+const ProfileStatus: FC<PropsType> = ({ userId, isMe }) => {
   const [editMode, setEditMode] = useState(false);
   const { profile } = useAppSelector((state: RootState) => state.profile);
   const { isLoadingStatus } = useAppSelector(
@@ -48,12 +49,14 @@ const ProfileStatus: FC<PropsType> = ({ userId }) => {
         !editMode && (
           <Row className={styles.status} align="middle" gutter={10}>
             <Col>{profile.status}</Col>
-            <Col>
-              <EditOutlined
-                className={styles.editButton + " " + styles.editButtonStatus}
-                onClick={activateEditMode}
-              />
-            </Col>
+            {isMe && (
+              <Col>
+                <EditOutlined
+                  className={styles.editButton + " " + styles.editButtonStatus}
+                  onClick={activateEditMode}
+                />
+              </Col>
+            )}
           </Row>
         )
       )}

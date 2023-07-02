@@ -2,7 +2,7 @@ import { instance } from "./api";
 
 export const postsApi = {
   getPosts(userId: string) {
-    return instance.get(`/posts?user=${userId}`).then((res) => res.data);
+    return instance.get(`/posts/${userId}`).then((res) => res.data);
   },
   sendPost(text: string) {
     return instance

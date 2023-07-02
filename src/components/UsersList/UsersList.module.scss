@@ -4,9 +4,21 @@
   padding: 20px;
   display: grid;
   align-items: center;
-  grid-template-columns: 60px 300px 1fr 300px;
+  grid-template-columns: 1fr 300px;
   gap: 20px;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: box-shadow 0.3s ease-in-out;
+  &:hover {
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.userAbout {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 60px 1fr 300px;
+  gap: 20px;
 }
 
 .userAvatar {
@@ -27,6 +39,7 @@
 
 .userLastSeen {
   text-align: right;
+  justify-self: flex-end;
 }
 
 .userButtons {

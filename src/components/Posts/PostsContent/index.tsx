@@ -8,15 +8,22 @@ import {
   getPosts,
   setLikesCount,
 } from "../../../redux/slices/posts/asyncActions";
-import { useEffect } from "react";
+import { FC, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-const PostsContent = () => {
+type PropsType = {
+  isMe: boolean;
+};
+
+const PostsContent: FC<PropsType> = ({ isMe }) => {
   const { posts } = useAppSelector((state) => state.posts);
   const dispatch = useAppDispatch();
 
+  const { id } = useParams();
+
   useEffect(() => {
-    dispatch(getPosts("644bfdeabab5a5f1c7416c4f"));
-  }, [posts]);
+    dispatch(getPosts(String(id)));
+  }, [id]);
 
   const updateLikesToggle = (
     postId: string,
@@ -46,38 +53,45 @@ const PostsContent = () => {
               <div>
                 <div className={styles.postContent}>
                   <div>{post.text}</div>
-                  <div
-                    className={styles.deletePost}
-                    onClick={() => onRemovePost(post._id)}
-                  >
-                    <DeleteOutlined />
-                  </div>
-                  <div className={styles.postLikes}>
-                    <div>
-                      {post.liked ? (
-                        <HeartFilled
-                          className={styles.postLikesHeart}
-                          onClick={() =>
-                            updateLikesToggle(
-                              post._id,
-                              post.likes - 1,
-                              post.liked
-                            )
-                          }
-                        />
-                      ) : (
-                        <LikeOutlined
-                          onClick={() =>
-                            updateLikesToggle(
-                              post._id,
-                              post.likes + 1,
-                              post.liked
-                            )
-                          }
-                        />
-                      )}
+                  {isMe && (
+                    <div
+                      className={styles.deletePost}
+                      onClick={() => onRemovePost(post._id)}
+                    >
+                      <DeleteOutlined />
                     </div>
-                    <div>{post.likes}</div>
+                  )}
+
+                  <div>
+                    {post.liked ? (
+                      <div
+                        className={styles.postLikes}
+                        onClick={() =>
+                          updateLikesToggle(
+                            post._id,
+                            post.likes - 1,
+                            post.liked
+                          )
+                        }
+                      >
+                        <HeartFilled className={styles.postLikesHeart} />
+                        <div>{post.likes}</div>
+                      </div>
+                    ) : (
+                      <div
+                        className={styles.postLikes}
+                        onClick={() =>
+                          updateLikesToggle(
+                            post._id,
+                            post.likes + 1,
+                            post.liked
+                          )
+                        }
+                      >
+                        <LikeOutlined />
+                        <div>{post.likes}</div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
