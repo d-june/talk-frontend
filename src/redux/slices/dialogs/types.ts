@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export type DialogType = {
   _id: string;
   text: string;
@@ -20,4 +22,5 @@ export type DialogType = {
     text: string;
     createdAt: string;
   };
+  setSidebarOpen?: Dispatch<SetStateAction<boolean>>;
 };

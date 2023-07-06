@@ -37,11 +37,17 @@ const UserInfo: FC = () => {
             onClick={() => setMenuVisible(!menuVisible)}
           >
             <div className={styles.userAvatar}>
-              <img src={CatImage} alt="default avatar" />
+              {userData?.avatar ? (
+                <img src={userData.avatar} alt="avatar" />
+              ) : (
+                <img src={CatImage} alt="default avatar" />
+              )}
             </div>
             <div className={styles.userName}>
-              {userData?.fullName}
-              {menuVisible ? <UpCircleOutlined /> : <DownCircleOutlined />}
+              <div>{userData?.fullName}</div>
+              <div>
+                {menuVisible ? <UpCircleOutlined /> : <DownCircleOutlined />}
+              </div>
             </div>
           </div>
           {menuVisible && (
@@ -55,11 +61,6 @@ const UserInfo: FC = () => {
                 <li>
                   <Link to="/users">
                     <TeamOutlined /> Пользователи
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/friends">
-                    <TeamOutlined /> Друзья
                   </Link>
                 </li>
                 <li>

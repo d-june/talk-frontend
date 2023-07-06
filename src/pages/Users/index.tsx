@@ -1,25 +1,23 @@
 import React, { FC } from "react";
-import { Sidebar, UsersList } from "../../components";
 import styles from "./Users.module.scss";
-import { useSelector } from "react-redux";
-import { selectIsAuth } from "../../redux/slices/me/selectors";
-import { Navigate } from "react-router-dom";
+import MainLayout from "../../components/layouts/MainLayout";
+import { UsersList } from "../../components";
+import { HomeFilled } from "@ant-design/icons";
 
 const Users: FC = () => {
-  const isAuth = useSelector(selectIsAuth);
   return (
-    <>
-      {isAuth ? (
-        <section className={styles.users}>
-          <Sidebar />
-          <div className={styles.usersList}>
-            <UsersList />
+    <MainLayout className="users">
+      <div className={styles.usersMain}>
+        <div className={styles.usersHeader}>
+          <div className={styles.breadcrumbs}>
+            <HomeFilled /> Пользователи
           </div>
-        </section>
-      ) : (
-        <Navigate to="/login" />
-      )}
-    </>
+        </div>
+        <div className={styles.usersList}>
+          <UsersList />
+        </div>
+      </div>
+    </MainLayout>
   );
 };
 

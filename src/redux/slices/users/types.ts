@@ -10,7 +10,7 @@ export type UserInfoType = {
   city: string;
   hobbies: string;
   birthday: string;
-  avatar: string;
-  isOnline: boolean;
-  id: string;
+  avatar?: string;
+  isOnline?: boolean;
+  id?: string;
 };

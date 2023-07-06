@@ -1,0 +1,71 @@
+@import "../../styles/variables";
+
+.burgerBtn {
+  display: none;
+}
+
+
+@media (max-width: 992px) {
+  .burgerBtn {
+    z-index: 5;
+    display: block;
+    position: fixed;
+    top: 25px;
+    right: 20px;
+    width: 25px;
+    height: 18px;
+    cursor: pointer;
+    justify-self: flex-end;
+
+    span,
+    &::before,
+    &::after {
+      left: 0;
+      position: absolute;
+      height: 10%;
+      width: 100%;
+      transition: all 0.3s ease 0s;
+      background-color: $dark;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+    }
+
+    &::before {
+      top: 0;
+    }
+
+    &::after {
+      bottom: 0;
+    }
+
+    span {
+      top: 50%;
+      transform: scale(1) translate(0px, -50%);
+    }
+
+    &.sidebarOpen {
+
+      span {
+        transform: scale(0) translate(0px, -50%);
+        background-color: $white;
+      }
+
+      &::before {
+        top: 50%;
+        transform: rotate(-45deg) translate(0px, -50%);
+        background-color: $white;
+      }
+
+      &::after {
+        bottom: 50%;
+        transform: rotate(45deg) translate(0px, 50%);
+        background-color: $white;
+      }
+    }
+
+  }
+}
+

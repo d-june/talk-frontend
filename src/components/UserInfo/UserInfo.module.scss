@@ -8,6 +8,13 @@
   position: relative;
 }
 
+.userName {
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .userData {
   display: flex;
   align-items: center;

@@ -26,6 +26,13 @@
   }
 }
 
+.selectedUserName {
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
 :global(.ant-select-selector) {
   background: $white !important;
   border: none !important;

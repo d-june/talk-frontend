@@ -1,23 +1,16 @@
 @import "../../styles/variables";
-.home {
-  height: 100vh;
-}
-
-.chat {
-  display: grid;
-  grid-template-columns: 410px 1fr;
-  height: 100%;
-  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.2);
-}
 
 .chatDialog {
-  height: 100vh;
+  height: 100%;
+  width: 100%;
   background: rgb(250,237,255);
   background: radial-gradient(circle, rgba(250,237,255,1) 0%, rgba(238,237,247,1) 100%);
 }
 
 .chatDialogHeader {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
+  width: 100%;
   justify-content: center;
   text-align: center;
   align-items: center;
@@ -27,8 +20,14 @@
   svg {
     font-size: 20px;
   }
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr auto;
+    padding: 10px;
+  }
 }
 .chatDialogMessagesBlock {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-content: space-between;
@@ -37,8 +36,10 @@
 }
 
 .chatDialogMessages {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-content: space-between;
   height: 95%;
 }
+

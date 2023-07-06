@@ -26,12 +26,14 @@ const ProfileInfo: FC<UpdateProfileType & onEditMode> = ({
       <Row className={styles.profileInfoContainer}>
         <Row>
           <Row className={styles.row} align="middle" gutter={10}>
-            <Col className={styles.profileInfoName}>{fullName}</Col>
-            {isMe && (
-              <Col onClick={onEditMode}>
-                <EditOutlined className={styles.editButton} />
-              </Col>
-            )}
+            <Col className={styles.profileInfoName}>
+              {fullName}
+              {isMe && (
+                <Col onClick={onEditMode}>
+                  <EditOutlined className={styles.editButton} />
+                </Col>
+              )}
+            </Col>
           </Row>
           <Row className={`${styles.profileInfoList} ${styles.row}`}>
             <ul>

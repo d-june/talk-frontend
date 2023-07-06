@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 
@@ -15,7 +15,12 @@ import { Input } from "antd";
 
 import styles from "./Sidebar.module.scss";
 
-const Sidebar = () => {
+type PropsType = {
+  sidebarOpen?: boolean;
+  setSidebarOpen?: Dispatch<SetStateAction<boolean>>;
+};
+
+const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
   const dispatch = useAppDispatch();
 
   const { items } = useSelector(selectDialogsData);
@@ -58,7 +63,11 @@ const Sidebar = () => {
   };
 
   return (
-    <div className={styles.sidebar}>
+    <div
+      className={
+        sidebarOpen ? styles.sidebar + " " + styles.sidebarOpen : styles.sidebar
+      }
+    >
       <div className={styles.sidebarHeader}>
         <div className={styles.sidebarDialogsList}>
           <UserInfo />
@@ -74,7 +83,7 @@ const Sidebar = () => {
         />
       </div>
       {filtered.length > 0 ? (
-        <Dialogs items={filtered} />
+        <Dialogs items={filtered} setSidebarOpen={setSidebarOpen} />
       ) : (
         <Empty description="Ничего не нашлось :(" light />
       )}

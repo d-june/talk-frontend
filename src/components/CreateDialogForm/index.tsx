@@ -17,12 +17,16 @@ type CreateDialogFormType = {
   setInputValue: (value: string) => void;
   inputValue: string;
   visible: boolean;
+  selectedId?: string;
 };
 const CreateDialogForm: FC<CreateDialogFormType> = ({
   setInputValue,
-  setVisible,
+
   inputValue,
   visible,
+  setVisible,
+
+  selectedId,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -56,7 +60,12 @@ const CreateDialogForm: FC<CreateDialogFormType> = ({
   };
 
   const onAddDialog = () => {
-    dispatch(createDialog({ selectedUserId, messageText }));
+    if (selectedId) {
+      dispatch(createDialog({ selectedUserId: selectedId, messageText }));
+    } else {
+      dispatch(createDialog({ selectedUserId, messageText }));
+    }
+
     onClose();
   };
 
@@ -86,28 +95,36 @@ const CreateDialogForm: FC<CreateDialogFormType> = ({
       <div>
         <h2>Создать диалог</h2>
       </div>
-      <Form className={styles.modalForm}>
-        <h3>Введите имя пользователя или email</h3>
 
-        <Form.Item>
-          <Select
-            showSearch
-            value={inputValue}
-            placeholder="Найти пользователя"
-            style={{ width: "100%" }}
-            labelInValue
-            defaultActiveFirstOption={false}
-            showArrow={false}
-            filterOption={false}
-            onSearch={onSearch}
-            onChange={onChangeInputModal}
-            onSelect={(user) => onSelectUser(user)}
-            notFoundContent={null}
-            options={options}
-            size={"large"}
-          />
-        </Form.Item>
-        {selectedUserId && (
+      <Form className={styles.modalForm}>
+        {selectedId ? (
+          <div className={styles.selectedUserName}>{inputValue}</div>
+        ) : (
+          <>
+            <h3>Введите имя пользователя или email</h3>
+
+            <Form.Item>
+              <Select
+                showSearch
+                value={inputValue}
+                placeholder="Найти пользователя"
+                style={{ width: "100%" }}
+                labelInValue
+                defaultActiveFirstOption={false}
+                showArrow={false}
+                filterOption={false}
+                onSearch={onSearch}
+                onChange={onChangeInputModal}
+                onSelect={(user) => onSelectUser(user)}
+                notFoundContent={null}
+                options={options}
+                size={"large"}
+              />
+            </Form.Item>
+          </>
+        )}
+
+        {selectedId && (
           <Form.Item>
             <TextArea
               placeholder="Введите текст сообщения"

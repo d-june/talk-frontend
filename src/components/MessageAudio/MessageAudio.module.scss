@@ -3,13 +3,16 @@
 .messageAudioBubble {
   background: $purple;
   border-radius: 12px 12px 0px 12px;
-  width: 290px;
+  width: 250px;
   height: 62px;
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  @media (max-width: 500px) {
+    width: 200px;
+  }
 }
 
 
@@ -24,6 +27,7 @@
   justify-content: space-between;
   position: relative;
   height: 35px;
+  padding: 10px;
 }
 
 .messageAudioBtn {

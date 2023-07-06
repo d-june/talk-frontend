@@ -24,3 +24,5 @@ export { default as Posts } from "./Posts";
 export { default as PostsContent } from "./Posts/PostsContent";
 export { default as PostsForm } from "./Posts/PostsForm";
 export { default as UsersList } from "./UsersList";
+export { default as User } from "./UsersList/User";
+export { default as BurgerIcon } from "./BurgerIcon";

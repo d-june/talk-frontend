@@ -24,6 +24,7 @@ const DialogItem: FC<DialogType> = ({
   unreaded,
   author,
   lastMessage,
+  setSidebarOpen,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -44,6 +45,9 @@ const DialogItem: FC<DialogType> = ({
   const onChangeCurrentDialogId = () => {
     socket.emit("DIALOGS:JOIN", _id);
     dispatch(setCurrentDialogId(_id));
+    if (setSidebarOpen) {
+      setSidebarOpen(false);
+    }
   };
 
   const renderLastMessage = (message: any, userId: string | undefined) => {

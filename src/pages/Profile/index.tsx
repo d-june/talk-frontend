@@ -1,22 +1,10 @@
 import React, { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { selectIsAuth, selectToken } from "../../redux/slices/me/selectors";
-import { getMe } from "../../redux/slices/me/asyncActions";
-import { getDialogs } from "../../redux/slices/dialogs/asyncActions";
 
 import defaultAvatar from "../../assets/img/cat.jpg";
 import styles from "./Profile.module.scss";
-import {
-  ChatInput,
-  Messages,
-  Posts,
-  Sidebar,
-  Status,
-  UserInfo,
-} from "../../components";
-import { Navigate, useParams } from "react-router-dom";
-import { Col, Row } from "antd";
-import { SyncOutlined, LoadingOutlined, EditOutlined } from "@ant-design/icons";
+import { Posts } from "../../components";
+import { useParams } from "react-router-dom";
+import { SyncOutlined, HomeFilled, EditOutlined } from "@ant-design/icons";
 import ProfileStatus from "../../components/ProfileStatus";
 import ProfileInfo from "./ProfileInfo";
 import {
@@ -27,12 +15,9 @@ import {
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { RootState } from "../../redux/store";
 import ProfileForm from "./ProfileForm";
-import {
-  ProfileType,
-  UpdateProfileType,
-} from "../../redux/slices/profile/types";
+import { UpdateProfileType } from "../../redux/slices/profile/types";
+import MainLayout from "../../components/layouts/MainLayout";
 const Profile: FC = () => {
-  const isAuth = useSelector(selectIsAuth);
   const { profile } = useAppSelector((state: RootState) => state.profile);
   const { isLoading } = useAppSelector((state: RootState) => state.profile);
   const dispatch = useAppDispatch();
@@ -68,57 +53,60 @@ const Profile: FC = () => {
     }
   };
 
-  if (!isAuth) {
-    return <Navigate to="/login" />;
-  }
-
   return (
-    <section className={styles.profile}>
-      <Sidebar />
+    <MainLayout className="profile">
       <div className={styles.profileContainer}>
         {isLoading ? (
           <SyncOutlined spin className={styles.profileLoading} />
         ) : (
           <>
-            <div className={styles.profileAbout}>
-              <div className={styles.profileLeft}>
-                <div className={styles.profileImage}>
-                  <img src={profile.avatar || defaultAvatar} alt="avatar" />
-
-                  {isMe && (
-                    <div className={styles.editAvatarButton}>
-                      <label>
-                        <EditOutlined />
-                        <input type="file" onChange={editUserAvatar} />
-                      </label>
-                    </div>
-                  )}
-                </div>
-
-                <ProfileStatus userId={String(id)} isMe={isMe} />
-              </div>
-
-              <div className={styles.profileContent}>
-                {editMode ? (
-                  <ProfileForm onSubmit={onSubmit} />
-                ) : (
-                  <ProfileInfo
-                    fullName={profile.fullName}
-                    birthday={profile.birthday}
-                    about={profile.about}
-                    city={profile.city}
-                    hobbies={profile.hobbies}
-                    onEditMode={onEditMode}
-                    isMe={isMe}
-                  />
-                )}
+            <div className={styles.profileHeader}>
+              <div className={styles.profileBreadcrumbs}>
+                <HomeFilled />
+                {isMe ? " Мой профиль" : " Профиль / " + profile.fullName}
               </div>
             </div>
-            <Posts isMe={isMe} />
+            <div className={styles.profileMain}>
+              <div className={styles.profileAbout}>
+                <div className={styles.profileLeft}>
+                  <div className={styles.profileImage}>
+                    <img src={profile.avatar || defaultAvatar} alt="avatar" />
+
+                    {isMe && (
+                      <div className={styles.editAvatarButton}>
+                        <label>
+                          <EditOutlined />
+                          <input type="file" onChange={editUserAvatar} />
+                        </label>
+                      </div>
+                    )}
+                  </div>
+
+                  <ProfileStatus userId={String(id)} isMe={isMe} />
+                </div>
+
+                <div className={styles.profileContent}>
+                  {editMode ? (
+                    <ProfileForm onSubmit={onSubmit} />
+                  ) : (
+                    <ProfileInfo
+                      fullName={profile.fullName}
+                      birthday={profile.birthday}
+                      about={profile.about}
+                      city={profile.city}
+                      hobbies={profile.hobbies}
+                      onEditMode={onEditMode}
+                      isMe={isMe}
+                    />
+                  )}
+                </div>
+              </div>{" "}
+              <Posts isMe={isMe} />
+            </div>
           </>
         )}
       </div>
-    </section>
+    </MainLayout>
   );
 };
 

@@ -3,6 +3,9 @@
 .postsWrapper {
     padding: 40px;
     width: 100%;
+    @media (max-width: 992px) {
+        padding: 20px;
+    }
 }
 
 .postsContainer {
@@ -10,33 +13,41 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-auto-rows: min-content;
-    row-gap: 10px;
+    row-gap: 20px;
 
 }
 
-.postContainer {
-    box-shadow: 0 0 10px #DCDCDC;
-    background: white;
-    color: $grey;
-    margin-bottom: 10px;
-    width: 100%;
+.postTop {
     display: flex;
-    align-items: center;
-    position: relative;
+    margin-bottom: 10px;
 }
 
 .postAvatar {
-    height: 100%;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
     display: flex;
+    margin-right: 10px;
     img {
-        overflow: hidden;
-        width: 150px;
+        width: 100%;
         height: 100%;
         object-fit: cover;
-        align-self: flex-start;
     }
 }
 
+.postInfo {
+
+}
+
+.postUserName {
+    font-weight: bold;
+}
+
+.postDate {
+    opacity: 0.8;
+    font-size: 12px;
+}
 
 
 .postsTitle {
@@ -47,10 +58,15 @@
 }
 
 .postContent {
-    height: 100%;
-    padding: 20px 50px 20px 20px;
+    box-shadow: 0 0 10px #DCDCDC;
+    background: white;
+    color: $grey;
+    margin-bottom: 10px;
+    width: 100%;
     display: flex;
     align-items: center;
+    position: relative;
+    padding: 20px 50px 20px 20px;
     font-size: 14px;
 }
 

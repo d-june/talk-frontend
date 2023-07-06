@@ -21,3 +21,11 @@ export const createDialog = createAsyncThunk(
     return data;
   }
 );
+
+export const findDialogId = createAsyncThunk(
+  "dialogs/findDialogId",
+  async (userId: string) => {
+    const data = await dialogsAPI.findDialogId(userId);
+    return data;
+  }
+);

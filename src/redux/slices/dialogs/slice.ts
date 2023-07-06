@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { DialogType } from "./types";
-import { getDialogs } from "./asyncActions";
+import { findDialogId, getDialogs } from "./asyncActions";
 
 const initialState = {
   items: [] as Array<DialogType>,
   currentDialogId: null as string | null,
+  isLoading: false,
 };
 
 const dialogsSlice = createSlice({
@@ -18,6 +19,13 @@ const dialogsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getDialogs.fulfilled, (state, action) => {
       state.items = action.payload;
+    });
+    builder.addCase(findDialogId.pending, (state, action) => {
+      state.isLoading = true;
+    });
+    builder.addCase(findDialogId.fulfilled, (state, action) => {
+      state.currentDialogId = action.payload[0]?._id;
+      state.isLoading = false;
     });
   },
 });

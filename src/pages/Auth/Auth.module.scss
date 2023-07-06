@@ -1,20 +1,39 @@
 .auth {
-  height: 100%;
+  height: 100vh;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px;
   h2, p {
     color: #ffe9fd;
+    @media (max-width: 450px) {
+      font-size: 14px;
+    }
   }
   h2 {
     font-size: 28px;
     margin-bottom: 15px;
+    @media (max-width: 450px) {
+      font-size: 22px;
+    }
   }
   p {
     font-size: 18px;
     opacity: 0.8;
+    @media (max-width: 450px) {
+      font-size: 14px;
+    }
+  }
+
+  button {
+    span {
+      @media (max-width: 450px) {
+        font-size: 14px;
+      }
+    }
+
   }
 
 }

@@ -57,12 +57,12 @@ const CheckEmailInfo = () => {
         title={info.status === "success" ? "Готово!" : "Ошибка"}
         subTitle={info.message}
         extra={
-          info.status === "success" &&
-          accountVerified === "success" && [
-            <Button size={"small"} onClick={() => navigate("/im")}>
-              Войти в аккаунт
-            </Button>,
-          ]
+          // info.status === "success" &&
+          // accountVerified === "success" && [
+          <Button size={"small"} onClick={() => navigate("/profile/:id")}>
+            Войти в аккаунт
+          </Button>
+          // ]
         }
       />
     </div>

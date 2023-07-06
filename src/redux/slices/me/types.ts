@@ -18,4 +18,5 @@ export type MeData = {
   lastSeen: string;
   createdAt: string;
   updatedAt: string;
+  avatar: string;
 };

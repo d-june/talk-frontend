@@ -3,6 +3,9 @@
   width: 100%;
   overflow: auto;
   padding: 40px;
+  @media (max-width: 450px) {
+    padding: 10px;
+  }
 }
 
 .messagesContainer {

@@ -10,6 +10,7 @@ import {
 } from "../../../redux/slices/posts/asyncActions";
 import { FC, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { format, isToday } from "date-fns";
 
 type PropsType = {
   isMe: boolean;
@@ -41,58 +42,68 @@ const PostsContent: FC<PropsType> = ({ isMe }) => {
     }
   };
 
+  const getMessageTime = (createdAt: string) => {
+    const createdAtDate = new Date(createdAt);
+    if (isToday(createdAtDate)) {
+      return format(createdAtDate, "HH:mm");
+    } else {
+      return format(createdAtDate, "dd.MM.yyyy");
+    }
+  };
+
   return (
     <>
       <div className={styles.postsContainer}>
         {posts.map((post) => {
           return (
             <div className={styles.postContainer}>
-              <div className={styles.postAvatar}>
-                <img src={post.user.avatar || defaultAvatar} alt="Avatar" />
+              <div className={styles.postTop}>
+                <div className={styles.postAvatar}>
+                  <img src={post.user.avatar || defaultAvatar} alt="Avatar" />
+                </div>
+                <div className={styles.postInfo}>
+                  <div className={styles.postUserName}>
+                    {post.user.fullName}
+                  </div>
+                  <div className={styles.postDate}>
+                    {getMessageTime(post.createdAt)}
+                  </div>
+                </div>
               </div>
-              <div>
-                <div className={styles.postContent}>
-                  <div>{post.text}</div>
-                  {isMe && (
+
+              <div className={styles.postContent}>
+                <div>{post.text}</div>
+                {isMe && (
+                  <div
+                    className={styles.deletePost}
+                    onClick={() => onRemovePost(post._id)}
+                  >
+                    <DeleteOutlined />
+                  </div>
+                )}
+
+                <div>
+                  {post.liked ? (
                     <div
-                      className={styles.deletePost}
-                      onClick={() => onRemovePost(post._id)}
+                      className={styles.postLikes}
+                      onClick={() =>
+                        updateLikesToggle(post._id, post.likes - 1, post.liked)
+                      }
                     >
-                      <DeleteOutlined />
+                      <HeartFilled className={styles.postLikesHeart} />
+                      <div>{post.likes}</div>
+                    </div>
+                  ) : (
+                    <div
+                      className={styles.postLikes}
+                      onClick={() =>
+                        updateLikesToggle(post._id, post.likes + 1, post.liked)
+                      }
+                    >
+                      <LikeOutlined />
+                      <div>{post.likes}</div>
                     </div>
                   )}
-
-                  <div>
-                    {post.liked ? (
-                      <div
-                        className={styles.postLikes}
-                        onClick={() =>
-                          updateLikesToggle(
-                            post._id,
-                            post.likes - 1,
-                            post.liked
-                          )
-                        }
-                      >
-                        <HeartFilled className={styles.postLikesHeart} />
-                        <div>{post.likes}</div>
-                      </div>
-                    ) : (
-                      <div
-                        className={styles.postLikes}
-                        onClick={() =>
-                          updateLikesToggle(
-                            post._id,
-                            post.likes + 1,
-                            post.liked
-                          )
-                        }
-                      >
-                        <LikeOutlined />
-                        <div>{post.likes}</div>
-                      </div>
-                    )}
-                  </div>
                 </div>
               </div>
             </div>

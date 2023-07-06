@@ -32,5 +32,8 @@
 }
 
 :global(.ant-form-item-control) {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  @media (max-width: 600px) {
+    margin-bottom: 10px;
+  }
 }
