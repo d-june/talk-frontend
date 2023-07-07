@@ -1,11 +1,10 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: "https://talk-backend-ajs1.vercel.app/",
-  withCredentials: true,
-  // headers: {
-  //   "Content-Type": "application/json",
-  // },
+  baseURL: window.location.origin,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 instance.interceptors.request.use(function (config) {
