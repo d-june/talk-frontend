@@ -2,7 +2,6 @@
 
 .usersMain {
   width: 100%;
-
 }
 
 .usersHeader {
@@ -21,21 +20,57 @@
   }
 }
 
-.usersList {
+.usersContent {
   width: 100%;
   height: calc(100vh - 70px);
   overflow: auto;
   padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.usersList {
+  width: 100%;
   display: grid;
-
   gap: 20px;
-
-    flex-direction: row;
-    flex-wrap: wrap;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    grid-auto-rows: min-content;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-auto-rows: min-content;
   @media (max-width: 992px) {
     padding: 20px;
-
   }
+}
+
+:global(.ant-pagination-item ) {
+  border: none !important;
+  background: linear-gradient(52deg, rgba(51,11,150,1) 0%, rgba(145,20,207,1) 50%, rgba(168,17,203,1) 100%);
+  opacity: 0.4;
+  transition: opacity 0.3s ease-in-out 0s;
+  &:hover {
+    opacity: 0.8;
+  }
+  a {
+    color: $white !important;
+  }
+}
+
+:global(.ant-pagination-item-active) {
+  opacity: 1;
+}
+
+:global(.ant-pagination-next) {
+  svg {
+    color: $purple;
+  }
+}
+
+:global(.ant-pagination-prev) {
+  svg {
+    color: $purple;
+  }
+}
+
+
+.pagination {
+  margin-top: 40px;
 }

@@ -1,7 +1,7 @@
 @import "../../styles/variables";
 
 .profileContainer {
-
+  width: 100%;
   color: $grey;
   display: flex;
   flex-direction: column;
@@ -28,6 +28,7 @@
 .profileMain {
   height: calc(100vh - 70px);
   overflow: auto;
+  width: 100%;
 }
 
 .profileLeft {

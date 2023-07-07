@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: window.location.origin,
+  baseURL: "https://talk-backend-ajs1.vercel.app",
   headers: {
     "Content-Type": "application/json",
   },

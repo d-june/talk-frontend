@@ -129,7 +129,6 @@ const RegisterForm = () => {
               Зарегистрироваться
             </Button>
             <Link to="/login" className={styles.loginButton}>
-              {" "}
               Войти в аккаунт
             </Link>
           </Form>

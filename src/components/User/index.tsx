@@ -1,13 +1,12 @@
-import styles from "../UsersList.module.scss";
+import styles from "./User.module.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { Avatar, Button, CreateDialogForm } from "../../index";
-import { UserInfoType } from "../../../redux/slices/users/types";
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { format, isToday } from "date-fns";
-import { findDialogId } from "../../../redux/slices/dialogs/asyncActions";
-import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { RootState } from "../../../redux/store";
-import { setCurrentDialogId } from "../../../redux/slices/dialogs/slice";
+import { UserInfoType } from "../../redux/slices/users/types";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { RootState } from "../../redux/store";
+import { findDialogId } from "../../redux/slices/dialogs/asyncActions";
+import { Avatar, Button, CreateDialogForm } from "../index";
 
 const User: FC<UserInfoType> = (user) => {
   const [selectedId, setSelectedId] = useState("");

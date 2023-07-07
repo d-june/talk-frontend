@@ -1,22 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { findUsers, getAllUsers } from "./asyncActions";
-
-interface usersSliceType {
-  _id: string;
-  email: string;
-  fullName: string;
-  lastSeen: string;
-  createdAt: string;
-  updatedAt: string;
-  status: string;
-  about: string;
-  city: string;
-  hobbies: string;
-  birthday: string;
-}
+import { UserInfoType } from "./types";
 
 const initialState = {
-  users: [] as Array<usersSliceType>,
+  users: [] as Array<UserInfoType>,
+  isLoading: false,
+  page: 1,
+  total: 1,
 };
 
 const usersSlice = createSlice({
@@ -24,8 +14,14 @@ const usersSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getAllUsers.pending, (state) => {
+      state.isLoading = true;
+    });
     builder.addCase(getAllUsers.fulfilled, (state, action) => {
-      state.users = action.payload;
+      state.users = action.payload.docs;
+      state.page = action.payload.page;
+      state.total = action.payload.total;
+      state.isLoading = false;
     });
     builder.addCase(findUsers.fulfilled, (state, action) => {
       state.users = action.payload;

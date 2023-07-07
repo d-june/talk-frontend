@@ -1,5 +1,5 @@
 import io from "socket.io-client";
 
-const socket = io("http://localhost:9999");
+const socket = io("https://talk-backend-ajs1.vercel.app");
 
 export default socket;

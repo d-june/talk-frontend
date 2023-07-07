@@ -6,6 +6,7 @@
   align-items: center;
   grid-template-columns: 1fr;
   gap: 20px;
+  background: transparent;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: box-shadow 0.3s ease-in-out;
@@ -31,10 +32,11 @@
 }
 
 .userAvatar {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   overflow: hidden;
+  margin-bottom: 10px;
 
   img {
     width: 100%;
@@ -46,6 +48,7 @@
 
 .userName {
   font-weight: bold;
+  font-size: 18px;
 }
 
 .userLastSeen {
@@ -58,9 +61,9 @@
   justify-content: center;
   gap: 20px;
   button {
-    span {
-      font-size: 12px;
-    }
+    //span {
+    //  font-size: 12px;
+    //}
   }
 }
 

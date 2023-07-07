@@ -14,3 +14,11 @@ export type UserInfoType = {
   isOnline?: boolean;
   id?: string;
 };
+
+type UsersResponseType = {
+  docs: Array<UserInfoType>;
+  total: number;
+  limit: number;
+  page: number;
+  pages: number;
+};

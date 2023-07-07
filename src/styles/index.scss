@@ -13,7 +13,7 @@ body, html, #root, .wrapper {
   line-height: 1.7em;
   background: rgb(51,11,150);
   background: linear-gradient(52deg, rgba(51,11,150,1) 0%, rgba(145,20,207,1) 50%, rgba(168,17,203,1) 100%);
-  color: #202002;
+  color: $dark;
 }
 
 .ant-form-item-explain-error {

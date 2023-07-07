@@ -4,20 +4,19 @@ import { RootState } from "../../redux/store";
 
 import socket from "../../socket/socket";
 
-import { Empty, Message } from "../index";
+import { Empty, Message, SpinIcon } from "../index";
 import { getMessageById } from "../../redux/slices/messages/asyncActions";
 import {
   selectLoading,
   selectMessagesData,
 } from "../../redux/slices/messages/selectors";
 
-import { Spin } from "antd";
-
 import styles from "./Messages.module.scss";
 import classNames from "classnames";
 
 import { addMessage } from "../../redux/slices/messages/slice";
 import { useAppDispatch } from "../../hooks/hooks";
+
 const Messages = () => {
   const dispatch = useAppDispatch();
   const currentDialogId = useSelector(
@@ -74,7 +73,7 @@ const Messages = () => {
       ref={messagesRef}
     >
       {isLoading ? (
-        <Spin size="large" tip="Загрузка..."></Spin>
+        <SpinIcon tip="Загружаю сообщения..." />
       ) : !isLoading && messages ? (
         messages.length > 0 ? (
           <div className={styles.messagesContainer}>
