@@ -2,8 +2,8 @@ import { FC } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Link } from "react-router-dom";
-
-import socket from "../../socket/socket";
+//
+// import socket from "../../socket/socket";
 import classNames from "classnames";
 import { isToday, format } from "date-fns";
 
@@ -42,13 +42,13 @@ const DialogItem: FC<DialogType> = ({
     }
   };
 
-  const onChangeCurrentDialogId = () => {
-    socket.emit("DIALOGS:JOIN", _id);
-    dispatch(setCurrentDialogId(_id));
-    if (setSidebarOpen) {
-      setSidebarOpen(false);
-    }
-  };
+  // const onChangeCurrentDialogId = () => {
+  //   socket.emit("DIALOGS:JOIN", _id);
+  //   dispatch(setCurrentDialogId(_id));
+  //   if (setSidebarOpen) {
+  //     setSidebarOpen(false);
+  //   }
+  // };
 
   const renderLastMessage = (message: any, userId: string | undefined) => {
     let text = "";
@@ -71,7 +71,7 @@ const DialogItem: FC<DialogType> = ({
           partner?.isOnline ? styles.dialogItemOnline : "",
           currentDialogId === _id ? styles.dialogItemSelected : ""
         )}
-        onClick={onChangeCurrentDialogId}
+        // onClick={onChangeCurrentDialogId}
       >
         <div className={styles.dialogItemAvatar}>
           {partner && <Avatar user={partner} />}

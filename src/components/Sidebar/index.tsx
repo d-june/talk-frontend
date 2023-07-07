@@ -4,7 +4,7 @@ import { RootState } from "../../redux/store";
 
 import { useAppDispatch } from "../../hooks/hooks";
 
-import socket from "../../socket/socket";
+// import socket from "../../socket/socket";
 import { CreateDialogForm, Dialogs, Empty, UserInfo } from "../index";
 import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
 
@@ -44,19 +44,19 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
     setInputValue(value);
   };
 
-  useEffect(() => {
-    if (!items.length) {
-      fetchDialogs();
-    } else {
-      setFilteredItems(items);
-    }
-    socket.on("SERVER:DIALOG_CREATED", fetchDialogs);
-    socket.on("SERVER:NEW_MESSAGE", fetchDialogs);
-    return () => {
-      socket.removeListener("SERVER:DIALOG_CREATED", fetchDialogs);
-      socket.removeListener("SERVER:NEW_MESSAGE", fetchDialogs);
-    };
-  }, [items]);
+  // useEffect(() => {
+  //   if (!items.length) {
+  //     fetchDialogs();
+  //   } else {
+  //     setFilteredItems(items);
+  //   }
+  //   socket.on("SERVER:DIALOG_CREATED", fetchDialogs);
+  //   socket.on("SERVER:NEW_MESSAGE", fetchDialogs);
+  //   return () => {
+  //     socket.removeListener("SERVER:DIALOG_CREATED", fetchDialogs);
+  //     socket.removeListener("SERVER:NEW_MESSAGE", fetchDialogs);
+  //   };
+  // }, [items]);
 
   const onShow = () => {
     setVisible(true);

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-
-import socket from "../../socket/socket";
+//
+// import socket from "../../socket/socket";
 
 import { Empty, Message, SpinIcon } from "../index";
 import { getMessageById } from "../../redux/slices/messages/asyncActions";
@@ -42,20 +42,20 @@ const Messages = () => {
     }, 3000);
   };
 
-  useEffect(() => {
-    socket.on("DIALOGS:TYPING", toggleIsTyping);
-    return () => {
-      socket.removeListener("DIALOGS:TYPING", toggleIsTyping);
-    };
-  }, []);
+  // useEffect(() => {
+  //   socket.on("DIALOGS:TYPING", toggleIsTyping);
+  //   return () => {
+  //     socket.removeListener("DIALOGS:TYPING", toggleIsTyping);
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    currentDialogId && dispatch(getMessageById(currentDialogId));
-    socket.on("SERVER:NEW_MESSAGE", onNewMessage);
-    return () => {
-      socket.removeListener("SERVER:NEW_MESSAGE", onNewMessage);
-    };
-  }, [currentDialogId]);
+  // useEffect(() => {
+  //   currentDialogId && dispatch(getMessageById(currentDialogId));
+  //   socket.on("SERVER:NEW_MESSAGE", onNewMessage);
+  //   return () => {
+  //     socket.removeListener("SERVER:NEW_MESSAGE", onNewMessage);
+  //   };
+  // }, [currentDialogId]);
 
   useEffect(() => {
     if (messagesRef.current) {
