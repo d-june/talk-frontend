@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: window.location.origin,
+  baseURL: "https://talk-api.onrender.com",
   headers: {
     "Content-Type": "application/json",
   },

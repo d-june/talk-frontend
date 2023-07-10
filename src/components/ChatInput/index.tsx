@@ -20,7 +20,7 @@ import EmojiPicker from "emoji-picker-react";
 import { filesApi } from "../../api/files-api";
 import { ChatUpload, UploadFiles } from "../index";
 import { setAttachments } from "../../redux/slices/attachments/slice";
-// import socket from "../../socket/socket";
+import socket from "../../socket/socket";
 import { useAppDispatch } from "../../hooks/hooks";
 
 const ChatInput = () => {
@@ -121,12 +121,12 @@ const ChatInput = () => {
     }
   };
 
-  // const handleSendMessage = (e: any) => {
-  //   socket.emit("DIALOGS:TYPING", { dialogId: currentDialogId, data });
-  //   if (e.keyCode === 13) {
-  //     onSendMessage();
-  //   }
-  // };
+  const handleSendMessage = (e: any) => {
+    socket.emit("DIALOGS:TYPING", { dialogId: currentDialogId, data });
+    if (e.keyCode === 13) {
+      onSendMessage();
+    }
+  };
 
   const onHideRecording = () => {
     setIsRecording(false);
@@ -161,7 +161,7 @@ const ChatInput = () => {
         ) : (
           <TextArea
             onChange={(e) => setValue(e.target.value)}
-            // onKeyUp={handleSendMessage}
+            onKeyUp={handleSendMessage}
             value={value}
             size="large"
             placeholder="Введите текст сообщения"

@@ -67,5 +67,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://talk-backend.vercel.app"
+  "proxy": "https://talk-api.onrender.com"
 }
