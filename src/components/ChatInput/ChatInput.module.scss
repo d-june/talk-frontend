@@ -8,7 +8,6 @@
   padding: 0 40px;
   @media (max-width: 600px) {
     padding: 0 20px;
-    margin-bottom: 40px;
   }
 }
 
@@ -74,9 +73,18 @@
   position: absolute;
   bottom: 100px;
   z-index: 1;
+  @media (max-width: 400px) {
+    bottom: 70px;
+  }
 }
 
 .chatInputUpload {
   width: 100%;
   padding-left: 80px;
+}
+
+:global(.EmojiPickerReact) {
+  @media (max-width: 400px) {
+    width: 320px !important;
+  }
 }

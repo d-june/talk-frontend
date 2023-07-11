@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import { ChatInput, Messages, Status } from "../../components";
+import { ChatInput, Header, Messages, Status } from "../../components";
 
 import styles from "./Home.module.scss";
 import MainLayout from "../../components/layouts/MainLayout";
@@ -9,11 +9,12 @@ const Home: FC = () => {
   return (
     <MainLayout className="home">
       <div className={styles.chatDialog}>
-        <div className={styles.chatDialogHeader}>
-          <Status />
-        </div>
+        <Header chatPage />
         <div className={styles.chatDialogMessagesBlock}>
-          <div className={styles.chatDialogMessages}>
+          <div
+            className={styles.chatDialogMessages}
+            style={{ height: window.innerHeight - 70 - 70 }}
+          >
             <Messages />
           </div>
 

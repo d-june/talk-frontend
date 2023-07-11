@@ -22,7 +22,6 @@
 
 .usersContent {
   width: 100%;
-  height: calc(100vh - 70px);
   overflow: auto;
   padding: 40px;
   display: flex;
@@ -77,5 +76,8 @@
 
 .pagination {
   margin-top: 40px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+  @media (max-width: 600px) {
+    margin-top: 20px;
+  }
 }

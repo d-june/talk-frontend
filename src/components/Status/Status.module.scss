@@ -1,9 +1,17 @@
 @import "../../styles/variables";
 
+.chatDialogHeaderBody {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .status {
   display: flex;
   justify-content: center;
-  gap: 5px;
+  padding-left: 10px;
   color: #a39cab;
   position: relative;
 

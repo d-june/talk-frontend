@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from "react";
 
 import defaultAvatar from "../../assets/img/cat.jpg";
 import styles from "./Profile.module.scss";
-import { Posts, SpinIcon } from "../../components";
+import { Header, Posts, SpinIcon } from "../../components";
 import { useParams } from "react-router-dom";
 import { SyncOutlined, HomeFilled, EditOutlined } from "@ant-design/icons";
 import ProfileStatus from "../../components/ProfileStatus";
@@ -51,13 +51,11 @@ const Profile: FC = () => {
   return (
     <MainLayout className="profile">
       <div className={styles.profileContainer}>
-        <div className={styles.profileHeader}>
-          <div className={styles.profileBreadcrumbs}>
-            <HomeFilled />
-            {isMe ? " Мой профиль" : " Профиль / " + profile.fullName}
-          </div>
-        </div>
-        <div className={styles.profileMain}>
+        <Header profilePage />
+        <div
+          className={styles.profileMain}
+          style={{ height: window.innerHeight - 70 }}
+        >
           {isLoading ? (
             <SpinIcon tip="Загружаю профиль..." />
           ) : (

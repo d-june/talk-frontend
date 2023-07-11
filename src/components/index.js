@@ -26,3 +26,4 @@ export { default as PostsForm } from "./Posts/PostsForm";
 export { default as User } from "./User";
 export { default as BurgerIcon } from "./BurgerIcon";
 export { default as SpinIcon } from "./SpinIcon";
+export { default as Header } from "./Header";
