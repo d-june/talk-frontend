@@ -18,8 +18,10 @@ import ProfileForm from "./ProfileForm";
 import { UpdateProfileType } from "../../redux/slices/profile/types";
 import MainLayout from "../../components/layouts/MainLayout";
 const Profile: FC = () => {
-  const { profile } = useAppSelector((state: RootState) => state.profile);
-  const { isLoading } = useAppSelector((state: RootState) => state.profile);
+  const { profile, isLoading } = useAppSelector(
+    (state: RootState) => state.profile
+  );
+
   const dispatch = useAppDispatch();
   const [editMode, setEditMode] = useState(false);
 
@@ -30,14 +32,7 @@ const Profile: FC = () => {
 
   useEffect(() => {
     dispatch(getProfile(String(id)));
-  }, [
-    profile.about,
-    profile.city,
-    profile.fullName,
-    profile.hobbies,
-    profile.birthday,
-    profile.avatar,
-  ]);
+  }, [editMode, profile.avatar]);
 
   const onEditMode = () => {
     setEditMode(true);

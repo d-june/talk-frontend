@@ -27,6 +27,7 @@ type ButtonProps = {
   onSubmit?: any;
   disabled?: boolean;
   loading?: boolean;
+  isLoading?: boolean;
 };
 const Button: FC<ButtonProps> = (props) => {
   return (

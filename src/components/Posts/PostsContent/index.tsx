@@ -56,7 +56,7 @@ const PostsContent: FC<PropsType> = ({ isMe }) => {
       <div className={styles.postsContainer}>
         {posts.map((post) => {
           return (
-            <div className={styles.postContainer}>
+            <div className={styles.postContainer} key={post._id}>
               <div className={styles.postTop}>
                 <div className={styles.postAvatar}>
                   <img src={post.user.avatar || defaultAvatar} alt="Avatar" />

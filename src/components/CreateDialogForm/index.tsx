@@ -76,7 +76,7 @@ const CreateDialogForm: FC<CreateDialogFormType> = ({
   return (
     <Modal
       centered
-      visible={visible}
+      open={visible}
       onCancel={onClose}
       className={styles.modal}
       footer={[

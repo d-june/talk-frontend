@@ -1,22 +1,23 @@
-import { Form, Input, notification } from "antd";
-import { LockOutlined, FrownOutlined, UserOutlined } from "@ant-design/icons";
-import { AuthBlock, Button } from "../index";
-import { Link, Navigate } from "react-router-dom";
 import React, { useEffect } from "react";
-
-// @ts-ignore
-import styles from "./LoginForm.module.scss";
 import { RootState } from "../../redux/store";
-import { login } from "../../redux/slices/me/asyncActions";
+import { Link, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/hooks";
+
+import { AuthBlock, Button, SpinIcon } from "../index";
+import { login } from "../../redux/slices/me/asyncActions";
+
+import { Form, Input, notification } from "antd";
+import { LockOutlined, FrownOutlined, UserOutlined } from "@ant-design/icons";
+
+import styles from "./LoginForm.module.scss";
 
 const LoginForm = () => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
   const { status } = useSelector((state: RootState) => state.me);
   const [api, contextHolder] = notification.useNotification();
-  const { isAuth } = useSelector((state: RootState) => state.me);
+  const { isAuth, isLoading } = useSelector((state: RootState) => state.me);
 
   const onFinish = (values: any) => {
     dispatch(login(values));
@@ -98,7 +99,7 @@ const LoginForm = () => {
                 ]}
                 hasFeedback
               >
-                <Input
+                <Input.Password
                   prefix={<LockOutlined className="site-form-item-icon" />}
                   type="password"
                   placeholder="Пароль"
@@ -106,7 +107,12 @@ const LoginForm = () => {
                 />
               </Form.Item>
 
-              <Button type="primary" size="large" htmlType="submit">
+              <Button
+                type="primary"
+                size="large"
+                htmlType="submit"
+                loading={isLoading}
+              >
                 Войти в аккаунт
               </Button>
               <Link to="/register" className={styles.registerButton}>

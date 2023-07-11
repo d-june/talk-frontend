@@ -19,7 +19,9 @@ import { useAppDispatch } from "../../hooks/hooks";
 const RegisterForm = () => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
-  const { registrationSuccess } = useSelector((state: RootState) => state.me);
+  const { registrationSuccess, isLoading } = useSelector(
+    (state: RootState) => state.me
+  );
   const onFinish = (values: any) => {
     dispatch(register(values));
   };
@@ -33,7 +35,7 @@ const RegisterForm = () => {
         {!registrationSuccess ? (
           <Form
             name="normal_login"
-            className="login-form"
+            className="register-form"
             initialValues={{ remember: true }}
             onFinish={onFinish}
             form={form}
@@ -90,7 +92,7 @@ const RegisterForm = () => {
               ]}
               hasFeedback
             >
-              <Input
+              <Input.Password
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Введите пароль"
@@ -117,7 +119,7 @@ const RegisterForm = () => {
               ]}
               hasFeedback
             >
-              <Input
+              <Input.Password
                 prefix={<LockOutlined className="site-form-item-icon" />}
                 type="password"
                 placeholder="Повторите пароль"
@@ -125,7 +127,12 @@ const RegisterForm = () => {
               />
             </Form.Item>
 
-            <Button type="primary" size="large" htmlType="submit">
+            <Button
+              type="primary"
+              size="large"
+              htmlType="submit"
+              loading={isLoading}
+            >
               Зарегистрироваться
             </Button>
             <Link to="/login" className={styles.loginButton}>

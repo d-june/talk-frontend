@@ -34,7 +34,6 @@ const ProfileStatus: FC<PropsType> = ({ userId, isMe }) => {
   };
 
   const updateStatus = (values: any) => {
-    console.log(values.statusBody);
     dispatch(updateUserStatus(values.statusBody));
     deactivateEditMode();
   };

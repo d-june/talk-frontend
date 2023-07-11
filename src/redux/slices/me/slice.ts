@@ -10,6 +10,7 @@ interface MeSliceType {
   status: "" | "error" | "success";
   registrationSuccess?: boolean;
   accountVerified?: string;
+  isLoading: boolean;
 }
 
 const initialState: MeSliceType = {
@@ -20,6 +21,7 @@ const initialState: MeSliceType = {
   status: "",
   registrationSuccess: false,
   accountVerified: "",
+  isLoading: false,
 };
 
 const meSlice = createSlice({
@@ -32,8 +34,12 @@ const meSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(login.pending, (state, action) => {
+      state.isLoading = true;
+    });
     builder.addCase(login.rejected, (state, action) => {
       state.status = "error";
+      state.isLoading = false;
     });
     builder.addCase(login.fulfilled, (state, action) => {
       state.isAuth = true;
@@ -42,6 +48,7 @@ const meSlice = createSlice({
       if (action.payload.status === "error") {
         state.status = "error";
       }
+      state.isLoading = false;
     });
     builder.addCase(getMe.fulfilled, (state, action) => {
       state.data = action.payload;

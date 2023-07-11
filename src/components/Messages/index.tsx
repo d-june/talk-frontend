@@ -78,7 +78,7 @@ const Messages = () => {
         messages.length > 0 ? (
           <div className={styles.messagesContainer}>
             {messages.map((item) => (
-              <Message {...item} />
+              <Message {...item} key={item._id} />
             ))}
           </div>
         ) : (

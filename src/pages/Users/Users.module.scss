@@ -28,6 +28,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media (max-width: 992px) {
+    padding: 10px;
+  }
 }
 
 .usersList {
@@ -38,6 +41,7 @@
   grid-auto-rows: min-content;
   @media (max-width: 992px) {
     padding: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   }
 }
 
@@ -73,4 +77,5 @@
 
 .pagination {
   margin-top: 40px;
+  margin-bottom: 40px;
 }

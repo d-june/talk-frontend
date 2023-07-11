@@ -39,11 +39,7 @@ const Users: FC = () => {
               <div className={styles.usersList}>
                 {users &&
                   users.map((user) => {
-                    return (
-                      <>
-                        <User {...user} />
-                      </>
-                    );
+                    return <User {...user} key={user._id} />;
                   })}
               </div>
               <Pagination

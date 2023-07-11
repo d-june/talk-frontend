@@ -124,7 +124,7 @@ const Message: FC<MessageType & MessagePropsType> = ({
         <IconReaded isMe={isMe} isReaded={isReaded} />
       </div>
       <Modal
-        visible={!!previewImage}
+        open={!!previewImage}
         onCancel={() => setPreviewImage("")}
         footer={null}
         className={styles.messagePhotoModal}

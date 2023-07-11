@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Auth, Friends, Home, Profile, Users } from "./pages";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
 import { CheckEmailInfo } from "./components";
+import { selectIsAuth, selectToken } from "./redux/slices/me/selectors";
+import { useAppDispatch } from "./hooks/hooks";
+import { getMe } from "./redux/slices/me/asyncActions";
+import { getDialogs } from "./redux/slices/dialogs/asyncActions";
 
 function App() {
-  const { isAuth } = useSelector((state: RootState) => state.me);
+  const isAuth = useSelector(selectIsAuth);
+  const token = useSelector(selectToken);
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getMe());
+    dispatch(getDialogs(token));
+  }, [isAuth]);
   return (
     <div className="wrapper">
       <Routes>
