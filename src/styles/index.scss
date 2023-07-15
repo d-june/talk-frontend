@@ -19,3 +19,23 @@ body, html, #root, .wrapper {
 .ant-form-item-explain-error {
   margin: 10px;
 }
+
+
+/* Стилизация скролла */
+* {
+  scrollbar-width: thin;
+}
+
+*::-webkit-scrollbar {
+  width: 4px;
+}
+
+*::-webkit-scrollbar-track {
+  background: $boxShadow
+
+}
+
+*::-webkit-scrollbar-thumb {
+  background: $grey
+
+}

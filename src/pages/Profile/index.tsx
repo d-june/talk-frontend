@@ -1,42 +1,51 @@
 import React, { FC, useEffect, useState } from "react";
-
-import defaultAvatar from "../../assets/img/cat.jpg";
-import styles from "./Profile.module.scss";
-import { Header, Posts, SpinIcon } from "../../components";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { RootState } from "../../redux/store";
 import { useParams } from "react-router-dom";
-import { SyncOutlined, HomeFilled, EditOutlined } from "@ant-design/icons";
-import ProfileStatus from "../../components/ProfileStatus";
+
+import { Header, Posts, SpinIcon, ProfileStatus } from "../../components";
 import ProfileInfo from "./ProfileInfo";
+import ProfileForm from "./ProfileForm";
+import MainLayout from "../../components/layouts/MainLayout";
+
 import {
   getProfile,
   updateAvatar,
   updateProfile,
 } from "../../redux/slices/profile/asyncActions";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import { RootState } from "../../redux/store";
-import ProfileForm from "./ProfileForm";
+
 import { UpdateProfileType } from "../../redux/slices/profile/types";
-import MainLayout from "../../components/layouts/MainLayout";
+
+import styles from "./Profile.module.scss";
+import { EditOutlined, UserOutlined } from "@ant-design/icons";
+import forestImg from "../../assets/img/forest.jpg";
+import { Avatar } from "antd";
+
 const Profile: FC = () => {
+  const [editMode, setEditMode] = useState(false);
+
   const { profile, isLoading } = useAppSelector(
     (state: RootState) => state.profile
   );
+  const { data } = useAppSelector((state: RootState) => state.me);
 
   const dispatch = useAppDispatch();
-  const [editMode, setEditMode] = useState(false);
-
-  const { data } = useAppSelector((state: RootState) => state.me);
 
   const { id } = useParams();
   const isMe = data?._id === id;
 
   useEffect(() => {
     dispatch(getProfile(String(id)));
-  }, [editMode, profile.avatar]);
+  }, [
+    dispatch,
+    id,
+    profile.avatar,
+    profile.birthday,
+    profile.fullName,
+    profile.about,
+    profile.hobbies,
+  ]);
 
-  const onEditMode = () => {
-    setEditMode(true);
-  };
   const onSubmit = (values: UpdateProfileType) => {
     dispatch(updateProfile(values));
     setEditMode(false);
@@ -61,9 +70,16 @@ const Profile: FC = () => {
           ) : (
             <>
               <div className={styles.profileAbout}>
+                <div className={styles.profileBackground}>
+                  <img src={forestImg} alt="forest" />
+                </div>
                 <div className={styles.profileLeft}>
                   <div className={styles.profileImage}>
-                    <img src={profile.avatar || defaultAvatar} alt="avatar" />
+                    {profile.avatar ? (
+                      <img src={profile.avatar} alt="avatar" />
+                    ) : (
+                      <Avatar size={64} icon={<UserOutlined />} />
+                    )}
 
                     {isMe && (
                       <div className={styles.editAvatarButton}>
@@ -88,7 +104,7 @@ const Profile: FC = () => {
                       about={profile.about}
                       city={profile.city}
                       hobbies={profile.hobbies}
-                      onEditMode={onEditMode}
+                      onEditMode={() => setEditMode(true)}
                       isMe={isMe}
                     />
                   )}

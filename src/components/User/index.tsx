@@ -49,7 +49,11 @@ const User: FC<UserInfoType> = (user) => {
       />
       <Link to={"/profile/" + user._id} className={styles.userAbout}>
         <div className={styles.userAvatar}>
-          <Avatar user={user} />
+          <Avatar
+            _id={user._id}
+            fullName={user.fullName}
+            avatar={user.avatar}
+          />
         </div>
         <div className={styles.userName}>{user.fullName}</div>
 

@@ -1,16 +1,19 @@
-import { Col, Row } from "antd";
+import { FC, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import defaultAvatar from "../../../assets/img/cat.jpg";
-import { LikeOutlined, DeleteOutlined, HeartFilled } from "@ant-design/icons";
-import styles from "../Posts.module.scss";
+
+import { format, isToday } from "date-fns";
+
 import {
   deletePost,
   getPosts,
   setLikesCount,
 } from "../../../redux/slices/posts/asyncActions";
-import { FC, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { format, isToday } from "date-fns";
+
+import styles from "../Posts.module.scss";
+import defaultAvatar from "../../../assets/img/cat.jpg";
+import { LikeOutlined, DeleteOutlined, HeartFilled } from "@ant-design/icons";
+import { Empty } from "antd";
 
 type PropsType = {
   isMe: boolean;
@@ -24,7 +27,7 @@ const PostsContent: FC<PropsType> = ({ isMe }) => {
 
   useEffect(() => {
     dispatch(getPosts(String(id)));
-  }, [id]);
+  }, [id, dispatch]);
 
   const updateLikesToggle = (
     postId: string,
@@ -54,61 +57,81 @@ const PostsContent: FC<PropsType> = ({ isMe }) => {
   return (
     <>
       <div className={styles.postsContainer}>
-        {posts.map((post) => {
-          return (
-            <div className={styles.postContainer} key={post._id}>
-              <div className={styles.postTop}>
-                <div className={styles.postAvatar}>
-                  <img src={post.user.avatar || defaultAvatar} alt="Avatar" />
-                </div>
-                <div className={styles.postInfo}>
-                  <div className={styles.postUserName}>
-                    {post.user.fullName}
-                  </div>
-                  <div className={styles.postDate}>
-                    {getMessageTime(post.createdAt)}
-                  </div>
-                </div>
-              </div>
-
-              <div className={styles.postContent}>
-                <div>{post.text}</div>
-                {isMe && (
-                  <div
-                    className={styles.deletePost}
-                    onClick={() => onRemovePost(post._id)}
-                  >
-                    <DeleteOutlined />
-                  </div>
-                )}
-
-                <div>
-                  {post.liked ? (
-                    <div
-                      className={styles.postLikes}
-                      onClick={() =>
-                        updateLikesToggle(post._id, post.likes - 1, post.liked)
-                      }
-                    >
-                      <HeartFilled className={styles.postLikesHeart} />
-                      <div>{post.likes}</div>
+        {posts.length > 0 ? (
+          <>
+            <h2 className={styles.postsTitle}>Посты</h2>
+            {posts.map((post) => {
+              return (
+                <div className={styles.postContainer} key={post._id}>
+                  <div className={styles.postTop}>
+                    <div className={styles.postAvatar}>
+                      <img
+                        src={post.user.avatar || defaultAvatar}
+                        alt="Avatar"
+                      />
                     </div>
-                  ) : (
-                    <div
-                      className={styles.postLikes}
-                      onClick={() =>
-                        updateLikesToggle(post._id, post.likes + 1, post.liked)
-                      }
-                    >
-                      <LikeOutlined />
-                      <div>{post.likes}</div>
+                    <div className={styles.postInfo}>
+                      <div className={styles.postUserName}>
+                        {post.user.fullName}
+                      </div>
+                      <div className={styles.postDate}>
+                        {getMessageTime(post.createdAt)}
+                      </div>
                     </div>
-                  )}
+                  </div>
+
+                  <div className={styles.postContent}>
+                    <div>{post.text}</div>
+                    {isMe && (
+                      <div
+                        className={styles.deletePost}
+                        onClick={() => onRemovePost(post._id)}
+                      >
+                        <DeleteOutlined />
+                      </div>
+                    )}
+
+                    <div>
+                      {post.liked ? (
+                        <div
+                          className={styles.postLikes}
+                          onClick={() =>
+                            updateLikesToggle(
+                              post._id,
+                              post.likes - 1,
+                              post.liked
+                            )
+                          }
+                        >
+                          <HeartFilled className={styles.postLikesHeart} />
+                          <div>{post.likes}</div>
+                        </div>
+                      ) : (
+                        <div
+                          className={styles.postLikes}
+                          onClick={() =>
+                            updateLikesToggle(
+                              post._id,
+                              post.likes + 1,
+                              post.liked
+                            )
+                          }
+                        >
+                          <LikeOutlined />
+                          <div>{post.likes}</div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          );
-        })}
+              );
+            })}
+          </>
+        ) : (
+          <div className={styles.postsEmpty}>
+            <Empty description="Постов еще нет" />
+          </div>
+        )}
       </div>
     </>
   );

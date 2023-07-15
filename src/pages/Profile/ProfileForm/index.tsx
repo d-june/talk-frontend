@@ -2,14 +2,11 @@ import { Col, DatePicker, Form, Input, Row } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import React, { FC } from "react";
 
-import { GiftOutlined, HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { useAppSelector } from "../../../hooks/hooks";
 import styles from "../Profile.module.scss";
 import { UpdateProfileType } from "../../../redux/slices/profile/types";
-import { values } from "lodash";
-import { format } from "date-fns";
 import dayjs from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
+
 import { Button } from "../../../components";
 
 type PropsType = {
@@ -25,7 +22,9 @@ const ProfileForm: FC<PropsType> = ({ onSubmit }) => {
         wrapperCol={{ span: 24 }}
         initialValues={{
           fullName: profile.fullName,
-          birthday: dayjs(new Date(profile.birthday)),
+          birthday: profile.birthday
+            ? dayjs(new Date(profile.birthday))
+            : undefined,
           city: profile.city,
           about: profile.about,
           hobbies: profile.hobbies,

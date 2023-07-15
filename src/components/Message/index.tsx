@@ -85,7 +85,7 @@ const Message: FC<MessageType & MessagePropsType> = ({
       )}
     >
       <div className={styles.messageAvatar}>
-        <Avatar user={user} />
+        <Avatar _id={user._id} fullName={user.fullName} avatar={user.avatar} />
       </div>
       <div className={styles.messageContent}>
         <div className={styles.messageBody}>

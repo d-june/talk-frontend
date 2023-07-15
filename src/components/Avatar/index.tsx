@@ -3,33 +3,50 @@ import { generateAvatarFromHash } from "../../utils";
 import styles from "./Avatar.module.scss";
 import { FC } from "react";
 import classNames from "classnames";
+import user from "../User";
 
 type AvatarProps = {
-  user: {
-    _id: string;
-    fullName: string;
-    avatar?: string | null;
-    isOnline?: boolean;
-  };
+  _id: string;
+  fullName: string;
+  avatar?: string | null;
+  bigSize?: boolean;
 };
 
-const Avatar: FC<AvatarProps> = ({ user }) => {
-  if (user.avatar) {
-    return <img src={user.avatar} alt={`Avatar ${user.fullName}`} />;
+const Avatar: FC<AvatarProps> = ({ _id, fullName, avatar, bigSize }) => {
+  if (avatar) {
+    return <img src={avatar} alt={`Avatar ${fullName}`} />;
   } else {
-    const { color, colorLighten } = generateAvatarFromHash(user._id);
-    const firstChartFromFullName = user.fullName[0].toUpperCase();
+    const firstChartFromFullName = fullName[0]?.toUpperCase();
+    let color = "#";
+    let hash = 0;
+
+    let i;
+    let valueColor;
+    let strLength;
+
+    if (!fullName) {
+      color = color + "333333";
+    }
+
+    strLength = fullName.length;
+
+    for (i = 0; i < strLength; i++) {
+      hash = fullName.charCodeAt(i) + ((hash << 5) - hash);
+    }
+
+    for (i = 0; i < 3; i++) {
+      valueColor = (hash >> (i * 8)) & 0xff;
+      color += ("00" + valueColor.toString(16)).substr(-2);
+    }
+
     return (
       <div
         style={{
-          background: `linear-gradient(135deg, ${color} 0%, ${colorLighten} 96.52%)`,
+          background: `${color}`,
         }}
-        className={classNames(
-          styles.avatar,
-          !user.avatar ? styles.avatarEmpty : ""
-        )}
+        className={classNames(styles.avatar, !avatar ? styles.avatarEmpty : "")}
       >
-        {firstChartFromFullName}
+        {bigSize ? fullName.toUpperCase() : firstChartFromFullName}
       </div>
     );
   }

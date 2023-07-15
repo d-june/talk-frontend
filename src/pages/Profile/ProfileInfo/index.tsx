@@ -5,8 +5,6 @@ import styles from "../Profile.module.scss";
 import { EditOutlined, GiftOutlined, HomeOutlined } from "@ant-design/icons";
 import { UpdateProfileType } from "../../../redux/slices/profile/types";
 import { format } from "date-fns";
-import { useAppSelector } from "../../../hooks/hooks";
-import { RootState } from "../../../redux/store";
 
 type onEditMode = {
   onEditMode: () => void;
@@ -23,39 +21,57 @@ const ProfileInfo: FC<UpdateProfileType & onEditMode> = ({
 }) => {
   return (
     <>
-      <Row className={styles.profileInfoContainer}>
-        <Row>
-          <Row className={styles.row} align="middle" gutter={10}>
-            <Col className={styles.profileInfoName}>
-              {fullName}
+      <div className={styles.profileInfoContainer}>
+        <Col>
+          {fullName ? (
+            <div className={styles.profileInfoName}>
+              <p>{fullName}</p>
               {isMe && (
-                <Col onClick={onEditMode}>
+                <div onClick={onEditMode}>
                   <EditOutlined className={styles.editButton} />
-                </Col>
+                </div>
               )}
-            </Col>
-          </Row>
-          <Row className={`${styles.profileInfoList} ${styles.row}`}>
-            <ul>
+            </div>
+          ) : (
+            ""
+          )}
+        </Col>
+        <div className={`${styles.profileInfoList} ${styles.row}`}>
+          <ul>
+            {birthday ? (
               <li>
                 <GiftOutlined /> День рождения:
                 {birthday && (
                   <span>{format(new Date(birthday), "dd.MM.yyyy")}</span>
                 )}
               </li>
+            ) : (
+              ""
+            )}
+            {city ? (
               <li>
                 <HomeOutlined /> Город: <span>{city}</span>
               </li>
+            ) : (
+              ""
+            )}
+            {about ? (
               <li>
                 Обо мне: <span>{about}</span>
               </li>
+            ) : (
+              ""
+            )}
+            {hobbies ? (
               <li>
                 Увлечения: <span>{hobbies}</span>
               </li>
-            </ul>
-          </Row>
-        </Row>
-      </Row>
+            ) : (
+              ""
+            )}
+          </ul>
+        </div>
+      </div>
     </>
   );
 };

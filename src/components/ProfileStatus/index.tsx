@@ -46,8 +46,26 @@ const ProfileStatus: FC<PropsType> = ({ userId, isMe }) => {
         </Row>
       ) : (
         !editMode && (
-          <Row className={styles.status} align="middle" gutter={10}>
-            <Col>{profile.status}</Col>
+          <Row
+            className={
+              profile.status || isMe ? styles.status : styles.statusIsEmpty
+            }
+            align="middle"
+            gutter={10}
+          >
+            <Col>
+              {profile.status ? (
+                profile.status
+              ) : (
+                <div className={styles.emptyStatus}>
+                  {isMe ? (
+                    <>Здесь мог бы быть ваш статус...</>
+                  ) : (
+                    <div className={styles.statusIsEmpty}></div>
+                  )}
+                </div>
+              )}
+            </Col>
             {isMe && (
               <Col>
                 <EditOutlined

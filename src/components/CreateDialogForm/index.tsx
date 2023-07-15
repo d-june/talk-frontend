@@ -97,34 +97,37 @@ const CreateDialogForm: FC<CreateDialogFormType> = ({
       </div>
 
       <Form className={styles.modalForm}>
+        <h3>Введите имя пользователя или email</h3>
+
+        <Form.Item>
+          <Select
+            showSearch
+            value={inputValue}
+            placeholder="Найти пользователя"
+            style={{ width: "100%" }}
+            labelInValue
+            defaultActiveFirstOption={false}
+            showArrow={false}
+            filterOption={false}
+            onSearch={onSearch}
+            onChange={onChangeInputModal}
+            onSelect={(user) => onSelectUser(user)}
+            notFoundContent={null}
+            options={options}
+            size={"large"}
+          />
+        </Form.Item>
+
         {selectedId ? (
-          <div className={styles.selectedUserName}>{inputValue}</div>
+          <Form.Item>
+            <TextArea
+              placeholder="Введите текст сообщения"
+              autoSize={{ minRows: 2, maxRows: 6 }}
+              onChange={onChangeTextArea}
+              value={messageText}
+            />
+          </Form.Item>
         ) : (
-          <>
-            <h3>Введите имя пользователя или email</h3>
-
-            <Form.Item>
-              <Select
-                showSearch
-                value={inputValue}
-                placeholder="Найти пользователя"
-                style={{ width: "100%" }}
-                labelInValue
-                defaultActiveFirstOption={false}
-                showArrow={false}
-                filterOption={false}
-                onSearch={onSearch}
-                onChange={onChangeInputModal}
-                onSelect={(user) => onSelectUser(user)}
-                notFoundContent={null}
-                options={options}
-                size={"large"}
-              />
-            </Form.Item>
-          </>
-        )}
-
-        {selectedId && (
           <Form.Item>
             <TextArea
               placeholder="Введите текст сообщения"

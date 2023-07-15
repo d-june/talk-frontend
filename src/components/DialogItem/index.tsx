@@ -74,7 +74,13 @@ const DialogItem: FC<DialogType> = ({
         onClick={onChangeCurrentDialogId}
       >
         <div className={styles.dialogItemAvatar}>
-          {partner && <Avatar user={partner} />}
+          {partner && (
+            <Avatar
+              _id={partner._id}
+              fullName={partner.fullName}
+              avatar={partner.avatar}
+            />
+          )}
         </div>
 
         <div className={styles.dialogItemInfo}>

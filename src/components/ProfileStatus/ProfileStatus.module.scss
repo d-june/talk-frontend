@@ -8,6 +8,14 @@
   justify-content: center;
 }
 
+.emptyStatus {
+  opacity: 0.3;
+}
+
+.statusIsEmpty {
+  display: none;
+}
+
 .statusEdit {
   margin-top: 20px;
   display: flex;
@@ -20,8 +28,18 @@
     padding: 10px 20px;
     transition: all 0.3s ease-in-out;
     &:active, &:focus, &:hover {
-      border: 1px solid $purple;
+      border: 1px solid $grey;
       box-shadow: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    gap: 5px;
+    flex-direction: column;
+
+    :global(.ant-form-item) {
+      width: 100%;
     }
   }
 
@@ -45,15 +63,19 @@
 
 
 .statusButton {
-  color: white;
+  color: $grey;
   height: 40px;
   border-radius: 5px;
   padding: 10px 20px;
-  background: rgb(51,11,150);
-  background: linear-gradient(52deg, rgba(51,11,150,1) 0%, rgba(145,20,207,1) 50%, rgba(168,17,203,1) 100%);
+  background: white;
   transition: opacity 0.3s ease-in-out;
   &:hover {
     opacity: 0.6;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+
   }
 }
 
