@@ -1,18 +1,16 @@
-import React, {
-  FC,
-  JSXElementConstructor,
-  ReactElement,
-  useState,
-} from "react";
-import clsx from "clsx";
-import styles from "./MainLayout.module.scss";
-import { BurgerIcon, Sidebar } from "../index";
+import React, { FC, ReactElement, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+import clsx from "clsx";
+
 import { selectIsAuth } from "../../redux/slices/me/selectors";
-import Header from "../Header";
+import { BurgerIcon, Sidebar } from "../index";
+
+import styles from "./MainLayout.module.scss";
+
 interface MainLayoutProps {
-  children: ReactElement<any, string | JSXElementConstructor<any>>;
+  children: ReactElement;
   className?: string;
 }
 const MainLayout: FC<MainLayoutProps> = ({ children, className }) => {

@@ -18,8 +18,8 @@ const initialState = {
     hobbies: "" as string,
     status: "",
   },
-  isLoading: false,
   isLoadingStatus: false,
+  isLoading: false,
 };
 
 const profileSlice = createSlice({
@@ -52,6 +52,7 @@ const profileSlice = createSlice({
       state.profile.about = action.payload.about;
       state.profile.hobbies = action.payload.hobbies;
     });
+
     builder.addCase(updateAvatar.fulfilled, (state, action) => {
       state.profile.avatar = action.payload.avatar;
     });

@@ -1,20 +1,23 @@
-import { Col, DatePicker, Form, Input, Row } from "antd";
-import TextArea from "antd/es/input/TextArea";
 import React, { FC } from "react";
-
-import { useAppSelector } from "../../../hooks/hooks";
-import styles from "../Profile.module.scss";
-import { UpdateProfileType } from "../../../redux/slices/profile/types";
 import dayjs from "dayjs";
 
-import { Button } from "../../../components";
+import { useAppSelector } from "../../hooks/hooks";
+import { RootState } from "../../redux/store";
+import { UpdateProfileType } from "../../redux/slices/profile/types";
+
+import Button from "../Button";
+
+import { Col, DatePicker, Form, Input, Row } from "antd";
+import TextArea from "antd/es/input/TextArea";
+
+import styles from "./ProfileForm.module.scss";
 
 type PropsType = {
   onSubmit: (values: UpdateProfileType) => void;
 };
 
 const ProfileForm: FC<PropsType> = ({ onSubmit }) => {
-  const { profile } = useAppSelector((state) => state.profile);
+  const { profile } = useAppSelector((state: RootState) => state.profile);
   return (
     <>
       <Form
@@ -32,7 +35,7 @@ const ProfileForm: FC<PropsType> = ({ onSubmit }) => {
         layout="horizontal"
         onFinish={onSubmit}
       >
-        <Row className={styles.profileInfoContainer}>
+        <Row className={styles.profileFormContainer}>
           <Row className={`${styles.profileFormName}} ${styles.row}`}>
             <Col span={24}>
               <Form.Item label="Полное имя" name="fullName">

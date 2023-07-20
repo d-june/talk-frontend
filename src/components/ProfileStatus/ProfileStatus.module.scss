@@ -22,6 +22,9 @@
   align-items: center;
   gap: 10px;
   position: relative;
+  :global(.ant-form-item-control){
+    margin: 0;
+  }
   input {
     width: 100%;
     height: 40px;

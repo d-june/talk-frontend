@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectIsAuth, selectMeData } from "../../redux/slices/me/selectors";
 import Button from "../Button";
@@ -23,6 +23,20 @@ const UserInfo: FC = () => {
   const dispatch = useAppDispatch();
 
   const [menuVisible, setMenuVisible] = useState(false);
+  const handleOutsideClick = (el: any, e: any) => {
+    if (el && !el.contains(e.target)) {
+      setMenuVisible(false);
+    }
+  };
+
+  useEffect(() => {
+    const el = document.getElementById("userData");
+
+    document.addEventListener("click", handleOutsideClick.bind(this, el));
+    return () => {
+      document.removeEventListener("click", handleOutsideClick.bind(this, el));
+    };
+  }, []);
 
   const logOut = () => {
     dispatch(logout());
@@ -33,6 +47,7 @@ const UserInfo: FC = () => {
       {isAuth ? (
         <div className={styles.userInfo}>
           <div
+            id="userData"
             className={styles.userData}
             onClick={() => setMenuVisible(!menuVisible)}
           >
@@ -63,7 +78,7 @@ const UserInfo: FC = () => {
                     <TeamOutlined /> Пользователи
                   </Link>
                 </li>
-                <li>
+                <li className={styles.userChat}>
                   <Link to="/dialogs">
                     <WechatOutlined /> Чат
                   </Link>

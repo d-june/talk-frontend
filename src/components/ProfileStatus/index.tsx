@@ -1,14 +1,16 @@
-import { Col, Form, Input, Row } from "antd";
 import React, { FC, useEffect, useState } from "react";
-import { EditOutlined, SyncOutlined } from "@ant-design/icons";
-
-import styles from "./ProfileStatus.module.scss";
 import { RootState } from "../../redux/store";
+
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+
 import {
   getUserStatus,
   updateUserStatus,
 } from "../../redux/slices/profile/asyncActions";
+
+import { Col, Form, Input, Row, Skeleton } from "antd";
+import { EditOutlined } from "@ant-design/icons";
+import styles from "./ProfileStatus.module.scss";
 
 type PropsType = {
   userId: string;
@@ -41,9 +43,7 @@ const ProfileStatus: FC<PropsType> = ({ userId, isMe }) => {
   return (
     <>
       {isLoadingStatus ? (
-        <Row className={styles.status} align="middle" gutter={10}>
-          <SyncOutlined spin />
-        </Row>
+        <Skeleton.Input style={{ marginTop: 28 }}></Skeleton.Input>
       ) : (
         !editMode && (
           <Row

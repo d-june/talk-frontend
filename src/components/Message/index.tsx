@@ -16,6 +16,7 @@ import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import classNames from "classnames";
 import styles from "./Message.module.scss";
 import { useAppDispatch } from "../../hooks/hooks";
+import { Link } from "react-router-dom";
 
 type MessagePropsType = {
   _id?: string;
@@ -84,9 +85,24 @@ const Message: FC<MessageType & MessagePropsType> = ({
           : ""
       )}
     >
-      <div className={styles.messageAvatar}>
-        <Avatar _id={user._id} fullName={user.fullName} avatar={user.avatar} />
-      </div>
+      {isMe ? (
+        <div className={styles.messageAvatar}>
+          <Avatar
+            _id={user._id}
+            fullName={user.fullName}
+            avatar={user.avatar}
+          />
+        </div>
+      ) : (
+        <Link to={`/profile/${user._id}`} className={styles.messageAvatar}>
+          <Avatar
+            _id={user._id}
+            fullName={user.fullName}
+            avatar={user.avatar}
+          />
+        </Link>
+      )}
+
       <div className={styles.messageContent}>
         <div className={styles.messageBody}>
           {attachments && (

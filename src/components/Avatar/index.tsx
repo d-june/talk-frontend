@@ -1,9 +1,6 @@
-import { generateAvatarFromHash } from "../../utils";
-// @ts-ignore
 import styles from "./Avatar.module.scss";
 import { FC } from "react";
 import classNames from "classnames";
-import user from "../User";
 
 type AvatarProps = {
   _id: string;

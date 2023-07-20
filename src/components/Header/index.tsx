@@ -1,10 +1,12 @@
-import styles from "./Header.module.scss";
-import { HomeFilled } from "@ant-design/icons";
 import React, { FC } from "react";
 import { useAppSelector } from "../../hooks/hooks";
 import { RootState } from "../../redux/store";
 import { useParams } from "react-router-dom";
+
 import { Status } from "../index";
+
+import { HomeFilled } from "@ant-design/icons";
+import styles from "./Header.module.scss";
 
 type PropsType = {
   chatPage?: boolean;

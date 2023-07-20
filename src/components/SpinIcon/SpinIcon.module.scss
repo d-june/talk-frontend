@@ -2,7 +2,7 @@
 
 .spinIcon {
   width: 100%;
-  height: calc(100vh - 150px);
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,5 +12,11 @@
   div {
     font-size: 16px;
     margin-top: 5px;
+  }
+}
+
+.spinIconWhite {
+  svg, div {
+    color: $white;
   }
 }

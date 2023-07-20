@@ -1,8 +1,9 @@
-import { Col, Row } from "antd";
-
-import styles from "./Posts.module.scss";
-import { PostsContent, PostsForm } from "../index";
 import { FC } from "react";
+
+import { PostsContent, PostsForm } from "../index";
+
+import { Col } from "antd";
+import styles from "./Posts.module.scss";
 
 type PropsType = {
   isMe: boolean;

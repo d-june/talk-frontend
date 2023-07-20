@@ -1,31 +1,29 @@
-import { Col, Row } from "antd";
-
 import React, { FC } from "react";
-import styles from "../Profile.module.scss";
-import { EditOutlined, GiftOutlined, HomeOutlined } from "@ant-design/icons";
-import { UpdateProfileType } from "../../../redux/slices/profile/types";
 import { format } from "date-fns";
+import { useAppSelector } from "../../hooks/hooks";
 
-type onEditMode = {
+import { RootState } from "../../redux/store";
+
+import { Col } from "antd";
+import { EditOutlined, GiftOutlined, HomeOutlined } from "@ant-design/icons";
+
+import styles from "./ProfileInfo.module.scss";
+
+type ProfileInfoProps = {
   onEditMode: () => void;
+  isMe: boolean;
 };
 
-const ProfileInfo: FC<UpdateProfileType & onEditMode> = ({
-  fullName,
-  birthday,
-  city,
-  about,
-  hobbies,
-  onEditMode,
-  isMe,
-}) => {
+const ProfileInfo: FC<ProfileInfoProps> = ({ onEditMode, isMe }) => {
+  const { profile } = useAppSelector((state: RootState) => state.profile);
+
   return (
     <>
       <div className={styles.profileInfoContainer}>
         <Col>
-          {fullName ? (
+          {profile.fullName ? (
             <div className={styles.profileInfoName}>
-              <p>{fullName}</p>
+              <p>{profile.fullName}</p>
               {isMe && (
                 <div onClick={onEditMode}>
                   <EditOutlined className={styles.editButton} />
@@ -38,33 +36,35 @@ const ProfileInfo: FC<UpdateProfileType & onEditMode> = ({
         </Col>
         <div className={`${styles.profileInfoList} ${styles.row}`}>
           <ul>
-            {birthday ? (
+            {profile.birthday ? (
               <li>
                 <GiftOutlined /> День рождения:
-                {birthday && (
-                  <span>{format(new Date(birthday), "dd.MM.yyyy")}</span>
+                {profile.birthday && (
+                  <span>
+                    {format(new Date(profile.birthday), "dd.MM.yyyy")}
+                  </span>
                 )}
               </li>
             ) : (
               ""
             )}
-            {city ? (
+            {profile.city ? (
               <li>
-                <HomeOutlined /> Город: <span>{city}</span>
+                <HomeOutlined /> Город: <span>{profile.city}</span>
               </li>
             ) : (
               ""
             )}
-            {about ? (
+            {profile.about ? (
               <li>
-                Обо мне: <span>{about}</span>
+                Обо мне: <span>{profile.about}</span>
               </li>
             ) : (
               ""
             )}
-            {hobbies ? (
+            {profile.hobbies ? (
               <li>
-                Увлечения: <span>{hobbies}</span>
+                Увлечения: <span>{profile.hobbies}</span>
               </li>
             ) : (
               ""
