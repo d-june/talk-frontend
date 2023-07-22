@@ -30,7 +30,7 @@ function App() {
               isAuth ? <Navigate to="/dialogs" /> : <Navigate to="/login" />
             }
           />
-          <Route path="/dialogs" element={<Home />} />
+          {/*<Route path="/dialogs" element={<Home />} />*/}
           <Route path="/dialogs" element={<Home />}>
             <Route path=":id" element={<Home />} />
           </Route>

@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Upload, Modal } from "antd";
 
+import { useAppDispatch } from "../../hooks/hooks";
+import {
+  removeAttachment,
+  setAttachments,
+} from "../../redux/slices/attachments/slice";
+
 function getBase64(file: any) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -16,6 +22,8 @@ const UploadFiles = ({ attachments }: any) => {
     previewImage: "",
     fileList: attachments,
   });
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setState({
@@ -37,14 +45,16 @@ const UploadFiles = ({ attachments }: any) => {
       previewVisible: true,
     });
   };
-
-  const handleChange = ({ fileList }: any) =>
+  const handleChange = ({ fileList }: any) => {
     setState({
       ...state,
       fileList,
     });
+  };
 
-  console.log(state.fileList);
+  const onRemove = (file: any) => {
+    dispatch(removeAttachment(file));
+  };
 
   return (
     <div className="clearfix">
@@ -54,7 +64,7 @@ const UploadFiles = ({ attachments }: any) => {
         fileList={state.fileList}
         onChange={handleChange}
         onPreview={handlePreview}
-        // onRemove={(file) => removeAttachment(file)}
+        onRemove={(file) => onRemove(file)}
       ></Upload>
 
       <Modal

@@ -17,21 +17,26 @@ import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
 import styles from "./DialogItem.module.scss";
 import { DialogType } from "../../redux/slices/dialogs/types";
 import { useAppDispatch } from "../../hooks/hooks";
+import SkeletonButton from "antd/es/skeleton/Button";
 
-const DialogItem: FC<DialogType> = ({
+type PropsType = {
+  isLoading: boolean;
+};
+const DialogItem: FC<DialogType & PropsType> = ({
   _id,
   partner,
   unreaded,
   author,
   lastMessage,
   setSidebarOpen,
+  isLoading,
 }) => {
   const dispatch = useAppDispatch();
 
   const { data } = useSelector((state: RootState) => state.me);
-  const { items } = useSelector(selectDialogsData);
   const isMe = data && author._id === data._id;
   const { currentDialogId } = useSelector(selectDialogsData);
+  const { items } = useSelector(selectDialogsData);
 
   const getMessageTime = (createdAt: string) => {
     const createdAtDate = new Date(createdAt);
@@ -64,45 +69,47 @@ const DialogItem: FC<DialogType> = ({
   partner = getPartner(items, data, author, partner);
 
   return (
-    <Link to={`/dialogs/${_id}`}>
-      <div
-        className={classNames(
-          styles.dialogItem,
-          partner?.isOnline ? styles.dialogItemOnline : "",
-          currentDialogId === _id ? styles.dialogItemSelected : ""
-        )}
-        onClick={onChangeCurrentDialogId}
-      >
-        <div className={styles.dialogItemAvatar}>
-          {partner && (
-            <Avatar
-              _id={partner._id}
-              fullName={partner.fullName}
-              avatar={partner.avatar}
-            />
+    <>
+      <Link to={`/dialogs/${_id}`}>
+        <div
+          className={classNames(
+            styles.dialogItem,
+            partner?.isOnline ? styles.dialogItemOnline : "",
+            currentDialogId === _id ? styles.dialogItemSelected : ""
           )}
-        </div>
-
-        <div className={styles.dialogItemInfo}>
-          <div className={styles.dialogItemInfoTop}>
-            <b>{partner?.fullName}</b>
-            <span>{getMessageTime(lastMessage.createdAt)}</span>
-          </div>
-          <div className={styles.dialogItemInfoBottom}>
-            <p>{renderLastMessage(lastMessage, data?._id)}</p>
-            <div className={styles.messageIconReaded}>
-              {isMe && <IconReaded isMe={true} isReaded={false} />}
-            </div>
-
-            {unreaded > 0 && (
-              <div className={styles.dialogItemCount}>
-                {unreaded > 9 ? "+9" : unreaded}
-              </div>
+          onClick={onChangeCurrentDialogId}
+        >
+          <div className={styles.dialogItemAvatar}>
+            {partner && (
+              <Avatar
+                _id={partner._id}
+                fullName={partner.fullName}
+                avatar={partner.avatar}
+              />
             )}
           </div>
+
+          <div className={styles.dialogItemInfo}>
+            <div className={styles.dialogItemInfoTop}>
+              <b>{partner?.fullName}</b>
+              <span>{getMessageTime(lastMessage.createdAt)}</span>
+            </div>
+            <div className={styles.dialogItemInfoBottom}>
+              <p>{renderLastMessage(lastMessage, data?._id)}</p>
+              <div className={styles.messageIconReaded}>
+                {isMe && <IconReaded isMe={true} isReaded={false} />}
+              </div>
+
+              {unreaded > 0 && (
+                <div className={styles.dialogItemCount}>
+                  {unreaded > 9 ? "+9" : unreaded}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </>
   );
 };
 

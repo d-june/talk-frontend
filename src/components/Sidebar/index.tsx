@@ -23,7 +23,7 @@ type PropsType = {
 const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
   const dispatch = useAppDispatch();
 
-  const { items } = useSelector(selectDialogsData);
+  const { items, isLoading } = useSelector(selectDialogsData);
   const { token } = useSelector((state: RootState) => state.me);
 
   const [filtered, setFilteredItems] = useState(Array.from(items));
@@ -56,7 +56,7 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
       socket.removeListener("SERVER:DIALOG_CREATED", fetchDialogs);
       socket.removeListener("SERVER:NEW_MESSAGE", fetchDialogs);
     };
-  }, [items]);
+  }, [items.length]);
 
   const onShow = () => {
     setVisible(true);
@@ -82,10 +82,14 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
           onChange={(e) => onChangeInput(e.target.value)}
         />
       </div>
-      {filtered.length > 0 ? (
-        <Dialogs items={filtered} setSidebarOpen={setSidebarOpen} />
-      ) : (
+      {filtered.length < 0 && !isLoading ? (
         <Empty description="Ничего не нашлось :(" light />
+      ) : (
+        <Dialogs
+          items={filtered}
+          isLoading={isLoading}
+          setSidebarOpen={setSidebarOpen}
+        />
       )}
       <CreateDialogForm
         setInputValue={setInputValue}

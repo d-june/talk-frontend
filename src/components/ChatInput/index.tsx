@@ -8,13 +8,13 @@ import {
 } from "@ant-design/icons";
 
 import styles from "./ChatInput.module.scss";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { sendMessage } from "../../redux/slices/messages/asyncActions";
 import { RootState } from "../../redux/store";
 import { useSelector } from "react-redux";
 
 import TextArea from "antd/es/input/TextArea";
-// @ts-ignore
+
 import EmojiPicker from "emoji-picker-react";
 
 import { filesApi } from "../../api/files-api";
@@ -23,7 +23,7 @@ import { setAttachments } from "../../redux/slices/attachments/slice";
 import socket from "../../socket/socket";
 import { useAppDispatch } from "../../hooks/hooks";
 
-const ChatInput = () => {
+const ChatInput: FC = () => {
   (window.navigator as any).getUserMedia =
     (window.navigator as any).getUserMedia ||
     (window.navigator as any).mozGetUserMedia ||
@@ -164,7 +164,7 @@ const ChatInput = () => {
             onKeyUp={handleSendMessage}
             value={value}
             size="large"
-            placeholder="Введите текст сообщения"
+            placeholder="Текст сообщения..."
             autoSize={{ minRows: 1, maxRows: 6 }}
           ></TextArea>
         )}

@@ -17,8 +17,12 @@ const dialogsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(getDialogs.pending, (state, action) => {
+      state.isLoading = true;
+    });
     builder.addCase(getDialogs.fulfilled, (state, action) => {
       state.items = action.payload;
+      state.isLoading = false;
     });
     builder.addCase(findDialogId.pending, (state, action) => {
       state.isLoading = true;
