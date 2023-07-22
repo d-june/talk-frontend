@@ -16,12 +16,17 @@ import classNames from "classnames";
 
 import { addMessage } from "../../redux/slices/messages/slice";
 import { useAppDispatch } from "../../hooks/hooks";
+import { UserInfoType } from "../../redux/slices/users/types";
+import avatar from "../Avatar";
 
 const Messages = () => {
   const dispatch = useAppDispatch();
-  const currentDialogId = useSelector(
-    (state: RootState) => state.dialogs.currentDialogId
+  const { currentDialogId, items } = useSelector(
+    (state: RootState) => state.dialogs
   );
+  const { _id } = useSelector((state: RootState) => state.me);
+  const currentDialog = items.filter((item) => item._id === currentDialogId)[0];
+
   const messages = useSelector(selectMessagesData);
   const isLoading = useSelector(selectLoading);
 
@@ -29,6 +34,25 @@ const Messages = () => {
   let typingTimeoutId: any = null;
 
   const messagesRef = useRef<HTMLDivElement>(null);
+
+  let partner = {} as {
+    fullName: string;
+    _id: string;
+    avatar: string | undefined | null;
+  };
+  const isPartner = () => {
+    if (currentDialog) {
+      if (_id === currentDialog.partner._id) {
+        partner = currentDialog.author;
+      } else {
+        partner = currentDialog.partner;
+      }
+    }
+
+    return partner;
+  };
+
+  isPartner();
 
   const onNewMessage = (data: any) => {
     dispatch(addMessage({ currentDialogId, data }));
@@ -90,8 +114,13 @@ const Messages = () => {
       <div>
         {isTyping && (
           <Message
-            _id={"0"}
-            user={{ fullName: "Amo", _id: "51561" }}
+            _id=""
+            user={{
+              fullName: partner.fullName,
+              _id: partner._id,
+              avatar: partner.avatar,
+            }}
+            key={partner._id}
             isTyping={isTyping}
           />
         )}

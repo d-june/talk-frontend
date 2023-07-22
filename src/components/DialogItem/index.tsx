@@ -24,8 +24,8 @@ type PropsType = {
 };
 const DialogItem: FC<DialogType & PropsType> = ({
   _id,
-  partner,
   unreaded,
+  partner,
   author,
   lastMessage,
   setSidebarOpen,
@@ -34,7 +34,7 @@ const DialogItem: FC<DialogType & PropsType> = ({
   const dispatch = useAppDispatch();
 
   const { data } = useSelector((state: RootState) => state.me);
-  const isMe = data && author._id === data._id;
+  const isMe = lastMessage.user._id === data?._id;
   const { currentDialogId } = useSelector(selectDialogsData);
   const { items } = useSelector(selectDialogsData);
 
@@ -46,6 +46,8 @@ const DialogItem: FC<DialogType & PropsType> = ({
       return format(createdAtDate, "dd.MM.yyyy");
     }
   };
+
+  console.log(lastMessage);
 
   const onChangeCurrentDialogId = () => {
     socket.emit("DIALOGS:JOIN", _id);
@@ -97,14 +99,8 @@ const DialogItem: FC<DialogType & PropsType> = ({
             <div className={styles.dialogItemInfoBottom}>
               <p>{renderLastMessage(lastMessage, data?._id)}</p>
               <div className={styles.messageIconReaded}>
-                {isMe && <IconReaded isMe={true} isReaded={false} />}
+                {isMe && <IconReaded isMe={isMe} isReaded={lastMessage.read} />}
               </div>
-
-              {unreaded > 0 && (
-                <div className={styles.dialogItemCount}>
-                  {unreaded > 9 ? "+9" : unreaded}
-                </div>
-              )}
             </div>
           </div>
         </div>

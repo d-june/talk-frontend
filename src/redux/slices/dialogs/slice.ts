@@ -15,6 +15,16 @@ const dialogsSlice = createSlice({
     setCurrentDialogId(state, action) {
       state.currentDialogId = action.payload;
     },
+    updateReaded(state, action) {
+      debugger;
+      state.items = state.items.map((dialog) => {
+        if (dialog._id === action.payload.dialogId) {
+          dialog.lastMessage.read = true;
+        }
+
+        return dialog;
+      });
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getDialogs.pending, (state, action) => {
@@ -33,5 +43,5 @@ const dialogsSlice = createSlice({
     });
   },
 });
-export const { setCurrentDialogId } = dialogsSlice.actions;
+export const { setCurrentDialogId, updateReaded } = dialogsSlice.actions;
 export default dialogsSlice.reducer;

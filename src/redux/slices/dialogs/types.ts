@@ -21,6 +21,10 @@ export type DialogType = {
   lastMessage: {
     text: string;
     createdAt: string;
+    read: boolean;
+    user: {
+      _id: string;
+    };
   };
   setSidebarOpen?: Dispatch<SetStateAction<boolean>>;
 };

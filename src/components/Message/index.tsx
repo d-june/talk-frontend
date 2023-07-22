@@ -120,6 +120,7 @@ const Message: FC<MessageType & MessagePropsType> = ({
                   <span></span>
                 </div>
               )}
+
               {audio && <MessageAudio audioSrc={audio} />}
             </div>
           )}

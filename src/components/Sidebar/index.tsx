@@ -14,6 +14,7 @@ import { FormOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 
 import styles from "./Sidebar.module.scss";
+import { updateReaded } from "../../redux/slices/dialogs/slice";
 
 type PropsType = {
   sidebarOpen?: boolean;
@@ -24,13 +25,21 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
   const dispatch = useAppDispatch();
 
   const { items, isLoading } = useSelector(selectDialogsData);
-  const { token } = useSelector((state: RootState) => state.me);
+  const { token, data } = useSelector((state: RootState) => state.me);
+  const { currentDialogId } = useSelector((state: RootState) => state.dialogs);
 
   const [filtered, setFilteredItems] = useState(Array.from(items));
   const [inputValue, setInputValue] = useState("");
   const [visible, setVisible] = useState(false);
   const fetchDialogs = () => {
     dispatch(getDialogs(token));
+  };
+
+  const updateReadedStatus = () => {
+    if (data?._id) {
+      const id = data._id;
+      dispatch(updateReaded({ id, currentDialogId }));
+    }
   };
 
   const onChangeInput = (value: any) => {
@@ -52,6 +61,7 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
     }
     socket.on("SERVER:DIALOG_CREATED", fetchDialogs);
     socket.on("SERVER:NEW_MESSAGE", fetchDialogs);
+    socket.on("SERVER:MESSAGES_READED", updateReadedStatus);
     return () => {
       socket.removeListener("SERVER:DIALOG_CREATED", fetchDialogs);
       socket.removeListener("SERVER:NEW_MESSAGE", fetchDialogs);

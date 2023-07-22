@@ -7,7 +7,7 @@ export type MessageType = {
   user: {
     _id: string;
     fullName: string;
-    avatar?: string;
+    avatar?: string | null;
   };
 
   dialog?: string;
