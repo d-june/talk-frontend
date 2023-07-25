@@ -26,11 +26,11 @@ import {
 import styles from "./ChatInput.module.scss";
 
 const ChatInput: FC = () => {
-  (window.navigator as any).getUserMedia =
-    (window.navigator as any).getUserMedia ||
-    (window.navigator as any).mozGetUserMedia ||
-    (window.navigator as any).msGetUserMedia ||
-    (window.navigator as any).webkitGetUserMedia;
+  (navigator as any).getUserMedia =
+    (navigator as any).getUserMedia ||
+    (navigator as any).mozGetUserMedia ||
+    (navigator as any).msGetUserMedia ||
+    (navigator as any).webkitGetUserMedia;
 
   const [value, setValue] = useState("");
   const [emojiPickerVisible, setShowEmojiPicker] = useState(false);
