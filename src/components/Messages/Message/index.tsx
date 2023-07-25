@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 
@@ -27,7 +27,6 @@ type MessagePropsType = {
     filename?: string;
     ext: string;
   }>;
-  audio?: string;
 };
 
 const Message: FC<MessageType & MessagePropsType> = ({
@@ -46,15 +45,6 @@ const Message: FC<MessageType & MessagePropsType> = ({
     isMe = user._id === data._id;
   }
 
-  let audio = "" as string | undefined;
-
-  if (
-    attachments?.length &&
-    (attachments[0].ext === "webm" || attachments[0].ext === "mp4")
-  ) {
-    audio = attachments[0].url;
-  }
-
   const dispatch = useAppDispatch();
 
   const onRemoveMessage = () => {
@@ -65,7 +55,7 @@ const Message: FC<MessageType & MessagePropsType> = ({
     }
   };
   const renderAttachment = (item: any) => {
-    if (item.ext !== "webm") {
+    if (item.ext !== "webm" && item.ext !== "mp4") {
       return (
         <div
           key={item._id}
@@ -129,8 +119,6 @@ const Message: FC<MessageType & MessagePropsType> = ({
                   <span></span>
                 </div>
               )}
-
-              {audio && <MessageAudio audioSrc={audio} />}
             </div>
           )}
         </div>

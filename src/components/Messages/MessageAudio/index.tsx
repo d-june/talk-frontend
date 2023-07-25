@@ -8,7 +8,7 @@ import styles from "./MessageAudio.module.scss";
 import waveSvg from "../../../assets/img/wave.svg";
 
 type MessageAudioProps = {
-  audioSrc: string;
+  audioSrc: string | undefined;
 };
 
 const MessageAudio: FC<MessageAudioProps> = ({ audioSrc }) => {
