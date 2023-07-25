@@ -70,6 +70,7 @@ const ChatInput: FC = () => {
         })
         .catch((err: any) => {
           onError(err);
+          alert(err);
         });
     }
   };
