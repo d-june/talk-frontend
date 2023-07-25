@@ -26,12 +26,6 @@ import {
 import styles from "./ChatInput.module.scss";
 
 const ChatInput: FC = () => {
-  (navigator as any).getUserMedia =
-    (navigator as any).getUserMedia ||
-    (navigator as any).mozGetUserMedia ||
-    (navigator as any).msGetUserMedia ||
-    (navigator as any).webkitGetUserMedia;
-
   const [value, setValue] = useState("");
   const [emojiPickerVisible, setShowEmojiPicker] = useState(false);
   const dispatch = useAppDispatch();
@@ -61,7 +55,7 @@ const ChatInput: FC = () => {
   }, []);
 
   const onRecord = () => {
-    if ((navigator as any).getUserMedia) {
+    if ((navigator as any).mediaDevices.getUserMedia) {
       (navigator as any).mediaDevices
         .getUserMedia({ audio: true })
         .then((stream: any) => {
