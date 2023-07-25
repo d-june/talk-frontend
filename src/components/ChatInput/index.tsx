@@ -60,11 +60,10 @@ const ChatInput: FC = () => {
         .getUserMedia({ audio: true })
         .then((stream: any) => {
           onRecording(stream);
-          console.log("work");
         })
         .catch((err: any) => {
           onError(err);
-          alert(err);
+          alert("Что-то пошло не так(");
         });
     }
   };
@@ -72,7 +71,6 @@ const ChatInput: FC = () => {
   const onRecording = (stream: any) => {
     const recorder = new MediaRecorder(stream);
     setMediaRecorder(recorder);
-    alert("record");
     recorder.start();
 
     recorder.onstart = () => {
