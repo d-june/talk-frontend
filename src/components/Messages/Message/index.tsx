@@ -25,6 +25,7 @@ type MessagePropsType = {
   attachments?: Array<{
     url?: string;
     filename?: string;
+    ext: string;
   }>;
   audio?: string;
 };
@@ -36,7 +37,6 @@ const Message: FC<MessageType & MessagePropsType> = ({
   createdAt,
   isReaded,
   attachments,
-  audio,
   isTyping,
 }) => {
   const [previewImage, setPreviewImage] = useState("");
@@ -44,6 +44,15 @@ const Message: FC<MessageType & MessagePropsType> = ({
   let isMe = false;
   if (data) {
     isMe = user._id === data._id;
+  }
+
+  let audio = "" as string | undefined;
+
+  if (
+    attachments?.length &&
+    (attachments[0].ext === "webm" || attachments[0].ext === "mp4")
+  ) {
+    audio = attachments[0].url;
   }
 
   const dispatch = useAppDispatch();
