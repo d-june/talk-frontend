@@ -78,7 +78,7 @@ const ChatInput: FC = () => {
   const onRecording = (stream: any) => {
     const recorder = new MediaRecorder(stream);
     setMediaRecorder(recorder);
-
+    alert("record");
     recorder.start();
 
     recorder.onstart = () => {
