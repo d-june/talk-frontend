@@ -4,7 +4,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/hooks";
 
-import { AuthBlock, Button, SpinIcon } from "../index";
+import { AuthBlock, Button } from "../index";
 import { login } from "../../redux/slices/me/asyncActions";
 
 import { Form, Input, notification } from "antd";

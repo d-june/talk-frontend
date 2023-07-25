@@ -1,12 +1,15 @@
+import { DialogType } from "../../redux/slices/dialogs/types";
+import { UserInfoType } from "../../redux/slices/users/types";
+
 export const getPartnerInDialog = (
   currentDialogId: string | null,
-  items: any,
-  data: any
+  items: Array<DialogType>,
+  data: UserInfoType | null
 ) => {
-  let partner = {} as any;
+  let partner = {} as UserInfoType | null;
 
   const currentDialogObj = items.filter(
-    (dialog: any) => dialog._id === currentDialogId
+    (dialog: DialogType) => dialog._id === currentDialogId
   )[0];
 
   if (data && currentDialogObj?.author._id === data._id) {
@@ -22,10 +25,10 @@ export const getPartnerInDialog = (
 };
 
 export const getPartner = (
-  items: any,
-  data: any,
-  author: any,
-  partner: any
+  items: Array<DialogType>,
+  data: UserInfoType | null,
+  author: UserInfoType,
+  partner: UserInfoType | null
 ) => {
   if (!items.length) {
     return null;

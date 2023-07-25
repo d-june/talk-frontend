@@ -1,0 +1,87 @@
+@import "../../../styles/variables";
+
+.status {
+  width: 100%;
+  margin-top: 20px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.emptyStatus {
+  opacity: 0.3;
+}
+
+.statusIsEmpty {
+  display: none;
+}
+
+.statusEdit {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  :global(.ant-form-item-control){
+    margin: 0;
+  }
+  input {
+    width: 100%;
+    height: 40px;
+    padding: 10px 20px;
+    transition: all 0.3s ease-in-out;
+    &:active, &:focus, &:hover {
+      border: 1px solid $grey;
+      box-shadow: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    gap: 5px;
+    flex-direction: column;
+
+    :global(.ant-form-item) {
+      width: 100%;
+    }
+  }
+
+}
+
+
+.editButton {
+  opacity: 0.4;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    color: $blue;
+    opacity: 1;
+  }
+}
+
+
+.editButtonStatus:hover {
+  opacity: 0.6;
+}
+
+
+.statusButton {
+  color: $grey;
+  height: 40px;
+  border-radius: 5px;
+  padding: 10px 20px;
+  background: white;
+  transition: opacity 0.3s ease-in-out;
+  &:hover {
+    opacity: 0.6;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+
+  }
+}
+
+:global(.ant-form-item) {
+  margin-bottom: 0px;
+}

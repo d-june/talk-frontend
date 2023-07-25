@@ -46,8 +46,9 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
     setFilteredItems(
       items.filter(
         (dialog) =>
+          dialog.partner &&
           dialog.partner.fullName.toLowerCase().indexOf(value.toLowerCase()) >=
-          0
+            0
       )
     );
     setInputValue(value);

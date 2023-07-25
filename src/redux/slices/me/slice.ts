@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getMe, login, register, verifyHash } from "./asyncActions";
-import { MeData } from "./types";
+import { UserInfoType } from "../users/types";
 
 interface MeSliceType {
   _id: null | string;
-  data: null | MeData;
+  data: null | UserInfoType;
   token: string;
   isAuth: boolean;
   status: "" | "error" | "success";

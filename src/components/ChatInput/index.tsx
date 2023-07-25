@@ -1,4 +1,20 @@
+import { FC, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import socket from "../../socket/socket";
+
+import EmojiPicker from "emoji-picker-react";
+
+import { useAppDispatch } from "../../hooks/hooks";
+import { setAttachments } from "../../redux/slices/attachments/slice";
+import { RootState } from "../../redux/store";
+import { sendMessage } from "../../redux/slices/messages/asyncActions";
+
+import { filesApi } from "../../api/files-api";
+
+import { ChatUpload, UploadFiles } from "../index";
+
 import { Button } from "antd";
+import TextArea from "antd/es/input/TextArea";
 import {
   AudioOutlined,
   CloseCircleOutlined,
@@ -8,27 +24,13 @@ import {
 } from "@ant-design/icons";
 
 import styles from "./ChatInput.module.scss";
-import { FC, useEffect, useState } from "react";
-import { sendMessage } from "../../redux/slices/messages/asyncActions";
-import { RootState } from "../../redux/store";
-import { useSelector } from "react-redux";
-
-import TextArea from "antd/es/input/TextArea";
-
-import EmojiPicker from "emoji-picker-react";
-
-import { filesApi } from "../../api/files-api";
-import { ChatUpload, UploadFiles } from "../index";
-import { setAttachments } from "../../redux/slices/attachments/slice";
-import socket from "../../socket/socket";
-import { useAppDispatch } from "../../hooks/hooks";
 
 const ChatInput: FC = () => {
-  (window.navigator as any).getUserMedia =
-    (window.navigator as any).getUserMedia ||
-    (window.navigator as any).mozGetUserMedia ||
-    (window.navigator as any).msGetUserMedia ||
-    (window.navigator as any).webkitGetUserMedia;
+  // (window.navigator as any).getUserMedia =
+  //   (window.navigator as any).getUserMedia ||
+  //   (window.navigator as any).mozGetUserMedia ||
+  //   (window.navigator as any).msGetUserMedia ||
+  //   (window.navigator as any).webkitGetUserMedia;
 
   const [value, setValue] = useState("");
   const [emojiPickerVisible, setShowEmojiPicker] = useState(false);
@@ -60,7 +62,15 @@ const ChatInput: FC = () => {
 
   const onRecord = () => {
     if ((navigator as any).getUserMedia) {
-      (navigator as any).getUserMedia({ audio: true }, onRecording, onError);
+      const constrains = (navigator as any).mediaDevices
+        .getUserMedia({ audio: true })
+        .then((stream: any) => {
+          onRecording(stream);
+          console.log("work");
+        })
+        .catch((err: any) => {
+          onError(err);
+        });
     }
   };
 

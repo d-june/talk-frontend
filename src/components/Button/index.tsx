@@ -1,15 +1,14 @@
-import { Component, FC, ReactElement } from "react";
+import { FC, ReactElement } from "react";
 
 import classNames from "classnames";
 
-import { SizeType } from "antd/es/config-provider/SizeContext";
 import { Button as BaseButton } from "antd";
-
-// @ts-ignore
-import styles from "./Button.module.scss";
 import { ButtonHTMLType } from "antd/es/button";
+import { SizeType } from "antd/es/config-provider/SizeContext";
 
-type ButtonProps = {
+import styles from "./Button.module.scss";
+
+type PropsType = {
   className?: string;
   children: string | ReactElement;
 
@@ -23,13 +22,13 @@ type ButtonProps = {
     | undefined;
   htmlType?: ButtonHTMLType;
   size: SizeType;
-  onClick?: any;
-  onSubmit?: any;
+  onClick?: () => void;
+  onSubmit?: () => void;
   disabled?: boolean;
   loading?: boolean;
   isLoading?: boolean;
 };
-const Button: FC<ButtonProps> = (props) => {
+const Button: FC<PropsType> = (props) => {
   return (
     <BaseButton
       className={classNames(styles.button, props.className)}

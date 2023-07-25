@@ -1,15 +1,16 @@
-import styles from "./Avatar.module.scss";
 import { FC } from "react";
 import classNames from "classnames";
 
-type AvatarProps = {
+import styles from "./Avatar.module.scss";
+
+type PropsType = {
   _id: string;
   fullName: string;
   avatar?: string | null;
   bigSize?: boolean;
 };
 
-const Avatar: FC<AvatarProps> = ({ _id, fullName, avatar, bigSize }) => {
+const Avatar: FC<PropsType> = ({ _id, fullName, avatar, bigSize }) => {
   if (avatar) {
     return <img src={avatar} alt={`Avatar ${fullName}`} />;
   } else {

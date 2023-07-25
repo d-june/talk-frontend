@@ -16,16 +16,14 @@ import classNames from "classnames";
 
 import { addMessage } from "../../redux/slices/messages/slice";
 import { useAppDispatch } from "../../hooks/hooks";
-import { UserInfoType } from "../../redux/slices/users/types";
-import avatar from "../Avatar";
+import { getPartnerInDialog } from "../../utils/helpers/getPartner";
 
 const Messages = () => {
   const dispatch = useAppDispatch();
   const { currentDialogId, items } = useSelector(
     (state: RootState) => state.dialogs
   );
-  const { _id } = useSelector((state: RootState) => state.me);
-  const currentDialog = items.filter((item) => item._id === currentDialogId)[0];
+  const { data } = useSelector((state: RootState) => state.me);
 
   const messages = useSelector(selectMessagesData);
   const isLoading = useSelector(selectLoading);
@@ -35,24 +33,8 @@ const Messages = () => {
 
   const messagesRef = useRef<HTMLDivElement>(null);
 
-  let partner = {} as {
-    fullName: string;
-    _id: string;
-    avatar: string | undefined | null;
-  };
-  const isPartner = () => {
-    if (currentDialog) {
-      if (_id === currentDialog.partner._id) {
-        partner = currentDialog.author;
-      } else {
-        partner = currentDialog.partner;
-      }
-    }
-
-    return partner;
-  };
-
-  isPartner();
+  let partner = {} as any;
+  partner = getPartnerInDialog(currentDialogId, items, data);
 
   const onNewMessage = (data: any) => {
     dispatch(addMessage({ currentDialogId, data }));

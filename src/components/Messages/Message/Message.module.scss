@@ -1,0 +1,182 @@
+@import "../../../styles/variables";
+
+.message {
+  display: flex;
+  max-width: 70%;
+  margin-bottom: 15px;
+  gap: 10px;
+  .messageAvatar {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-bottom: 22px;
+    img, div {
+      border-radius: 50px;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+    }
+
+  }
+
+  .messageBody {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 10px;
+    min-width: 10px;
+  }
+
+  .messageBubble {
+    flex: 1 1 auto;
+    background: $blue;
+    box-shadow: 0px 5px 5px $boxShadow;
+    border-radius: 12px 12px 12px 0px;
+    padding: 15px;
+  }
+
+  .messageText {
+    color: $white;
+  }
+
+  .messageTyping {
+    span {
+      height: 8px;
+      width: 8px;
+      border-radius: 50%;
+      background: #c1c1c1;
+      display: inline-block;
+      margin-right: 8px;
+      animation: typingAnimation 1000ms ease-in-out infinite;
+      &:nth-of-type(2) {
+        animation-delay: 333ms
+      }
+      &:nth-of-type(3) {
+        animation-delay: 666ms
+      }
+    }
+  }
+
+  @keyframes typingAnimation {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .messageAttachments {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 5px 0;
+  }
+
+  .messageAttachmentsItem {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0px 5px 5px $boxShadow;
+    cursor: pointer;
+    position: relative;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .messageAttachmentsItemOverlay {
+      background: rgba(0,0,0,0.6);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+      svg {
+        font-size: 18px;
+        color: white;
+      }
+    }
+    &:hover {
+      .messageAttachmentsItemOverlay {
+        opacity: 1;
+      }
+    }
+  }
+
+  .messageDate {
+    font-size: 12px;
+    opacity: 0.6;
+  }
+}
+
+.messageImage {
+    .messageAttachmentsItem {
+      width: 150px;
+      height: 150px;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+  }
+
+}
+
+.messageIsTyping {
+  .messageBubble {
+    background: $message-typing-grey;
+    box-shadow: 0 5px 5px rgba(54, 116, 255, 0.04);
+    padding: 15px 18px;
+  }
+}
+
+.messageMe {
+  display: flex;
+  flex-direction: row-reverse;
+  align-self: flex-end;
+
+  .messageBody {
+    flex-direction: row;
+  }
+
+  .messageBubble {
+    background: $purple;
+    border-radius: 12px 12px 0px 12px;
+  }
+  .messageText {
+    text-align: right;
+  }
+
+  .messageDate {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  .messageIcons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  .messageIconsDelete {
+    opacity: 0.5;
+    transition: 0.3s ease-in-out 0s;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+.messagePhotoModal {
+  img {
+    width: 100%;
+  }
+}
+

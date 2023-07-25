@@ -1,20 +1,18 @@
-import { Form, Input } from "antd";
-import {
-  LockOutlined,
-  UserOutlined,
-  MailOutlined,
-  InfoCircleTwoTone,
-} from "@ant-design/icons";
-import { Button, AuthBlock, CheckEmailInfo } from "../index";
-import { Link, Navigate } from "react-router-dom";
 import React from "react";
+import { Link, Navigate } from "react-router-dom";
 
-// @ts-ignore
-import styles from "./RegisterForm.module.scss";
-import { RootState } from "../../redux/store";
-import { register } from "../../redux/slices/me/asyncActions";
-import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/hooks";
+import { RootState } from "../../redux/store";
+import { useSelector } from "react-redux";
+
+import { register } from "../../redux/slices/me/asyncActions";
+
+import { Button, AuthBlock } from "../index";
+
+import { Form, Input } from "antd";
+import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
+
+import styles from "./RegisterForm.module.scss";
 
 const RegisterForm = () => {
   const [form] = Form.useForm();
