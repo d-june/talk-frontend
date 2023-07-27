@@ -4,6 +4,8 @@ import { Link, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../hooks/hooks";
 
+import { LoginType } from "../../redux/slices/me/types";
+
 import { AuthBlock, Button } from "../index";
 import { login } from "../../redux/slices/me/asyncActions";
 
@@ -19,8 +21,9 @@ const LoginForm = () => {
   const [api, contextHolder] = notification.useNotification();
   const { isAuth, isLoading } = useSelector((state: RootState) => state.me);
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: LoginType) => {
     dispatch(login(values));
+    console.log(values);
   };
 
   useEffect(() => {

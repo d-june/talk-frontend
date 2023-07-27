@@ -1,15 +1,17 @@
-// @ts-ignore
-import styles from "./CheckEmailInfo.module.scss";
-import { InfoCircleTwoTone } from "@ant-design/icons";
-import React, { useEffect, useState } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import { RootState } from "../../../redux/store";
+import { useAppDispatch } from "../../../hooks/hooks";
+
 import { verifyHash } from "../../../redux/slices/me/asyncActions";
+
+import { Button } from "../../index";
+
 import { Result } from "antd";
 import { ResultStatusType } from "antd/es/result";
-import { Button } from "../../index";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../../hooks/hooks";
+import styles from "./CheckEmailInfo.module.scss";
 
 const CheckEmailInfo = () => {
   const { accountVerified } = useSelector((state: RootState) => state.me);
@@ -49,6 +51,7 @@ const CheckEmailInfo = () => {
       dispatch(verifyHash(hash));
     }
   });
+
   return (
     <div className={styles.successBlock}>
       <Result

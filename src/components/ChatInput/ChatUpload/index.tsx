@@ -1,22 +1,30 @@
-// @ts-ignore
-import { UploadField } from "@navjobs/upload";
-import { Button } from "antd";
-import { CameraOutlined } from "@ant-design/icons";
+import { useAppDispatch } from "../../../hooks/hooks";
+
 import {
   removeAttachment,
   setAttachments,
 } from "../../../redux/slices/attachments/slice";
 import { filesApi } from "../../../api/files-api";
-import { useAppDispatch } from "../../../hooks/hooks";
 
+import { Button } from "antd";
+import { CameraOutlined } from "@ant-design/icons";
+
+// @ts-ignore
+import { UploadField } from "@navjobs/upload";
+
+type FileType = {
+  uid: number;
+  name: string;
+  status: string;
+};
 const ChatUpload = () => {
   const dispatch = useAppDispatch();
-  const onRemove = (file: any) => {
+  const onRemove = (file: File) => {
     dispatch(removeAttachment(file));
   };
 
-  const onSelectFiles = async (files: any) => {
-    let uploaded: any = [];
+  const onSelectFiles = async (files: File[]) => {
+    let uploaded: FileType[] = [];
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
       const uid = Math.round(Math.random() * 1000);
@@ -30,7 +38,7 @@ const ChatUpload = () => {
       ];
       dispatch(setAttachments(uploaded));
       await filesApi.upload(file).then(({ data }) => {
-        uploaded = uploaded.map((item: any) => {
+        uploaded = uploaded.map((item: FileType) => {
           if (item.uid === uid) {
             return {
               status: "done",
@@ -56,7 +64,7 @@ const ChatUpload = () => {
         accept: ".jpg,.jpeg,.png,.gif,.bmp",
         multiple: "multiple",
       }}
-      onRemove={(file: any) => onRemove(file)}
+      onRemove={(file: File) => onRemove(file)}
     >
       <Button type="link">
         <CameraOutlined />

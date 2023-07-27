@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { DialogType } from "./types";
-import { findDialogId, getDialogs } from "./asyncActions";
+import { createDialog, findDialogId, getDialogs } from "./asyncActions";
 
 const initialState = {
   items: [] as Array<DialogType>,
@@ -16,7 +16,6 @@ const dialogsSlice = createSlice({
       state.currentDialogId = action.payload;
     },
     updateReaded(state, action) {
-      debugger;
       state.items = state.items.map((dialog) => {
         if (dialog._id === action.payload.dialogId) {
           dialog.lastMessage.read = true;
@@ -41,6 +40,7 @@ const dialogsSlice = createSlice({
       state.currentDialogId = action.payload[0]?._id;
       state.isLoading = false;
     });
+    builder.addCase(createDialog.fulfilled, (state, action) => {});
   },
 });
 export const { setCurrentDialogId, updateReaded } = dialogsSlice.actions;

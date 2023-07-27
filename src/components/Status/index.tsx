@@ -6,6 +6,7 @@ import { getPartnerInDialog } from "../../utils/helpers/getPartner";
 
 import classNames from "classnames";
 import styles from "./Status.module.scss";
+import { UserInfoType } from "../../redux/slices/users/types";
 
 const Status: FC = () => {
   const { currentDialogId, items } = useSelector(
@@ -13,7 +14,7 @@ const Status: FC = () => {
   );
   const { data } = useSelector((state: RootState) => state.me);
 
-  let partner = {} as any;
+  let partner = {} as UserInfoType | null;
   partner = getPartnerInDialog(currentDialogId, items, data);
 
   if (!items.length || !currentDialogId) {

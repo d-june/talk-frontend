@@ -1,3 +1,5 @@
+import { AttachmentsType } from "../attachments/types";
+
 export type MessagesType = Array<MessageType>;
 
 export type MessageType = {
@@ -6,9 +8,11 @@ export type MessageType = {
   createdAt?: string;
   user: {
     _id: string;
-    fullName: string;
+    fullName?: string;
     avatar?: string | null;
   };
 
   dialog?: string;
+  attachments?: Array<AttachmentsType>;
+  read?: boolean;
 };

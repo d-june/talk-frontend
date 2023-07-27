@@ -2,15 +2,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 import { FC, useState } from "react";
 
+import { useAppDispatch } from "../../../hooks/hooks";
+
 import { Button } from "../../index";
 
-import { Form, Modal, Select } from "antd";
-import TextArea from "antd/es/input/TextArea";
 import { findUsers } from "../../../redux/slices/users/asyncActions";
 import { createDialog } from "../../../redux/slices/dialogs/asyncActions";
 
+import { Form, Modal, Select } from "antd";
+import TextArea from "antd/es/input/TextArea";
 import styles from "./CreateDialogForm.module.scss";
-import { useAppDispatch } from "../../../hooks/hooks";
 
 type CreateDialogFormType = {
   setVisible: (value: boolean) => void;
@@ -21,11 +22,9 @@ type CreateDialogFormType = {
 };
 const CreateDialogForm: FC<CreateDialogFormType> = ({
   setInputValue,
-
   inputValue,
   visible,
   setVisible,
-
   selectedId,
 }) => {
   const dispatch = useAppDispatch();
@@ -55,7 +54,7 @@ const CreateDialogForm: FC<CreateDialogFormType> = ({
     setSelectedUserId(user.value);
   };
 
-  const onChangeTextArea = (e: any) => {
+  const onChangeTextArea = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setMessageText(e.target.value);
   };
 
@@ -65,7 +64,6 @@ const CreateDialogForm: FC<CreateDialogFormType> = ({
     } else {
       dispatch(createDialog({ selectedUserId, messageText }));
     }
-
     onClose();
   };
 
@@ -102,7 +100,7 @@ const CreateDialogForm: FC<CreateDialogFormType> = ({
         <Form.Item>
           <Select
             showSearch
-            value={inputValue}
+            defaultValue={inputValue}
             placeholder="Найти пользователя"
             style={{ width: "100%" }}
             labelInValue

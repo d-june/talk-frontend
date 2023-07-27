@@ -16,7 +16,6 @@
       height: 40px;
       object-fit: cover;
     }
-
   }
 
   .messageBody {
@@ -108,6 +107,15 @@
       .messageAttachmentsItemOverlay {
         opacity: 1;
       }
+    }
+  }
+
+  .messageAttachmentsOne {
+    width: 100px;
+    height: 100px;
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
 

@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import { useAppDispatch } from "../../hooks/hooks";
 import { RootState } from "../../redux/store";
-import { useSelector } from "react-redux";
 
 import { register } from "../../redux/slices/me/asyncActions";
 
@@ -11,8 +11,8 @@ import { Button, AuthBlock } from "../index";
 
 import { Form, Input } from "antd";
 import { LockOutlined, UserOutlined, MailOutlined } from "@ant-design/icons";
-
 import styles from "./RegisterForm.module.scss";
+import { RegistrationData } from "../../redux/slices/me/types";
 
 const RegisterForm = () => {
   const [form] = Form.useForm();
@@ -20,7 +20,7 @@ const RegisterForm = () => {
   const { registrationSuccess, isLoading } = useSelector(
     (state: RootState) => state.me
   );
-  const onFinish = (values: any) => {
+  const onFinish = (values: RegistrationData) => {
     dispatch(register(values));
   };
   return (

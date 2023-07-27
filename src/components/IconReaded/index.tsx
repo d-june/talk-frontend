@@ -1,14 +1,14 @@
-import { CheckOutlined } from "@ant-design/icons";
-// @ts-ignore
-import styles from "./IconReaded.module.scss";
 import { FC } from "react";
 
-type IconReadedProps = {
+import { CheckOutlined } from "@ant-design/icons";
+import styles from "./IconReaded.module.scss";
+
+type PropsType = {
   isMe?: boolean;
   isReaded?: boolean;
   className?: string;
 };
-const IconReaded: FC<IconReadedProps> = ({ isMe, isReaded }) => {
+const IconReaded: FC<PropsType> = ({ isMe, isReaded }) => {
   return (
     <>
       {isMe && isReaded && <CheckOutlined className={styles.messageChecked} />}

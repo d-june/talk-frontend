@@ -5,21 +5,23 @@ import { Link } from "react-router-dom";
 
 import socket from "../../../../socket/socket";
 import classNames from "classnames";
-import { isToday, format } from "date-fns";
+
+import { useAppDispatch } from "../../../../hooks/hooks";
+import { setCurrentDialogId } from "../../../../redux/slices/dialogs/slice";
+import { DialogType } from "../../../../redux/slices/dialogs/types";
+import { MessageType } from "../../../../redux/slices/messages/types";
+import { selectDialogsData } from "../../../../redux/slices/dialogs/selectors";
 
 import { Avatar, IconReaded } from "../../../index";
 
 import { getPartner } from "../../../../utils/helpers/getPartner";
-import { setCurrentDialogId } from "../../../../redux/slices/dialogs/slice";
-
-import { selectDialogsData } from "../../../../redux/slices/dialogs/selectors";
+import { getTime } from "../../../../utils/helpers/getTime";
 
 import styles from "./DialogItem.module.scss";
-import { DialogType } from "../../../../redux/slices/dialogs/types";
-import { useAppDispatch } from "../../../../hooks/hooks";
 
 type PropsType = {
   isLoading: boolean;
+  setFilteredItems: (value: DialogType[]) => void;
 };
 const DialogItem: FC<DialogType & PropsType> = ({
   _id,
@@ -37,15 +39,6 @@ const DialogItem: FC<DialogType & PropsType> = ({
 
   partner = getPartner(items, data, author, partner);
 
-  const getMessageTime = (createdAt: string) => {
-    const createdAtDate = new Date(createdAt);
-    if (isToday(createdAtDate)) {
-      return format(createdAtDate, "HH:mm");
-    } else {
-      return format(createdAtDate, "dd.MM.yyyy");
-    }
-  };
-
   const onChangeCurrentDialogId = () => {
     socket.emit("DIALOGS:JOIN", _id);
     dispatch(setCurrentDialogId(_id));
@@ -54,11 +47,14 @@ const DialogItem: FC<DialogType & PropsType> = ({
     }
   };
 
-  const renderLastMessage = (message: any, userId: string | undefined) => {
+  const renderLastMessage = (
+    message: MessageType,
+    userId: string | undefined
+  ) => {
     let text = "";
-    if (!message.text && message.attachments.length) {
+    if (!message.text && message.attachments?.length) {
       text = "прикрепленный файл";
-    } else {
+    } else if (message.text) {
       text = message.text;
     }
 
@@ -89,7 +85,7 @@ const DialogItem: FC<DialogType & PropsType> = ({
           <div className={styles.dialogItemInfo}>
             <div className={styles.dialogItemInfoTop}>
               <b>{partner?.fullName}</b>
-              <span>{getMessageTime(lastMessage.createdAt)}</span>
+              <span>{getTime(lastMessage.createdAt)}</span>
             </div>
             <div className={styles.dialogItemInfoBottom}>
               <p>{renderLastMessage(lastMessage, data?._id)}</p>

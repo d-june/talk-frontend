@@ -13,7 +13,9 @@ export const getPartnerInDialog = (
   )[0];
 
   if (data && currentDialogObj?.author._id === data._id) {
-    partner = currentDialogObj.partner;
+    if (currentDialogObj) {
+      partner = currentDialogObj.partner;
+    }
   } else {
     partner = currentDialogObj?.author;
   }
@@ -27,7 +29,7 @@ export const getPartnerInDialog = (
 export const getPartner = (
   items: Array<DialogType>,
   data: UserInfoType | null,
-  author: UserInfoType,
+  author: UserInfoType | null,
   partner: UserInfoType | null
 ) => {
   if (!items.length) {

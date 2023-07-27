@@ -4,10 +4,10 @@ import { useAppDispatch, useAppSelector } from "../../../hooks/hooks";
 
 import { getPosts } from "../../../redux/slices/posts/asyncActions";
 
-import styles from "../Posts.module.scss";
+import { Post } from "../../index";
 
 import { Empty } from "antd";
-import { Post } from "../../index";
+import styles from "../Posts.module.scss";
 
 type PropsType = {
   isMe: boolean;

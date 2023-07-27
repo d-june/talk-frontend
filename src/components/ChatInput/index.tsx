@@ -2,11 +2,12 @@ import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import socket from "../../socket/socket";
 
-import EmojiPicker from "emoji-picker-react";
+import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 
 import { useAppDispatch } from "../../hooks/hooks";
 import { setAttachments } from "../../redux/slices/attachments/slice";
 import { RootState } from "../../redux/store";
+import { AttachmentsType } from "../../redux/slices/attachments/types";
 import { sendMessage } from "../../redux/slices/messages/asyncActions";
 
 import { filesApi } from "../../api/files-api";
@@ -31,7 +32,9 @@ const ChatInput: FC = () => {
   const dispatch = useAppDispatch();
   const { currentDialogId } = useSelector((state: RootState) => state.dialogs);
   const [isRecording, setIsRecording] = useState(false);
-  const [mediaRecorder, setMediaRecorder] = useState<any>(null);
+  const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(
+    null
+  );
   const [isLoading, setLoading] = useState(false);
   const { attachments } = useSelector((state: RootState) => state.attachments);
   const { data } = useSelector((state: RootState) => state.me);
@@ -39,7 +42,7 @@ const ChatInput: FC = () => {
     setShowEmojiPicker(!emojiPickerVisible);
   };
 
-  const handleOutsideClick = (el: any, e: any) => {
+  const handleOutsideClick = (el: any, e: Event) => {
     if (el && !el.contains(e.target)) {
       setShowEmojiPicker(false);
     }
@@ -55,20 +58,20 @@ const ChatInput: FC = () => {
   }, []);
 
   const onRecord = () => {
-    if ((navigator as any).mediaDevices.getUserMedia) {
-      (navigator as any).mediaDevices
+    if (navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices
         .getUserMedia({ audio: true })
-        .then((stream: any) => {
+        .then((stream) => {
           onRecording(stream);
         })
-        .catch((err: any) => {
+        .catch((err: string) => {
           onError(err);
           alert("Что-то пошло не так(");
         });
     }
   };
 
-  const onRecording = (stream: any) => {
+  const onRecording = (stream: MediaStream) => {
     const recorder = new MediaRecorder(stream);
     setMediaRecorder(recorder);
     recorder.start();
@@ -79,6 +82,9 @@ const ChatInput: FC = () => {
 
     recorder.onstop = () => {
       setIsRecording(false);
+      stream.getTracks().forEach((track) => {
+        track.stop();
+      });
     };
 
     recorder.ondataavailable = (e) => {
@@ -92,11 +98,11 @@ const ChatInput: FC = () => {
     };
   };
 
-  const onError = (err: any) => {
+  const onError = (err: string) => {
     console.log("The following error occured: " + err);
   };
 
-  const sendAudio = (audioId: any) => {
+  const sendAudio = (audioId: string) => {
     setIsRecording(false);
     return dispatch(
       sendMessage({
@@ -108,14 +114,14 @@ const ChatInput: FC = () => {
   };
 
   const onSendMessage = () => {
-    if (isRecording) {
+    if (isRecording && mediaRecorder) {
       mediaRecorder.stop();
     } else if (value || attachments.length) {
       dispatch(
         sendMessage({
           text: value,
           dialogId: currentDialogId,
-          attachments: attachments.map((file: any) => file.uid),
+          attachments: attachments.map((file: AttachmentsType) => file.uid),
         })
       );
 
@@ -124,7 +130,7 @@ const ChatInput: FC = () => {
     }
   };
 
-  const handleSendMessage = (e: any) => {
+  const handleSendMessage = (e: React.KeyboardEvent) => {
     socket.emit("DIALOGS:TYPING", { dialogId: currentDialogId, data });
     if (e.keyCode === 13) {
       onSendMessage();
@@ -134,7 +140,7 @@ const ChatInput: FC = () => {
   const onHideRecording = () => {
     setIsRecording(false);
   };
-  const addEmoji = (emojiData: any) => {
+  const addEmoji = (emojiData: EmojiClickData) => {
     setValue(value + " " + emojiData.emoji);
     setShowEmojiPicker(false);
   };

@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { useAppDispatch } from "../../hooks/hooks";
 
 import socket from "../../socket/socket";
 
+import { UserInfoType } from "../../redux/slices/users/types";
+
+import { getPartnerInDialog } from "../../utils/helpers/getPartner";
+
 import { Empty, Message, SpinIcon } from "../index";
+import { addMessage } from "../../redux/slices/messages/slice";
 import { getMessageById } from "../../redux/slices/messages/asyncActions";
 import {
   selectLoading,
@@ -13,10 +19,6 @@ import {
 
 import styles from "./Messages.module.scss";
 import classNames from "classnames";
-
-import { addMessage } from "../../redux/slices/messages/slice";
-import { useAppDispatch } from "../../hooks/hooks";
-import { getPartnerInDialog } from "../../utils/helpers/getPartner";
 
 const Messages = () => {
   const dispatch = useAppDispatch();
@@ -33,10 +35,10 @@ const Messages = () => {
 
   const messagesRef = useRef<HTMLDivElement>(null);
 
-  let partner = {} as any;
+  let partner = {} as UserInfoType | null;
   partner = getPartnerInDialog(currentDialogId, items, data);
 
-  const onNewMessage = (data: any) => {
+  const onNewMessage = (data: string) => {
     dispatch(addMessage({ currentDialogId, data }));
   };
 
@@ -94,7 +96,7 @@ const Messages = () => {
         <Empty description="Диалога пока нет" />
       )}
       <div>
-        {isTyping && (
+        {isTyping && partner && (
           <Message
             _id=""
             user={{

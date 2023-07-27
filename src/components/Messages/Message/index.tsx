@@ -1,32 +1,26 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/store";
-
-import Time from "../../Time";
-import { Avatar, MessageAudio } from "../../index";
-
-import { removeMessage } from "../../../redux/slices/messages/asyncActions";
-
-import { MessageType } from "../../../redux/slices/messages/types";
-
-import { Modal } from "antd";
-import IconReaded from "../../IconReaded";
-import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
-
-import classNames from "classnames";
-import styles from "./Message.module.scss";
-import { useAppDispatch } from "../../../hooks/hooks";
 import { Link } from "react-router-dom";
 
+import { RootState } from "../../../redux/store";
+import { useAppDispatch } from "../../../hooks/hooks";
+import { removeMessage } from "../../../redux/slices/messages/asyncActions";
+import { MessageType } from "../../../redux/slices/messages/types";
+import { AttachmentsType } from "../../../redux/slices/attachments/types";
+
+import Time from "../../Time";
+
+import { Avatar, MessageAudio } from "../../index";
+import IconReaded from "../../IconReaded";
+
+import { Modal } from "antd";
+import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
+import styles from "./Message.module.scss";
+import classNames from "classnames";
+
 type MessagePropsType = {
-  _id?: string;
   isTyping?: boolean;
   isReaded?: boolean;
-  attachments?: Array<{
-    url?: string;
-    filename?: string;
-    ext: string;
-  }>;
 };
 
 const Message: FC<MessageType & MessagePropsType> = ({
@@ -54,12 +48,19 @@ const Message: FC<MessageType & MessagePropsType> = ({
       }
     }
   };
-  const renderAttachment = (item: any) => {
+  const renderAttachment = (item: AttachmentsType) => {
+    console.log(item);
     if (item.ext !== "webm" && item.ext !== "mp4") {
       return (
         <div
           key={item._id}
-          className={styles.messageAttachmentsItem}
+          className={
+            attachments?.length === 1
+              ? styles.messageAttachmentsItem +
+                " " +
+                styles.messageAttachmentsOne
+              : styles.messageAttachmentsItem
+          }
           onClick={() => item.url && setPreviewImage(item.url)}
         >
           <div className={styles.messageAttachmentsItemOverlay}>
@@ -106,7 +107,9 @@ const Message: FC<MessageType & MessagePropsType> = ({
         <div className={styles.messageBody}>
           {attachments && (
             <div className={styles.messageAttachments}>
-              {attachments.map((item) => renderAttachment(item))}
+              {attachments.map((item: AttachmentsType) =>
+                renderAttachment(item)
+              )}
             </div>
           )}
           {((text?.length && text?.length > 1) || isTyping) && (

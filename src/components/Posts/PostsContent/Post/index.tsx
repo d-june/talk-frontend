@@ -1,8 +1,9 @@
-import { FC, useEffect } from "react";
-import { format, isToday } from "date-fns";
+import { FC } from "react";
 
 import { useAppDispatch } from "../../../../hooks/hooks";
 import { postType } from "../../../../redux/slices/posts/types";
+
+import { getTime } from "../../../../utils/helpers/getTime";
 
 import {
   deletePost,
@@ -10,10 +11,10 @@ import {
   setLikesCount,
 } from "../../../../redux/slices/posts/asyncActions";
 
+import { Skeleton } from "antd";
 import { DeleteOutlined, HeartFilled, LikeOutlined } from "@ant-design/icons";
 import styles from "../../Posts.module.scss";
 import defaultAvatar from "../../../../assets/img/cat.jpg";
-import { Skeleton } from "antd";
 
 type PropsType = {
   isMe: boolean;
@@ -41,15 +42,6 @@ const Post: FC<PropsType> = ({ post, isMe, id, isLoading }) => {
       }
     }
   };
-  const getMessageTime = (createdAt: string) => {
-    const createdAtDate = new Date(createdAt);
-    if (isToday(createdAtDate)) {
-      return format(createdAtDate, "HH:mm");
-    } else {
-      return format(createdAtDate, "dd.MM.yyyy");
-    }
-  };
-
   return (
     <>
       {isLoading ? (
@@ -80,9 +72,7 @@ const Post: FC<PropsType> = ({ post, isMe, id, isLoading }) => {
             </div>
             <div className={styles.postInfo}>
               <div className={styles.postUserName}>{post.user.fullName}</div>
-              <div className={styles.postDate}>
-                {getMessageTime(post.createdAt)}
-              </div>
+              <div className={styles.postDate}>{getTime(post.createdAt)}</div>
             </div>
           </div>
 

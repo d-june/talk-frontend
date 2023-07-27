@@ -50,8 +50,12 @@ const meSlice = createSlice({
       }
       state.isLoading = false;
     });
+    builder.addCase(getMe.pending, (state, action) => {
+      state.isLoading = true;
+    });
     builder.addCase(getMe.fulfilled, (state, action) => {
       state.data = action.payload;
+      state.isLoading = false;
     });
     builder.addCase(getMe.rejected, (state, action) => {
       state.isAuth = false;

@@ -1,12 +1,14 @@
-import { Row } from "antd";
-import TextArea from "antd/es/input/TextArea";
-import styles from "../Posts.module.scss";
-import { useAppDispatch } from "../../../hooks/hooks";
-
 import { useState } from "react";
-import { SendOutlined } from "@ant-design/icons";
+
+import { useAppDispatch } from "../../../hooks/hooks";
 import { sendPost } from "../../../redux/slices/posts/asyncActions";
+
 import { Button } from "../../index";
+
+import TextArea from "antd/es/input/TextArea";
+import { SendOutlined } from "@ant-design/icons";
+import styles from "../Posts.module.scss";
+
 const PostsForm = () => {
   const dispatch = useAppDispatch();
   const [newPostText, setNewPostText] = useState("");
@@ -18,7 +20,7 @@ const PostsForm = () => {
     setNewPostText("");
   };
 
-  const handleSendMessage = (e: any) => {
+  const handleSendMessage = (e: React.KeyboardEvent) => {
     if (e.keyCode === 13) {
       onSubmit();
     }

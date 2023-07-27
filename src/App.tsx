@@ -1,24 +1,21 @@
 import React, { Suspense, useEffect } from "react";
-import { Auth, Friends, Home, Users } from "./pages";
-import { Navigate, Route, Router, Routes } from "react-router-dom";
+import { Auth, Users } from "./pages";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { RootState } from "./redux/store";
 import { CheckEmailInfo, SpinIcon } from "./components";
-import { selectIsAuth, selectToken } from "./redux/slices/me/selectors";
+import { selectIsAuth } from "./redux/slices/me/selectors";
 import { useAppDispatch } from "./hooks/hooks";
 import { getMe } from "./redux/slices/me/asyncActions";
-import { getDialogs } from "./redux/slices/dialogs/asyncActions";
 
 const Profile = React.lazy(() => import("../src/pages/Profile"));
+const Home = React.lazy(() => import("../src/pages/Home"));
 
 function App() {
   const isAuth = useSelector(selectIsAuth);
-  const token = useSelector(selectToken);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getMe());
-    dispatch(getDialogs(token));
   }, [isAuth]);
   return (
     <div className="wrapper">
@@ -41,7 +38,6 @@ function App() {
           <Route path="/profile/:id" element={<Profile />} />
 
           <Route path="/users" element={<Users />} />
-          <Route path="/friends" element={<Friends />} />
         </Routes>
       </Suspense>
     </div>

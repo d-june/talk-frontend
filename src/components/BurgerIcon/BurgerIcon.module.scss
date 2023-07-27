@@ -1,9 +1,8 @@
-@import "../../../styles/variables";
+@import "../../styles/variables";
 
 .burgerBtn {
   display: none;
 }
-
 
 @media (max-width: 992px) {
   .burgerBtn {

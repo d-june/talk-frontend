@@ -9,11 +9,11 @@ import { BurgerIcon, Sidebar } from "../index";
 
 import styles from "./MainLayout.module.scss";
 
-interface MainLayoutProps {
+interface PropsType {
   children: ReactElement;
   className?: string;
 }
-const MainLayout: FC<MainLayoutProps> = ({ children, className }) => {
+const MainLayout: FC<PropsType> = ({ children, className }) => {
   const isAuth = useSelector(selectIsAuth);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 

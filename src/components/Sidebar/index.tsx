@@ -1,20 +1,19 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
 
-import { useAppDispatch } from "../../hooks/hooks";
-
-import socket from "../../socket/socket";
 import { CreateDialogForm, Dialogs, Empty, UserInfo } from "../index";
 import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
-
-import { getDialogs } from "../../redux/slices/dialogs/asyncActions";
 
 import { FormOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 
 import styles from "./Sidebar.module.scss";
+import { useAppDispatch } from "../../hooks/hooks";
+import { getDialogs } from "../../redux/slices/dialogs/asyncActions";
+import { RootState } from "../../redux/store";
 import { updateReaded } from "../../redux/slices/dialogs/slice";
+import socket from "../../socket/socket";
+import { DialogType } from "../../redux/slices/dialogs/types";
 
 type PropsType = {
   sidebarOpen?: boolean;
@@ -26,11 +25,16 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
 
   const { items, isLoading } = useSelector(selectDialogsData);
   const { token, data } = useSelector((state: RootState) => state.me);
-  const { currentDialogId } = useSelector((state: RootState) => state.dialogs);
+  const { currentDialogId } = useSelector(selectDialogsData);
 
   const [filtered, setFilteredItems] = useState(Array.from(items));
   const [inputValue, setInputValue] = useState("");
   const [visible, setVisible] = useState(false);
+
+  const lastMessages = items.filter((item) => {
+    return item.lastMessage;
+  });
+
   const fetchDialogs = () => {
     dispatch(getDialogs(token));
   };
@@ -40,18 +44,6 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
       const id = data._id;
       dispatch(updateReaded({ id, currentDialogId }));
     }
-  };
-
-  const onChangeInput = (value: any) => {
-    setFilteredItems(
-      items.filter(
-        (dialog) =>
-          dialog.partner &&
-          dialog.partner.fullName.toLowerCase().indexOf(value.toLowerCase()) >=
-            0
-      )
-    );
-    setInputValue(value);
   };
 
   useEffect(() => {
@@ -67,7 +59,19 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
       socket.removeListener("SERVER:DIALOG_CREATED", fetchDialogs);
       socket.removeListener("SERVER:NEW_MESSAGE", fetchDialogs);
     };
-  }, [items.length]);
+  }, [items.length, lastMessages]);
+
+  const onChangeInput = (value: string) => {
+    setFilteredItems(
+      items.filter(
+        (dialog) =>
+          dialog.partner &&
+          dialog.partner.fullName.toLowerCase().indexOf(value.toLowerCase()) >=
+            0
+      )
+    );
+    setInputValue(value);
+  };
 
   const onShow = () => {
     setVisible(true);
@@ -100,6 +104,7 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
           items={filtered}
           isLoading={isLoading}
           setSidebarOpen={setSidebarOpen}
+          setFilteredItems={setFilteredItems}
         />
       )}
       <CreateDialogForm

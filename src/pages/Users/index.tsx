@@ -9,11 +9,23 @@ import { getAllUsers } from "../../redux/slices/users/asyncActions";
 import { Pagination, PaginationProps } from "antd";
 
 const Users: FC = () => {
+  const [pageHeight, setPageHeight] = useState(window.innerHeight - 70);
   const { isLoading, users, page, total } = useAppSelector(
     (state: RootState) => state.users
   );
   const [currentPage, setCurrentPage] = useState(page);
   const dispatch = useAppDispatch();
+
+  const onResizePage = () => {
+    setPageHeight(window.innerHeight - 70);
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", onResizePage);
+    return () => {
+      window.removeEventListener("resize", onResizePage);
+    };
+  }, [window.innerHeight]);
 
   useEffect(() => {
     dispatch(getAllUsers(currentPage));
@@ -27,10 +39,7 @@ const Users: FC = () => {
     <MainLayout className="users">
       <div className={styles.usersMain}>
         <Header usersPage />
-        <div
-          className={styles.usersContent}
-          style={{ height: window.innerHeight - 70 }}
-        >
+        <div className={styles.usersContent} style={{ height: pageHeight }}>
           {isLoading ? (
             <SpinIcon tip="Загружаю пользователей..." />
           ) : (

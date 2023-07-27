@@ -1,9 +1,8 @@
 import { FC, useEffect, useRef, useState } from "react";
 
-import { PauseCircleFilled, PlayCircleFilled } from "@ant-design/icons";
-
 import { convertCurrentTime } from "../../../utils";
 
+import { PauseCircleFilled, PlayCircleFilled } from "@ant-design/icons";
 import styles from "./MessageAudio.module.scss";
 import waveSvg from "../../../assets/img/wave.svg";
 

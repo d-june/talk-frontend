@@ -1,8 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-type AttachmentsType = {
-  uid: string;
-};
+import { AttachmentsType } from "./types";
 
 const initialState = {
   attachments: [] as Array<AttachmentsType>,

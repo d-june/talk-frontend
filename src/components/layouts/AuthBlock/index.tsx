@@ -2,10 +2,10 @@ import { FC } from "react";
 
 import styles from "./AuthBlock.module.scss";
 
-type LoginBlockProps = {
+type PropsType = {
   children: React.ReactElement;
 };
-const AuthBlock: FC<LoginBlockProps> = ({ children }) => {
+const AuthBlock: FC<PropsType> = ({ children }) => {
   return <div className={styles.loginBlock}>{children}</div>;
 };
 

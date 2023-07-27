@@ -1,7 +1,14 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
+import { useAppDispatch } from "../../../hooks/hooks";
+import { logout } from "../../../redux/slices/me/slice";
 import { selectIsAuth, selectMeData } from "../../../redux/slices/me/selectors";
+
+import { Avatar } from "../../index";
 import Button from "../../Button";
+
 import {
   UpCircleOutlined,
   DownCircleOutlined,
@@ -10,20 +17,17 @@ import {
   LogoutOutlined,
   WechatOutlined,
 } from "@ant-design/icons";
-import CatImage from "../../../assets/img/cat.jpg";
-
 import styles from "./UserInfo.module.scss";
-import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../../hooks/hooks";
-import { logout } from "../../../redux/slices/me/slice";
+import SkeletonButton from "antd/es/skeleton/Button";
+import { RootState } from "../../../redux/store";
 
 const UserInfo: FC = () => {
   const userData = useSelector(selectMeData);
-  const isAuth = useSelector(selectIsAuth);
+  const { isAuth, isLoading } = useSelector((state: RootState) => state.me);
   const dispatch = useAppDispatch();
 
   const [menuVisible, setMenuVisible] = useState(false);
-  const handleOutsideClick = (el: any, e: any) => {
+  const handleOutsideClick = (el: any, e: Event) => {
     if (el && !el.contains(e.target)) {
       setMenuVisible(false);
     }
@@ -44,7 +48,13 @@ const UserInfo: FC = () => {
 
   return (
     <div>
-      {isAuth ? (
+      {isLoading ? (
+        <SkeletonButton
+          block
+          active
+          style={{ height: 50, width: 161, zIndex: 10 }}
+        ></SkeletonButton>
+      ) : isAuth ? (
         <div className={styles.userInfo}>
           <div
             id="userData"
@@ -52,11 +62,11 @@ const UserInfo: FC = () => {
             onClick={() => setMenuVisible(!menuVisible)}
           >
             <div className={styles.userAvatar}>
-              {userData?.avatar ? (
-                <img src={userData.avatar} alt="avatar" />
-              ) : (
-                <img src={CatImage} alt="default avatar" />
-              )}
+              <Avatar
+                _id={userData?._id}
+                fullName={userData?.fullName}
+                avatar={userData?.avatar}
+              />
             </div>
             <div className={styles.userName}>
               <div>{userData?.fullName}</div>
