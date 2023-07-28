@@ -1,7 +1,8 @@
+import { FC } from "react";
+
 import { SmileOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import styles from "./SpinIcon.module.scss";
-import { FC } from "react";
 
 type PropsType = {
   tip: string;

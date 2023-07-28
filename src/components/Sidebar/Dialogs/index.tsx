@@ -13,15 +13,9 @@ type DialogsProps = {
   items: Array<DialogType>;
   setSidebarOpen?: Dispatch<SetStateAction<boolean>>;
   isLoading: boolean;
-  setFilteredItems: (value: DialogType[]) => void;
 };
 
-const Dialogs: FC<DialogsProps> = ({
-  items,
-  setSidebarOpen,
-  isLoading,
-  setFilteredItems,
-}) => {
+const Dialogs: FC<DialogsProps> = ({ items, setSidebarOpen, isLoading }) => {
   const [pageHeight, setPageHeight] = useState(window.innerHeight - 160);
 
   const onResizePage = () => {
@@ -54,7 +48,6 @@ const Dialogs: FC<DialogsProps> = ({
             {...item}
             isLoading={isLoading}
             setSidebarOpen={setSidebarOpen}
-            setFilteredItems={setFilteredItems}
           />
         )
       )}

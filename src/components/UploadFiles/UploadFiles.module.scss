@@ -1,11 +1,17 @@
-.uploadModal {
-  img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 5px;
-  }
+.imagePreview {
+  width: 100%;
+  height: 100%;
+
 }
+
+//.uploadModal {
+//  img {
+//    height: 100%;
+//    width: 100%;
+//    object-fit: cover;
+//    border-radius: 5px;
+//  }
+//}
 
 :global(.ant-modal-wrap) {
 
@@ -14,12 +20,24 @@ display: flex;
 
 }
 :global(.ant-modal) {
-  top: 0px;
-  bottom: 0px;
+  width: 100% !important;
+  height: 100% !important;
+
+
 }
 :global(.ant-modal-content) {
   padding: 0px !important;
+  height: 100% !important;
+
+
 }
 :global(.ant-modal-body) {
-  padding: 5px !important;
+  padding: 40px !important;
+  width: 100%;
+  height: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import { useAppDispatch } from "../../../hooks/hooks";
 import { logout } from "../../../redux/slices/me/slice";
-import { selectIsAuth, selectMeData } from "../../../redux/slices/me/selectors";
+import { selectMeData } from "../../../redux/slices/me/selectors";
 
 import { Avatar } from "../../index";
 import Button from "../../Button";
@@ -23,7 +23,9 @@ import { RootState } from "../../../redux/store";
 
 const UserInfo: FC = () => {
   const userData = useSelector(selectMeData);
-  const { isAuth, isLoading } = useSelector((state: RootState) => state.me);
+  const { isAuth, isLoadingMeData } = useSelector(
+    (state: RootState) => state.me
+  );
   const dispatch = useAppDispatch();
 
   const [menuVisible, setMenuVisible] = useState(false);
@@ -48,7 +50,7 @@ const UserInfo: FC = () => {
 
   return (
     <div>
-      {isLoading ? (
+      {isLoadingMeData ? (
         <SkeletonButton
           block
           active

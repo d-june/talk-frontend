@@ -1,19 +1,18 @@
 import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import socket from "../../socket/socket";
+
+import { RootState } from "../../redux/store";
+import { useAppDispatch } from "../../hooks/hooks";
+import { getDialogs } from "../../redux/slices/dialogs/asyncActions";
+import { updateReaded } from "../../redux/slices/dialogs/slice";
 
 import { CreateDialogForm, Dialogs, Empty, UserInfo } from "../index";
 import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
 
 import { FormOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-
 import styles from "./Sidebar.module.scss";
-import { useAppDispatch } from "../../hooks/hooks";
-import { getDialogs } from "../../redux/slices/dialogs/asyncActions";
-import { RootState } from "../../redux/store";
-import { updateReaded } from "../../redux/slices/dialogs/slice";
-import socket from "../../socket/socket";
-import { DialogType } from "../../redux/slices/dialogs/types";
 
 type PropsType = {
   sidebarOpen?: boolean;
@@ -31,10 +30,6 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
   const [inputValue, setInputValue] = useState("");
   const [visible, setVisible] = useState(false);
 
-  const lastMessages = items.filter((item) => {
-    return item.lastMessage;
-  });
-
   const fetchDialogs = () => {
     dispatch(getDialogs(token));
   };
@@ -47,11 +42,8 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
   };
 
   useEffect(() => {
-    if (!items.length) {
-      fetchDialogs();
-    } else {
-      setFilteredItems(items);
-    }
+    fetchDialogs();
+
     socket.on("SERVER:DIALOG_CREATED", fetchDialogs);
     socket.on("SERVER:NEW_MESSAGE", fetchDialogs);
     socket.on("SERVER:MESSAGES_READED", updateReadedStatus);
@@ -59,22 +51,32 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
       socket.removeListener("SERVER:DIALOG_CREATED", fetchDialogs);
       socket.removeListener("SERVER:NEW_MESSAGE", fetchDialogs);
     };
-  }, [items.length, lastMessages]);
+  }, []);
 
-  const onChangeInput = (value: string) => {
-    setFilteredItems(
-      items.filter(
-        (dialog) =>
-          dialog.partner &&
-          dialog.partner.fullName.toLowerCase().indexOf(value.toLowerCase()) >=
-            0
-      )
-    );
-    setInputValue(value);
-  };
+  useEffect(() => {
+    if (items.length) {
+      onChangeInput();
+    }
+  }, [items]);
 
   const onShow = () => {
     setVisible(true);
+  };
+
+  const onChangeInput = (value = "") => {
+    setFilteredItems(
+      items.filter(
+        (dialog) =>
+          dialog.author.fullName.toLowerCase().indexOf(value.toLowerCase()) >=
+            0 ||
+          (dialog.partner &&
+            dialog.partner.fullName
+              .toLowerCase()
+              .indexOf(value.toLowerCase()) >= 0)
+      )
+    );
+
+    setInputValue(value);
   };
 
   return (
@@ -104,7 +106,6 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
           items={filtered}
           isLoading={isLoading}
           setSidebarOpen={setSidebarOpen}
-          setFilteredItems={setFilteredItems}
         />
       )}
       <CreateDialogForm

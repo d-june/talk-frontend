@@ -21,7 +21,6 @@ import styles from "./DialogItem.module.scss";
 
 type PropsType = {
   isLoading: boolean;
-  setFilteredItems: (value: DialogType[]) => void;
 };
 const DialogItem: FC<DialogType & PropsType> = ({
   _id,

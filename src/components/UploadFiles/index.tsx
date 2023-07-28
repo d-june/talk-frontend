@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
+
+import { AttachmentsType } from "../../redux/slices/attachments/types";
+import { useAppDispatch } from "../../hooks/hooks";
+import { removeAttachment } from "../../redux/slices/attachments/slice";
+
 import { Upload, Modal } from "antd";
 
-import { useAppDispatch } from "../../hooks/hooks";
-import {
-  removeAttachment,
-  setAttachments,
-} from "../../redux/slices/attachments/slice";
+import styles from "./UploadFiles.module.scss";
 
-function getBase64(file: any) {
+function getBase64(file: File) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -16,7 +17,15 @@ function getBase64(file: any) {
   });
 }
 
-const UploadFiles = ({ attachments }: any) => {
+type UploadAttachmentsType = {
+  attachments: Array<AttachmentsType>;
+};
+
+type fileListType = {
+  fileList: Array<AttachmentsType>;
+};
+
+const UploadFiles = ({ attachments }: UploadAttachmentsType) => {
   const [state, setState] = useState({
     previewVisible: false,
     previewImage: "",
@@ -45,14 +54,14 @@ const UploadFiles = ({ attachments }: any) => {
       previewVisible: true,
     });
   };
-  const handleChange = ({ fileList }: any) => {
+  const handleChange = ({ fileList }: fileListType) => {
     setState({
       ...state,
       fileList,
     });
   };
 
-  const onRemove = (file: any) => {
+  const onRemove = (file: AttachmentsType) => {
     dispatch(removeAttachment(file));
   };
 
@@ -64,15 +73,17 @@ const UploadFiles = ({ attachments }: any) => {
         fileList={state.fileList}
         onChange={handleChange}
         onPreview={handlePreview}
-        onRemove={(file) => onRemove(file)}
+        onRemove={(file: AttachmentsType) => onRemove(file)}
       ></Upload>
 
       <Modal
-        visible={state.previewVisible}
+        open={state.previewVisible}
         footer={null}
         onCancel={handleCancel}
+        centered
+        className={styles.imagePreview}
       >
-        <img alt="example" style={{ width: "100%" }} src={state.previewImage} />
+        <img alt="example" src={state.previewImage} />
       </Modal>
     </div>
   );

@@ -11,6 +11,7 @@ interface MeSliceType {
   registrationSuccess?: boolean;
   accountVerified?: string;
   isLoading: boolean;
+  isLoadingMeData: boolean;
 }
 
 const initialState: MeSliceType = {
@@ -22,6 +23,7 @@ const initialState: MeSliceType = {
   registrationSuccess: false,
   accountVerified: "",
   isLoading: false,
+  isLoadingMeData: false,
 };
 
 const meSlice = createSlice({
@@ -51,11 +53,11 @@ const meSlice = createSlice({
       state.isLoading = false;
     });
     builder.addCase(getMe.pending, (state, action) => {
-      state.isLoading = true;
+      state.isLoadingMeData = true;
     });
     builder.addCase(getMe.fulfilled, (state, action) => {
       state.data = action.payload;
-      state.isLoading = false;
+      state.isLoadingMeData = false;
     });
     builder.addCase(getMe.rejected, (state, action) => {
       state.isAuth = false;

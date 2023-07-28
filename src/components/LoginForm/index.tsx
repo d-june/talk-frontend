@@ -23,7 +23,6 @@ const LoginForm = () => {
 
   const onFinish = (values: LoginType) => {
     dispatch(login(values));
-    console.log(values);
   };
 
   useEffect(() => {

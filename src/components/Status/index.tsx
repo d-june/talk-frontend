@@ -1,12 +1,13 @@
 import { FC } from "react";
 import { useSelector } from "react-redux";
+
 import { RootState } from "../../redux/store";
+import { UserInfoType } from "../../redux/slices/users/types";
 
 import { getPartnerInDialog } from "../../utils/helpers/getPartner";
 
 import classNames from "classnames";
 import styles from "./Status.module.scss";
-import { UserInfoType } from "../../redux/slices/users/types";
 
 const Status: FC = () => {
   const { currentDialogId, items } = useSelector(
