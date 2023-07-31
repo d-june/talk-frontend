@@ -30,3 +30,4 @@ export { default as Header } from "./Header";
 export { default as UserProfile } from "./UserProfile";
 export { default as ProfileInfo } from "./UserProfile/ProfileInfo";
 export { default as ProfileForm } from "./UserProfile/ProfileForm";
+export { default as UsersList } from "./UsersList";

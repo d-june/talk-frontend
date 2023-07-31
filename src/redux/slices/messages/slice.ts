@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getMessageById, removeMessage, sendMessage } from "./asyncActions";
+import { getMessageById, removeMessage } from "./asyncActions";
 import { MessagesType } from "./types";
-import { reduce } from "lodash";
 
 const initialState = {
   messages: [] as MessagesType,

@@ -38,6 +38,13 @@ const Messages = () => {
   let partner = {} as UserInfoType | null;
   partner = getPartnerInDialog(currentDialogId, items, data);
 
+  useEffect(() => {
+    currentDialogId && dispatch(getMessageById(currentDialogId));
+    socket.on("SERVER:NEW_MESSAGE", onNewMessage);
+    return () => {
+      socket.removeListener("SERVER:NEW_MESSAGE", onNewMessage);
+    };
+  }, [currentDialogId]);
   const onNewMessage = (data: string) => {
     dispatch(addMessage({ currentDialogId, data }));
   };
@@ -52,18 +59,11 @@ const Messages = () => {
 
   useEffect(() => {
     socket.on("DIALOGS:TYPING", toggleIsTyping);
+
     return () => {
       socket.removeListener("DIALOGS:TYPING", toggleIsTyping);
     };
   }, []);
-
-  useEffect(() => {
-    currentDialogId && dispatch(getMessageById(currentDialogId));
-    socket.on("SERVER:NEW_MESSAGE", onNewMessage);
-    return () => {
-      socket.removeListener("SERVER:NEW_MESSAGE", onNewMessage);
-    };
-  }, [currentDialogId]);
 
   useEffect(() => {
     if (messagesRef.current) {

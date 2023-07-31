@@ -1,12 +1,16 @@
-import styles from "./User.module.scss";
-import { Link, useNavigate } from "react-router-dom";
 import { FC, useState } from "react";
-import { format, isToday } from "date-fns";
-import { UserInfoType } from "../../redux/slices/users/types";
+import { Link, useNavigate } from "react-router-dom";
+
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { RootState } from "../../redux/store";
+
+import { UserInfoType } from "../../redux/slices/users/types";
+
 import { findDialogId } from "../../redux/slices/dialogs/asyncActions";
 import { Avatar, Button, CreateDialogForm } from "../index";
+
+import styles from "./User.module.scss";
+import { getTime } from "../../utils/helpers/getTime";
 
 const User: FC<UserInfoType> = (user) => {
   const [selectedId, setSelectedId] = useState("");
@@ -17,17 +21,8 @@ const User: FC<UserInfoType> = (user) => {
   const { isLoading } = useAppSelector((state: RootState) => state.dialogs);
   const navigate = useNavigate();
 
-  const getMessageTime = (lastSeen: string) => {
-    const lastSeenDate = new Date(lastSeen);
-    if (isToday(lastSeenDate)) {
-      return format(lastSeenDate, "HH:mm");
-    } else {
-      return format(lastSeenDate, "dd.MM.yyyy");
-    }
-  };
-
   const findDialog = (userId: string, userName: string) => {
-    dispatch(findDialogId(userId)).then((data) => {
+    dispatch(findDialogId(userId)).then((data: any) => {
       if (data.payload.length) {
         navigate(`/dialogs/${data.payload[0]._id}`);
       } else {
@@ -58,7 +53,7 @@ const User: FC<UserInfoType> = (user) => {
         <div className={styles.userName}>{user.fullName}</div>
 
         <div className={styles.userLastSeen}>
-          Был(а) в сети: {getMessageTime(user.lastSeen)}
+          Был(а) в сети: {getTime(user.lastSeen)}
         </div>
       </Link>
       <div className={styles.userButtons}>

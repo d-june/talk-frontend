@@ -9,13 +9,13 @@ import {
 
 const initialState = {
   profile: {
-    userId: "" as string,
-    fullName: "" as string,
+    userId: "",
+    fullName: "",
     birthday: 0 as Date | number,
-    avatar: "" as string,
-    city: "" as string,
-    about: "" as string,
-    hobbies: "" as string,
+    avatar: "",
+    city: "",
+    about: "",
+    hobbies: "",
     status: "",
   },
   isLoadingStatus: false,
@@ -27,7 +27,7 @@ const profileSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getUserStatus.pending, (state, action) => {
+    builder.addCase(getUserStatus.pending, (state) => {
       state.isLoadingStatus = true;
     });
     builder.addCase(getUserStatus.fulfilled, (state, action) => {
@@ -37,7 +37,7 @@ const profileSlice = createSlice({
     builder.addCase(updateUserStatus.fulfilled, (state, action) => {
       state.profile.status = action.payload.status;
     });
-    builder.addCase(getProfile.pending, (state, action) => {
+    builder.addCase(getProfile.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(getProfile.fulfilled, (state, action) => {

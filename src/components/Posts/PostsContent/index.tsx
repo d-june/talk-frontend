@@ -10,14 +10,13 @@ import { Empty } from "antd";
 import styles from "../Posts.module.scss";
 
 type PropsType = {
+  id?: string;
   isMe: boolean;
 };
 
-const PostsContent: FC<PropsType> = ({ isMe }) => {
-  const { posts, isLoading } = useAppSelector((state) => state.posts);
+const PostsContent: FC<PropsType> = ({ isMe, id }) => {
+  const { posts } = useAppSelector((state) => state.posts);
   const dispatch = useAppDispatch();
-
-  const { id } = useParams();
 
   useEffect(() => {
     dispatch(getPosts(String(id)));
@@ -26,21 +25,11 @@ const PostsContent: FC<PropsType> = ({ isMe }) => {
   return (
     <>
       <div className={styles.postsContainer}>
-        {posts.length > 0 || isLoading ? (
-          <>
-            <h2 className={styles.postsTitle}>Посты</h2>
-            {posts.map((post) => {
-              return (
-                <Post
-                  post={post}
-                  key={post._id}
-                  isMe={isMe}
-                  id={id}
-                  isLoading={isLoading}
-                />
-              );
-            })}
-          </>
+        <h2 className={styles.postsTitle}>Посты</h2>
+        {posts.length > 0 ? (
+          posts.map((post) => {
+            return <Post post={post} key={post._id} isMe={isMe} id={id} />;
+          })
         ) : (
           <div className={styles.postsEmpty}>
             <Empty description="Постов еще нет" />

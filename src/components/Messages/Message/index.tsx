@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -17,10 +17,14 @@ import { Modal } from "antd";
 import { DeleteOutlined, EyeOutlined } from "@ant-design/icons";
 import styles from "./Message.module.scss";
 import classNames from "classnames";
+import socket from "../../../socket/socket";
+import {
+  setCurrentDialogId,
+  updateReaded,
+} from "../../../redux/slices/dialogs/slice";
 
 type MessagePropsType = {
   isTyping?: boolean;
-  isReaded?: boolean;
 };
 
 const Message: FC<MessageType & MessagePropsType> = ({
@@ -28,7 +32,7 @@ const Message: FC<MessageType & MessagePropsType> = ({
   text,
   user,
   createdAt,
-  isReaded,
+  read,
   attachments,
   isTyping,
 }) => {
@@ -48,8 +52,8 @@ const Message: FC<MessageType & MessagePropsType> = ({
       }
     }
   };
+
   const renderAttachment = (item: AttachmentsType) => {
-    console.log(item);
     if (item.ext !== "webm" && item.ext !== "mp4") {
       return (
         <div
@@ -138,13 +142,14 @@ const Message: FC<MessageType & MessagePropsType> = ({
             <DeleteOutlined className={styles.messageIconsDelete} />
           </button>
         )}
-        <IconReaded isMe={isMe} isReaded={isReaded} />
+        <IconReaded isMe={isMe} isReaded={read} />
       </div>
       <Modal
         open={!!previewImage}
         onCancel={() => setPreviewImage("")}
         footer={null}
         className={styles.messagePhotoModal}
+        centered
       >
         <img src={previewImage} alt="Preview" />
       </Modal>

@@ -8,7 +8,7 @@ import { useAppDispatch } from "./hooks/hooks";
 import { getMe } from "./redux/slices/me/asyncActions";
 
 const Profile = React.lazy(() => import("../src/pages/Profile"));
-const Home = React.lazy(() => import("../src/pages/Home"));
+const Home = React.lazy(() => import("./pages/Chat"));
 
 function App() {
   const isAuth = useSelector(selectIsAuth);
@@ -24,10 +24,10 @@ function App() {
           <Route
             path="/"
             element={
-              isAuth ? <Navigate to="/dialogs" /> : <Navigate to="/login" />
+              isAuth ? <Navigate to="/profile" /> : <Navigate to="/login" />
             }
           />
-          {/*<Route path="/dialogs" element={<Home />} />*/}
+          {/*<Route path="/dialogs" element={<Chat />} />*/}
           <Route path="/dialogs" element={<Home />}>
             <Route path=":id" element={<Home />} />
           </Route>
@@ -35,7 +35,9 @@ function App() {
           <Route path="/register" element={<Auth />} />
           <Route path="/register/verify" element={<CheckEmailInfo />} />
 
-          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/profile" element={<Profile />}>
+            <Route path=":id" element={<Profile />} />
+          </Route>
 
           <Route path="/users" element={<Users />} />
         </Routes>

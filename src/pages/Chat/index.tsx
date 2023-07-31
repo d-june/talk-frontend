@@ -1,13 +1,14 @@
 import React, { FC, useEffect, useState } from "react";
-
-import { ChatInput, Header, Messages } from "../../components";
-
-import styles from "./Home.module.scss";
-import MainLayout from "../../components/layouts/MainLayout";
 import { useSelector } from "react-redux";
+
 import { RootState } from "../../redux/store";
 
-const Home: FC = () => {
+import { ChatInput, Header, Messages } from "../../components";
+import MainLayout from "../../components/layouts/MainLayout";
+
+import styles from "./Chat.module.scss";
+
+const Chat: FC = () => {
   const { attachments } = useSelector((state: RootState) => state.attachments);
   const [pageHeight, setPageHeight] = useState(window.innerHeight - 70 - 70);
 
@@ -48,4 +49,4 @@ const Home: FC = () => {
   );
 };
 
-export default Home;
+export default Chat;

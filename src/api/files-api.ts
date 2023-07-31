@@ -1,7 +1,7 @@
 import { instance } from "./api";
 
 export const filesApi = {
-  upload(file: any) {
+  upload(file: File) {
     const formData = new FormData();
     formData.append("file", file);
     return instance.post("/files", formData, {

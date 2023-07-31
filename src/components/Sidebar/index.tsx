@@ -10,7 +10,7 @@ import { updateReaded } from "../../redux/slices/dialogs/slice";
 import { CreateDialogForm, Dialogs, Empty, UserInfo } from "../index";
 import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
 
-import { FormOutlined } from "@ant-design/icons";
+import { FormOutlined, SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import styles from "./Sidebar.module.scss";
 
@@ -23,8 +23,7 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
   const dispatch = useAppDispatch();
 
   const { items, isLoading } = useSelector(selectDialogsData);
-  const { token, data } = useSelector((state: RootState) => state.me);
-  const { currentDialogId } = useSelector(selectDialogsData);
+  const { token } = useSelector((state: RootState) => state.me);
 
   const [filtered, setFilteredItems] = useState(Array.from(items));
   const [inputValue, setInputValue] = useState("");
@@ -34,22 +33,16 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
     dispatch(getDialogs(token));
   };
 
-  const updateReadedStatus = () => {
-    if (data?._id) {
-      const id = data._id;
-      dispatch(updateReaded({ id, currentDialogId }));
-    }
-  };
-
   useEffect(() => {
     fetchDialogs();
 
-    socket.on("SERVER:DIALOG_CREATED", fetchDialogs);
+    // socket.on("SERVER:DIALOG_CREATED", fetchDialogs);
     socket.on("SERVER:NEW_MESSAGE", fetchDialogs);
-    socket.on("SERVER:MESSAGES_READED", updateReadedStatus);
+    socket.on("SERVER:MESSAGES_READED", fetchDialogs);
     return () => {
       socket.removeListener("SERVER:DIALOG_CREATED", fetchDialogs);
       socket.removeListener("SERVER:NEW_MESSAGE", fetchDialogs);
+      // socket.removeListener("SERVER:MESSAGES_READED", fetchDialogs);
     };
   }, []);
 
@@ -94,12 +87,13 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
         </button>
       </div>
       <div className={styles.sidebarSearch}>
-        <Input.Search
+        <Input
           placeholder="Поиск среди контактов"
           onChange={(e) => onChangeInput(e.target.value)}
+          prefix={<SearchOutlined />}
         />
       </div>
-      {filtered.length < 0 && !isLoading ? (
+      {filtered.length <= 0 ? (
         <Empty description="Ничего не нашлось :(" light />
       ) : (
         <Dialogs

@@ -1,7 +1,8 @@
 import React, { FC, useEffect, useState } from "react";
 import { useAppSelector } from "../../hooks/hooks";
-import { RootState } from "../../redux/store";
 import { useParams } from "react-router-dom";
+
+import { RootState } from "../../redux/store";
 
 import { Header, Posts, UserProfile } from "../../components";
 import MainLayout from "../../components/layouts/MainLayout";
@@ -12,8 +13,7 @@ const Profile: FC = () => {
   const [pageHeight, setPageHeight] = useState(window.innerHeight - 70);
   const { data } = useAppSelector((state: RootState) => state.me);
   const { id } = useParams();
-  const isMe = data?._id === id;
-
+  const isMe = data?._id === id || id === undefined;
   const onResizePage = () => {
     setPageHeight(window.innerHeight - 70);
   };
@@ -30,8 +30,8 @@ const Profile: FC = () => {
       <div className={styles.profileContainer}>
         <Header profilePage />
         <div className={styles.profileMain} style={{ height: pageHeight }}>
-          <UserProfile isMe={isMe} id={id} />
-          <Posts isMe={isMe} />
+          <UserProfile isMe={isMe} id={id ? id : data?._id} />
+          <Posts isMe={isMe} id={id ? id : data?._id} />
         </div>
       </div>
     </MainLayout>

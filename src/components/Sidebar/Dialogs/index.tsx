@@ -16,10 +16,10 @@ type DialogsProps = {
 };
 
 const Dialogs: FC<DialogsProps> = ({ items, setSidebarOpen, isLoading }) => {
-  const [pageHeight, setPageHeight] = useState(window.innerHeight - 160);
+  const [pageHeight, setPageHeight] = useState(window.innerHeight - 168);
 
   const onResizePage = () => {
-    setPageHeight(window.innerHeight - 160);
+    setPageHeight(window.innerHeight - 168);
   };
 
   useEffect(() => {

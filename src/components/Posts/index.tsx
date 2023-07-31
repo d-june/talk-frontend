@@ -6,14 +6,15 @@ import { Col } from "antd";
 import styles from "./Posts.module.scss";
 
 type PropsType = {
+  id?: string;
   isMe: boolean;
 };
-const Posts: FC<PropsType> = ({ isMe }) => {
+const Posts: FC<PropsType> = ({ isMe, id }) => {
   return (
     <>
       <div className={styles.postsWrapper}>
         <Col span={24}>
-          <PostsContent isMe={isMe} />
+          <PostsContent isMe={isMe} id={id} />
         </Col>
         {isMe && (
           <Col span={24}>

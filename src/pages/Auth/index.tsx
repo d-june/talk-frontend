@@ -1,6 +1,8 @@
 import React, { FC } from "react";
 import { useLocation } from "react-router-dom";
+
 import { LoginForm, RegisterForm } from "../../components";
+
 import styles from "./Auth.module.scss";
 
 const Auth: FC = () => {

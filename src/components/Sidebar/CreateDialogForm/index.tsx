@@ -1,12 +1,15 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { useAppDispatch } from "../../../hooks/hooks";
 
 import { Button } from "../../index";
 
-import { findUsers } from "../../../redux/slices/users/asyncActions";
+import {
+  findUsers,
+  getAllUsers,
+} from "../../../redux/slices/users/asyncActions";
 import { createDialog } from "../../../redux/slices/dialogs/asyncActions";
 
 import { Form, Modal, Select } from "antd";
