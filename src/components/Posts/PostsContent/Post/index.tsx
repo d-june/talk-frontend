@@ -11,9 +11,10 @@ import {
   setLikesCount,
 } from "../../../../redux/slices/posts/asyncActions";
 
+import Avatar from "../../../Avatar";
+
 import { DeleteOutlined, HeartFilled, LikeOutlined } from "@ant-design/icons";
 import styles from "../../Posts.module.scss";
-import defaultAvatar from "../../../../assets/img/cat.jpg";
 
 type PropsType = {
   isMe: boolean;
@@ -45,7 +46,11 @@ const Post: FC<PropsType> = ({ post, isMe, id }) => {
       <div className={styles.postContainer} key={post._id}>
         <div className={styles.postTop}>
           <div className={styles.postAvatar}>
-            <img src={post.user.avatar || defaultAvatar} alt="Avatar" />
+            <Avatar
+              _id={post.user._id}
+              fullName={post.user.fullName}
+              avatar={post.user.avatar}
+            />
           </div>
           <div className={styles.postInfo}>
             <div className={styles.postUserName}>{post.user.fullName}</div>

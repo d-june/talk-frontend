@@ -17,6 +17,8 @@ import { Avatar, Skeleton } from "antd";
 import { EditOutlined, UserOutlined } from "@ant-design/icons";
 import styles from "./UserProfile.module.scss";
 import forestImg from "../../assets/img/forest.jpg";
+import { getPosts } from "../../redux/slices/posts/asyncActions";
+import { getMe } from "../../redux/slices/me/asyncActions";
 
 type PropsType = {
   isMe: boolean;
@@ -50,7 +52,13 @@ const UserProfile: FC<PropsType> = ({ isMe, id }) => {
 
   const editUserAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files !== null) {
-      dispatch(updateAvatar(e.target.files[0]));
+      dispatch(updateAvatar(e.target.files[0])).then(() => {
+        dispatch(getProfile(String(id)));
+        dispatch(getPosts(String(id)));
+        dispatch(getMe());
+      });
+
+      console.log(String(id));
     }
   };
 

@@ -18,6 +18,7 @@ import { getPartner } from "../../../../utils/helpers/getPartner";
 import { getTime } from "../../../../utils/helpers/getTime";
 
 import styles from "./DialogItem.module.scss";
+import { selectMessagesData } from "../../../../redux/slices/messages/selectors";
 
 type PropsType = {
   isLoading: boolean;

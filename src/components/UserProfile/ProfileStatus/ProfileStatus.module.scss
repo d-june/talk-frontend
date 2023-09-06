@@ -69,8 +69,8 @@
   color: $grey;
   height: 40px;
   border-radius: 5px;
-  padding: 10px 20px;
-  background: white;
+  padding: 10px 20px !important;
+  background: white !important;
   transition: opacity 0.3s ease-in-out;
   &:hover {
     opacity: 0.6;

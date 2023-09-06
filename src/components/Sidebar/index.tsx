@@ -5,7 +5,6 @@ import socket from "../../socket/socket";
 import { RootState } from "../../redux/store";
 import { useAppDispatch } from "../../hooks/hooks";
 import { getDialogs } from "../../redux/slices/dialogs/asyncActions";
-import { updateReaded } from "../../redux/slices/dialogs/slice";
 
 import { CreateDialogForm, Dialogs, Empty, UserInfo } from "../index";
 import { selectDialogsData } from "../../redux/slices/dialogs/selectors";
@@ -36,13 +35,11 @@ const Sidebar: FC<PropsType> = ({ sidebarOpen, setSidebarOpen }) => {
   useEffect(() => {
     fetchDialogs();
 
-    // socket.on("SERVER:DIALOG_CREATED", fetchDialogs);
+    socket.on("SERVER:DIALOG_CREATED", fetchDialogs);
     socket.on("SERVER:NEW_MESSAGE", fetchDialogs);
-    socket.on("SERVER:MESSAGES_READED", fetchDialogs);
     return () => {
       socket.removeListener("SERVER:DIALOG_CREATED", fetchDialogs);
       socket.removeListener("SERVER:NEW_MESSAGE", fetchDialogs);
-      // socket.removeListener("SERVER:MESSAGES_READED", fetchDialogs);
     };
   }, []);
 

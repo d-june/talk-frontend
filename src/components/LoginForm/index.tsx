@@ -58,6 +58,11 @@ const LoginForm = () => {
               form={form}
               autoComplete="off"
             >
+              <div className={styles.testAccount}>
+                <p>
+                  Тестовый аккаунт: логин - test@test.ru, пароль - Test12345
+                </p>
+              </div>
               <Form.Item
                 className={styles.item}
                 name="email"
